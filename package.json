@@ -1,0 +1,14 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "chat",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hexlet/chat-server": "^2.0.4"
+  }
+}
