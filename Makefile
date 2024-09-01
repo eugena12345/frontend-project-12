@@ -1,2 +1,5 @@
 start:
-	npm start -s ./frontend/build
+	npm start 
+	
+build:
+	npx start-server -s ./frontend/build
