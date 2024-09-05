@@ -1,4 +1,5 @@
 import { useFormik } from 'formik';
+import axios from 'axios';
 
 
 const LoginPage = () => {
@@ -9,6 +10,9 @@ const LoginPage = () => {
         },
         onSubmit: (values) => {
             console.log(JSON.stringify(values, null, 2));
+            axios.post('/api/v1/login', { username: 'admin', password: 'admin' }).then((response) => {
+                console.log(response.data); // => { token: ..., username: 'admin' }
+              });
         },
     });
     return (
