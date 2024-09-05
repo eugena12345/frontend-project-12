@@ -1,8 +1,12 @@
 import { useFormik } from 'formik';
 import axios from 'axios';
+import { actions as autorizedActions } from './slices/auorizeSlice';
+import { useDispatch } from 'react-redux';
+
 
 
 const LoginPage = () => {
+    const dispatch = useDispatch();
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -11,7 +15,11 @@ const LoginPage = () => {
         onSubmit: (values) => {
             console.log(JSON.stringify(values, null, 2));
             axios.post('/api/v1/login', { username: 'admin', password: 'admin' }).then((response) => {
-                console.log(response.data); // => { token: ..., username: 'admin' }
+               // console.log(response.data); // => { token: ..., username: 'admin' }
+                const currentUser = response.data;
+                console.log('currentUser', currentUser);
+                dispatch(autorizedActions.login({...currentUser, id: 1}));
+                
               });
         },
     });
