@@ -9,14 +9,16 @@ const slice = createSlice({
     reducers: {
         login: (state, action) => {
             console.log(action);
-            autorizeAdapter.addOne(state, action.payload);
-            console.log(JSON.stringify(state));
+            // autorizeAdapter.addOne(state, action.payload);
+            // console.log(JSON.stringify(state));
+            localStorage.setItem('token', action.payload.token);
         },
             
-        logout: autorizeAdapter.removeOne,
+        logout: (state, action) => { localStorage.removeItem('token')},
+        //autorizeAdapter.removeOne,
     }
     });
 
 export const { actions } = slice;
 export default slice.reducer;
-export const selectors = autorizeAdapter.getSelectors((state) => state.user);
+// export const selectors = autorizeAdapter.getSelectors((state) => state.user); //

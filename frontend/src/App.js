@@ -1,8 +1,9 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import PageOne from './PageOne';
-import LoginPage from './LoginPage';
-import NotFoundPage from './NotFoundPage';
+import PageOne from './components/PageOne';
+import LoginPage from './components/LoginPage';
+import NotFoundPage from './components/NotFoundPage';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
@@ -10,7 +11,7 @@ function App() {
     <Routes>
       <Route path="*" element={<NotFoundPage />} />
       <Route path="/" element={<PageOne />} />
-      <Route path="/login" element={<LoginPage />} />
+      <Route path="/login" element={<LoginPage />} /> 
     </Routes>
   </BrowserRouter>
 
