@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import Header from './Header';
 
 
 const LoginPage = () => {
@@ -41,34 +42,38 @@ const LoginPage = () => {
         },
     });
     return (
-        < div class="d-flex flex-row bd-highlight mb-3 " >
-            <div class="p-2 bd-highlight">
-                <div class="row">
-                    <div class="col-md-8 mx-auto">
-                        <Form onSubmit={formik.handleSubmit}>
-                            <Form.Group className="mb-3" controlId="name">
-                                <Form.Label>Username</Form.Label>
-                                <Form.Control type="name" placeholder="Enter name" onChange={formik.handleChange}
-                                    value={formik.values.name} />
-                                <Form.Text className="text-muted">
-                                    We'll never share your email with anyone else.
-                                </Form.Text>
-                            </Form.Group>
+        <div className="">
+            <Header />
+            < div class="d-flex flex-row bd-highlight mb-3 " >
+                <div class="p-2 bd-highlight">
+                    <div class="row">
+                        <div class="col-md-8 mx-auto">
+                            <Form onSubmit={formik.handleSubmit}>
+                                <Form.Group className="mb-3" controlId="name">
+                                    <Form.Label>Username</Form.Label>
+                                    <Form.Control type="name" placeholder="Enter name" onChange={formik.handleChange}
+                                        value={formik.values.name} />
+                                    <Form.Text className="text-muted">
+                                        We'll never share your email with anyone else.
+                                    </Form.Text>
+                                </Form.Group>
 
-                            <Form.Group className="mb-3" controlId="password">
-                                <Form.Label>Password</Form.Label>
-                                <Form.Control type="password" placeholder="Password" onChange={formik.handleChange}
-                                    value={formik.values.password} />
-                            </Form.Group>
+                                <Form.Group className="mb-3" controlId="password">
+                                    <Form.Label>Password</Form.Label>
+                                    <Form.Control type="password" placeholder="Password" onChange={formik.handleChange}
+                                        value={formik.values.password} />
+                                </Form.Group>
 
-                            <Button variant="primary" type="submit">
-                                Submit
-                            </Button>
-                        </Form>
+                                <Button variant="primary" type="submit">
+                                    Submit
+                                </Button>
+                            </Form>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div >
+            </div >
+        </div>
+
     );
 }
 

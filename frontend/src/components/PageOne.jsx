@@ -10,8 +10,9 @@ import axios from 'axios';
 import Navbar from './Navbar.jsx';
 import { io } from 'socket.io-client';
 import Header from './Header.jsx';
+import ActualChat from './ActualCaht.jsx';
 
- const socket = io('/');  //    http://0.0.0.0:5001 '<https://api/v1/messages>'
+const socket = io('/');  //    http://0.0.0.0:5001 '<https://api/v1/messages>'
 
 const PageOne = () => {
     let userToken = localStorage.getItem('token');
@@ -57,34 +58,48 @@ const PageOne = () => {
 
 
     // console.log('channels', channels);
-   
+
     console.log(socket);
-      socket.on('newMessage', (payload) => {
-           console.log(payload); // => { body: "new message", channelId: 7, id: 8, username: "admin" }
-         });
+    socket.on('newMessage', (payload) => {
+        console.log(payload); // => { body: "new message", channelId: 7, id: 8, username: "admin" }
+    });
     const msg = { body: "new message", channelId: 1, };
-     socket.emit('newMessage', msg);
+    socket.emit('newMessage', msg);
 
 
 
     return ((
-        <div>
-            <Header/>
-            Всем привет!!!! Это юзер такой {user};
-            <Navbar />
-            {channels.map((channel) => {
-                console.log(channel.name)
-                return (
-                    <div key={channel.id}>
-                        <div>{channel.name}</div>
-                        {messages.map((msg) => {
-                            console.log(msg)
-                            return msg;
-                        })}
+        <div className='container min-vw-100 vh-100'>
+            <div className='row'>
+                <div className='col '>
+                    <Header />
+                    <div className='w-100 text-wrap'><p className="text-break">Всем привет!!!! Это юзер такой {user};</p></div>
+                    <div className='row'>
+                        <div className='col-3'>
+                            <Navbar />
+                        </div>
+                        <div className='col-9'>
+                            <ActualChat/>
+                            {channels.map((channel) => {
+                                console.log(channel.name)
+                                return (
+                                    <div key={channel.id}>
+                                        <div>{channel.name}</div>
+                                        {messages.map((msg) => {
+                                            console.log(msg)
+                                            return msg;
+                                        })}
+                                    </div>
+                                )
+                            })}
+                        </div>
                     </div>
-                )
-            })}
-            <button onClick={logout}>удалить юзера</button>
+
+
+                    <button onClick={logout}>удалить юзера</button>
+                </div>
+            </div>
+
         </div>
     ))
 }
