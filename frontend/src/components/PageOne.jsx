@@ -8,8 +8,10 @@ import { actions as channelsActions } from '../slices/channelsSlice.js';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import Navbar from './Navbar.jsx';
+import { io } from 'socket.io-client';
+import Header from './Header.jsx';
 
-
+ const socket = io('/');  //    http://0.0.0.0:5001 '<https://api/v1/messages>'
 
 const PageOne = () => {
     let userToken = localStorage.getItem('token');
@@ -37,7 +39,7 @@ const PageOne = () => {
                     Authorization: `Bearer ${user}`,
                 },
             }).then((response) => {
-                console.log('axios response channels',response.data); // =>[{ id: '1', name: 'general', removable: false }, ...]
+                console.log('axios response channels', response.data); // =>[{ id: '1', name: 'general', removable: false }, ...]
                 setCHannels(response.data);
                 dispatch(channelsActions.addChannels(response.data));
             });
@@ -55,11 +57,19 @@ const PageOne = () => {
 
 
     // console.log('channels', channels);
+   
+    console.log(socket);
+      socket.on('newMessage', (payload) => {
+           console.log(payload); // => { body: "new message", channelId: 7, id: 8, username: "admin" }
+         });
+    const msg = { body: "new message", channelId: 1, };
+     socket.emit('newMessage', msg);
 
 
 
     return ((
         <div>
+            <Header/>
             Всем привет!!!! Это юзер такой {user};
             <Navbar />
             {channels.map((channel) => {
