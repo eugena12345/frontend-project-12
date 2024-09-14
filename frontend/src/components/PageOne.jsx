@@ -2,7 +2,6 @@
 // import { selectors as userSelectors } from '../slices/auorizeSlice.js';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
-import { actions as autorizedActions } from '../slices/auorizeSlice.js';
 import { actions as channelsActions } from '../slices/channelsSlice.js';
 
 import { useDispatch } from 'react-redux';
@@ -19,10 +18,7 @@ const PageOne = () => {
     const [user, setUser] = useState(userToken);
     const [channels, setCHannels] = useState([]);
     const [messages, setMessages] = useState([]);
-    const logout = () => {
-        setUser(null);
-        dispatch(autorizedActions.logout())
-    };
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     // const user = useSelector((state) => {
@@ -65,7 +61,7 @@ const PageOne = () => {
         <div className='container min-vw-100 vh-100 g-0 '>
             <div className='row g-0 h-100'>
                 <div className='col'>
-                    <Header />
+                    <Header setUser={setUser}/>
                     <div className="container d-flex align-items-center w-100 vh-100">
                         <div className="row border border-success">
                             <div className="col">
@@ -77,7 +73,7 @@ const PageOne = () => {
                                         <ActualChat />
                                     </div>
                                 </div>
-                                <button onClick={logout}>удалить юзера</button>
+                               
                             </div>
                         </div>
                     </div>
