@@ -3,7 +3,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import { actions as channelsActions } from '../slices/channelsSlice.js';
-
+import {actions as currentChannelActions} from '../slices/actualChannelSlice.js';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import Navbar from './Navbar.jsx';
@@ -39,6 +39,9 @@ const PageOne = () => {
                 console.log('axios response channels', response.data); // =>[{ id: '1', name: 'general', removable: false }, ...]
                 setCHannels(response.data);
                 dispatch(channelsActions.addChannels(response.data));
+                // найти канал джеренрал и его задиспатчить
+                const currentChannel = { id: '1', name: 'general', removable: false };
+                dispatch(currentChannelActions.addCurrentChannel(currentChannel));
             });
             axios.get('/api/v1/messages', {
                 headers: {
