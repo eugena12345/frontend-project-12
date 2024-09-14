@@ -55,51 +55,34 @@ const PageOne = () => {
         }
 
     }, [user, navigate, dispatch]);
-
-
     // console.log('channels', channels);
-
-    console.log(socket);
+    // console.log(socket);
     socket.on('newMessage', (payload) => {
         console.log(payload); // => { body: "new message", channelId: 7, id: 8, username: "admin" }
     });
-    const msg = { body: "new message", channelId: 1, };
-    socket.emit('newMessage', msg);
-
-
 
     return ((
-        <div className='container min-vw-100 vh-100'>
-            <div className='row'>
-                <div className='col '>
+        <div className='container min-vw-100 vh-100 g-0 '>
+            <div className='row g-0 h-100'>
+                <div className='col'>
                     <Header />
-                    <div className='w-100 text-wrap'><p className="text-break">Всем привет!!!! Это юзер такой {user};</p></div>
-                    <div className='row'>
-                        <div className='col-3'>
-                            <Navbar />
-                        </div>
-                        <div className='col-9'>
-                            <ActualChat/>
-                            {channels.map((channel) => {
-                                console.log(channel.name)
-                                return (
-                                    <div key={channel.id}>
-                                        <div>{channel.name}</div>
-                                        {messages.map((msg) => {
-                                            console.log(msg)
-                                            return msg;
-                                        })}
+                    <div className="container d-flex align-items-center w-100 vh-100">
+                        <div className="row border border-success">
+                            <div className="col">
+                                <div className='row '>
+                                    <div className='col-3'>
+                                        <Navbar />
                                     </div>
-                                )
-                            })}
+                                    <div className='col-9'>
+                                        <ActualChat />
+                                    </div>
+                                </div>
+                                <button onClick={logout}>удалить юзера</button>
+                            </div>
                         </div>
                     </div>
-
-
-                    <button onClick={logout}>удалить юзера</button>
                 </div>
             </div>
-
         </div>
     ))
 }
