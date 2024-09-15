@@ -3,7 +3,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import { actions as channelsActions } from '../slices/channelsSlice.js';
-import {actions as currentChannelActions} from '../slices/actualChannelSlice.js';
+import { actions as currentChannelActions } from '../slices/actualChannelSlice.js';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import Navbar from './Navbar.jsx';
@@ -61,24 +61,27 @@ const PageOne = () => {
     });
 
     return ((
-        <div className='container min-vw-100 vh-100 g-0 '>
-            <div className='row g-0 h-100'>
+        <div className='container min-vw-100 vh-100'>
+            <div className='row h-100'>
                 <div className='col'>
-                    <Header setUser={setUser}/>
-                    <div className="container d-flex align-items-center w-100 vh-100">
-                        <div className="row border border-success">
-                            <div className="col">
-                                <div className='row '>
-                                    <div className='col-3'>
-                                        <Navbar />
-                                    </div>
-                                    <div className='col-9'>
-                                        <ActualChat />
-                                    </div>
+                    <div className="row">
+                        <Header setUser={setUser} />
+                    </div>
+                    <div className="row align-items-center my-4 h-75 px-5">
+                        {/*d-flex align-items-center w-100  vh-100 */}
+                        {/* <div className="row border border-success"> */}
+                        <div className="col align-self-center h-100 border border-primary rounded">
+                            <div className='row h-100'>
+                                <div className='col-3'>
+                                    <Navbar />
                                 </div>
-                               
+                                <div className='col-9 '>
+                                    <ActualChat />
+                                </div>
                             </div>
+
                         </div>
+                        {/* </div> */}
                     </div>
                 </div>
             </div>
