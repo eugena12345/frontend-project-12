@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import { actions as channelsActions } from '../slices/channelsSlice.js';
 import { actions as currentChannelActions } from '../slices/actualChannelSlice.js';
+import { actions as messagesActions } from '../slices/messageSlice.js';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import Navbar from './Navbar.jsx';
@@ -49,7 +50,8 @@ const PageOne = () => {
                 },
             }).then((response) => {
                 console.log('axios response messages', response.data); // =>[{ id: '1', body: 'text message', channelId: '1', username: 'admin }, ...]
-                setMessages(response.data)
+                setMessages(response.data);
+                dispatch(messagesActions.addMessages(response.data));
             });
         }
 
