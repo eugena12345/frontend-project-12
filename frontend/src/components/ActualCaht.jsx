@@ -35,7 +35,7 @@ const ActualChat = () => {
                         </div>
                     </div>
                     <div className="mt-auto px-5 py-3">
-                        <AddMessage />
+                        <AddMessage currentChannelId={currentChannel.id}/>
                     </div>
                 </>
             }

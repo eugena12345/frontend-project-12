@@ -64,11 +64,11 @@ const PageOne = () => {
     });
 
     return (
-        <div className="container bg-primary vh-100 mw-100 d-flex flex-column">
-            <div className="row bg-secondary">
+        <div className="container  vh-100 mw-100 d-flex flex-column">
+            <div className="row ">
                 <Header setUser={setUser} />
             </div>
-            <div className="row bg-secondary m-3 mh-100 h-100">
+            <div className="row  m-3 mh-100 h-100">
                 <div className="container overflow-hidden rounded shadow flex-row">
                     <div className="row flex-md-row">
                         <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">

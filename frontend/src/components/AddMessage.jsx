@@ -2,7 +2,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import axios from "axios";
 
-function AddMessage() {
+function AddMessage({currentChannelId}) {
     let userToken = localStorage.getItem('token');
 
     const sendMessage = (e) => {
@@ -14,7 +14,7 @@ function AddMessage() {
         // console.log(messageText);
         const newMessage = {
             body: messageText,
-            channelId: '1',
+            channelId: currentChannelId,
             username: 'admin',
         }
         // console.log(newMessage);

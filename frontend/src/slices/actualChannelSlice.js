@@ -8,7 +8,7 @@ const currentChannelSlice = createSlice({
     initialState,
     reducers: {
         addCurrentChannel: currentChannelAdapter.addOne,
-        deleteCurrentChannel: currentChannelAdapter.removeOne,
+        deleteCurrentChannel: currentChannelAdapter.removeAll,
     },
 });
 
