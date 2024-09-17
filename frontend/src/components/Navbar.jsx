@@ -18,19 +18,21 @@ function Navbar() {
         const [newCurrentChannel] = channels.filter((channel) => channel.id === e.target.id);
          dispatch(currentChannelActions.deleteCurrentChannel());
          dispatch(currentChannelActions.addCurrentChannel(newCurrentChannel))
-       // console.log(newCurrentChannel);
-
     }
+
 
     return (
         <Nav defaultActiveKey="/home" className="flex-column border border-primary g-0">
-            {channels.map((channel) => <Nav.Link key={channel.id}
+            {channels.map((channel) => {
+                const activeClass = channel.id === currentChannel.id ?
+                'g-0 btn btn-primary text-white' : 'border border-primary g-0';
+                return (<Nav.Link key={channel.id}
                 id={channel.id}
                 eventKey="link-1"
-                className=" border border-primary g-0"
+                className={activeClass}
                 onClick={selectChannel}>
                 {channel.name}
-            </Nav.Link>)}
+            </Nav.Link>)})}
         </Nav>
     );
 }
