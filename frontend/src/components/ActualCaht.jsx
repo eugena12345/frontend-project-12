@@ -11,35 +11,28 @@ const ActualChat = () => {
     const messages = useSelector(messagesSelectors.selectAll);
     console.log('messages!!!!!!!!!!!!!! /n', messages);
 
-
-
     return (
-
-        <div className='container g-0 h-100 '>
-            <div className='row h-100'>
-                {currentChannel &&
-                    <div className='col h-100 d-block'>
-                        <div className=" border border-primary rounded">
-                            <p>{currentChannel.name}</p>
-                            <p>unread messages conter</p>
-                        </div>
-                        <div className=" border border-primary overflow-auto">
-                            <div className="overflow-auto">
-                                {messages.map((message) => {
-                                    return (
-                                        <p>{message.body}</p>
-                                    )
-                                })}
-                            </div>
-
-                        </div>
-                        <div className=" border border-primary">
-                            <AddMessage />
+        <div className='d-flex flex-column h-100'>
+            {currentChannel &&
+                <>
+                    <div className="bg-light mb-4 p-3 shadow-sm small">
+                        <p className="m-0">#{currentChannel.name}</p>
+                        <span>{messages.length} сообщений</span>
+                    </div>
+                    <div className='chat-messages'>
+                        <div className="overflow-auto px-5">
+                            {messages.map((message) => {
+                                return (
+                                    <p><b>{message.username}:</b> {message.body}</p>
+                                )
+                            })}
                         </div>
                     </div>
-                }
-
-            </div>
+                    <div className="mt-auto px-5 py-3">
+                        <AddMessage />
+                    </div>
+                </>
+            }
         </div>
     )
 };

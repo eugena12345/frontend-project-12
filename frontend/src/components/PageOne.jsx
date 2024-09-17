@@ -60,35 +60,28 @@ const PageOne = () => {
     // console.log(socket);
     socket.on('newMessage', (payload) => {
         console.log(payload); // => { body: "new message", channelId: 7, id: 8, username: "admin" }
+        dispatch(messagesActions.addMessage(payload));
     });
 
-    return ((
-        <div className='container min-vw-100 vh-100'>
-            <div className='row h-100'>
-                <div className='col'>
-                    <div className="row">
-                        <Header setUser={setUser} />
-                    </div>
-                    <div className="row align-items-center my-4 h-75 px-5">
-                        {/*d-flex align-items-center w-100  vh-100 */}
-                        {/* <div className="row border border-success"> */}
-                        <div className="col align-self-center h-100 border border-primary rounded">
-                            <div className='row h-100'>
-                                <div className='col-3'>
-                                    <Navbar />
-                                </div>
-                                <div className='col-9 '>
-                                    <ActualChat />
-                                </div>
-                            </div>
-
+    return (
+        <div className="container bg-primary vh-100 mw-100 d-flex flex-column">
+            <div className="row bg-secondary">
+                <Header setUser={setUser} />
+            </div>
+            <div className="row bg-secondary m-3 mh-100 h-100">
+                <div className="container overflow-hidden rounded shadow flex-row">
+                    <div className="row flex-md-row">
+                        <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
+                            <Navbar />
                         </div>
-                        {/* </div> */}
+                        <div className="col p-0 h-100">
+                            <ActualChat />
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    ))
+    )
 }
 
 export default PageOne;
