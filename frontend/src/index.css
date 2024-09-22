@@ -16,3 +16,7 @@ code {
   overflow: auto;
   height: 55vh;
 }
+
+button#dropdown-custom-2 {
+flex: none;
+}

@@ -29,7 +29,7 @@ const ActualChat = () => {
                         <div className="overflow-auto px-5">
                             {currentMessages.map((message) => {
                                 return (
-                                    <p><b>{message.username}:</b> {message.body}</p>
+                                    <p key={message.id}><b>{message.username}:</b> {message.body}</p>
                                 )
                             })}
                         </div>
