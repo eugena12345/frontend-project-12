@@ -15,6 +15,7 @@ const channelsSlice = createSlice({
             // console.log(JSON.stringify(state));
            // localStorage.setItem('token', action.payload.token);
         },
+        addChannel: channelsAdapter.addOne,
             
         //logout: (state, action) => { localStorage.removeItem('token')},
         //autorizeAdapter.removeOne,
