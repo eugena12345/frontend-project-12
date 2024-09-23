@@ -31,7 +31,19 @@ function Navbar() {
         dispatch(currentChannelActions.deleteCurrentChannel());
         dispatch(currentChannelActions.addCurrentChannel(newCurrentChannel))
     }
+const removeChannel = (channelId) => {
+    console.log(channelId);
+    axios.delete(`/api/v1/channels/${channelId}`, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      }).then((response) => {
+        console.log(response.data); // => { id: '3' }
+        dispatch(channelsSliceActions.removeChannel(channelId));
+        // также удалить все сообщения с этого канала и перебросить на general, если это актуальный
+      });
 
+}
     const formik = useFormik({
         initialValues: {
             channelName: '',
@@ -110,8 +122,8 @@ function Navbar() {
                                 <>
                                     <Dropdown.Toggle split variant="btn" id="dropdown-custom-2" />
                                     <Dropdown.Menu className="super-colors">
-                                        <Dropdown.Item eventKey="1">Переименовать</Dropdown.Item>
-                                        <Dropdown.Item eventKey="2">Удалить</Dropdown.Item>
+                                        <Dropdown.Item eventKey="1" >Переименовать</Dropdown.Item>
+                                        <Dropdown.Item eventKey="2" onClick={()=>removeChannel(channel.id)}>Удалить</Dropdown.Item>
                                     </Dropdown.Menu>
                                 </>
                                 : null
