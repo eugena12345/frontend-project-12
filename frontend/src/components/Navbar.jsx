@@ -14,7 +14,6 @@ import { useDispatch } from 'react-redux';
 import { actions as currentChannelActions } from '../slices/actualChannelSlice.js';
 import { actions as channelsSliceActions } from './../slices/channelsSlice.js';
 
-//  добавить валидацию названия канала
 function Navbar() {
     let userToken = localStorage.getItem('token');
     const [show, setShow] = useState(false);
@@ -46,23 +45,19 @@ function Navbar() {
         }),
         onSubmit: (values) => {
             const newChannel = { name: values.channelName };
-            //  values.channelName = '';
             console.log(newChannel);
             axios.post('/api/v1/channels', newChannel, {
                 headers: {
                     Authorization: `Bearer ${userToken}`,
                 },
             }).then((response) => {
-
                 console.log('отчет по созданию нового канала', response.data); // => { id: '3', name: 'new channel', removable: true }
                 handleClose();
                 dispatch(channelsSliceActions.addChannel(response.data));
                 values.channelName = '';
             });
         },
-
     });
-
     return (
         <div defaultActiveKey="/home" className="flex-column g-0">
             <div className="mb-4 p-3 d-flex justify-content-between align-items-center">
