@@ -14,7 +14,7 @@ import { useDispatch } from 'react-redux';
 import { actions as currentChannelActions } from '../slices/actualChannelSlice.js';
 import { actions as channelsSliceActions } from './../slices/channelsSlice.js';
 
-
+//  добавить валидацию названия канала
 function Navbar() {
     let userToken = localStorage.getItem('token');
     const [show, setShow] = useState(false);
@@ -25,37 +25,42 @@ function Navbar() {
     const currentChannel = useSelector(currentChannelSelectors.selectAll)[0];
     console.log('currentChannel', currentChannel);
     console.log('channels из навбара', channels);
+    const channelsNameColl = channels.map((channel) => channel.name);
     const selectChannel = (e) => {
         e.preventDefault();
         const [newCurrentChannel] = channels.filter((channel) => channel.id === e.target.id);
         dispatch(currentChannelActions.deleteCurrentChannel());
         dispatch(currentChannelActions.addCurrentChannel(newCurrentChannel))
     }
-    let schema = yup.object().shape({
-        channelName: yup.string().required().min(3).max(20),
-    });
+
     const formik = useFormik({
         initialValues: {
             channelName: '',
         },
+        validationSchema: yup.object({
+            channelName: yup.string()
+                .required()
+                .min(3, 'Название должно быть больше 3 занокв')
+                .max(20, 'Название должно быть меньше 20 занокв')
+                .notOneOf(channelsNameColl, 'канал с таким названием уже существует')
+        }),
         onSubmit: (values) => {
-            console.log(JSON.stringify(values, null, 2));
-            schema.isValid({
-                channelName: values.channelName,
-            })
-                .then(function () {
-                    const newChannel = { name: values.channelName };
-                    axios.post('/api/v1/channels', newChannel, {
-                        headers: {
-                            Authorization: `Bearer ${userToken}`,
-                        },
-                    }).then((response) => {
-                        console.log('отчет по созданию нового канала', response.data); // => { id: '3', name: 'new channel', removable: true }
-                        handleClose();
-                        dispatch(channelsSliceActions.addChannel(response.data))
-                    });
-                });
+            const newChannel = { name: values.channelName };
+            //  values.channelName = '';
+            console.log(newChannel);
+            axios.post('/api/v1/channels', newChannel, {
+                headers: {
+                    Authorization: `Bearer ${userToken}`,
+                },
+            }).then((response) => {
+
+                console.log('отчет по созданию нового канала', response.data); // => { id: '3', name: 'new channel', removable: true }
+                handleClose();
+                dispatch(channelsSliceActions.addChannel(response.data));
+                values.channelName = '';
+            });
         },
+
     });
 
     return (
@@ -78,12 +83,15 @@ function Navbar() {
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                             <Form.Label>Название канала</Form.Label>
                             <Form.Control
-                                //id="channelName"
                                 name="channelName"
                                 type="text"
-                                onChange={formik.handleChange}
                                 value={formik.values.channelName}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
                             />
+                            {formik.submitCount > 0 && formik.errors.channelName && (
+                                <p className='text-danger small'>{formik.errors.channelName}</p>
+                            )}
                         </Form.Group>
                         <div className='d-flex justify-content-end'>
                             <Button variant="secondary m-1" onClick={handleClose}>
