@@ -10,6 +10,7 @@ const messagesSlice = createSlice({
         addMessage: messagesAdapter.addOne,
         addMessages: messagesAdapter.addMany,
         removeMessage: messagesAdapter.removeOne,
+        removeMessages: messagesAdapter.removeMany,
     },
 });
 

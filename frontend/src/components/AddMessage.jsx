@@ -30,7 +30,8 @@ function AddMessage({currentChannelId}) {
     }
 
     return (
-        <Form onSubmit={sendMessage} controlId="text">
+        <Form onSubmit={sendMessage} >
+            {/* controlId="text" */}
             <div className='d-flex flex-row'>
                 <input className='form-control me-2' type="text" name='message' />
                 <Button variant="primary" type="submit" >
