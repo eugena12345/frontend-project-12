@@ -7,6 +7,8 @@ import { useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Header from './Header';
+import * as yup from 'yup';
+
     
 const RegistrationPage = () => {
     const dispatch = useDispatch();
@@ -17,6 +19,18 @@ const RegistrationPage = () => {
             password: '',
             repeatPassword: '',
         },
+        validationSchema: yup.object({
+            name: yup.string()
+                .required('Обязательное поле')
+                .min(3, 'Имя должно быть больше 3 занокв')
+                .max(20, 'Имя должно быть меньше 20 занокв'),
+            password: yup.string()
+            .required('Обязательное поле')
+            .min(6, 'Пароль должен быть больше 6 символов'),
+            repeatPassword: yup.string()
+            .required('Обязательное поле')
+            .oneOf([yup.ref('password'), null], 'Пароль и подтверждение должны совпадать')
+        }),
         onSubmit: (values) => {
             console.log(JSON.stringify(values, null, 2));
             const user = { username: values.name, password: values.password }
@@ -55,6 +69,7 @@ const RegistrationPage = () => {
                                     <Form.Label>Username</Form.Label>
                                     <Form.Control type="name" placeholder="Enter name" onChange={formik.handleChange}
                                         value={formik.values.name} />
+                                        <p className='text-danger small'>{formik.errors.name}</p>
                                     <Form.Text className="text-muted">
                                         We'll never share your email with anyone else.
                                     </Form.Text>
@@ -64,11 +79,13 @@ const RegistrationPage = () => {
                                     <Form.Label>Password</Form.Label>
                                     <Form.Control type="password" placeholder="Password" onChange={formik.handleChange}
                                         value={formik.values.password} />
+                                        <p className='text-danger small'>{formik.errors.password}</p>
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="repeatPassword">
                                     <Form.Label>repeat password</Form.Label>
                                     <Form.Control type="password" placeholder="repeat Password" onChange={formik.handleChange}
                                         value={formik.values.repeatPassword} />
+                                        <p className='text-danger small'>{formik.errors.repeatPassword}</p>
                                 </Form.Group>
 
                                 <Button variant="primary" type="submit">

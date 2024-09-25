@@ -12,6 +12,7 @@ const slice = createSlice({
             // autorizeAdapter.addOne(state, action.payload);
             // console.log(JSON.stringify(state));
             localStorage.setItem('token', action.payload.token);
+            localStorage.setItem('username', action.payload.username);
         },
             
         logout: (state, action) => { localStorage.removeItem('token')},

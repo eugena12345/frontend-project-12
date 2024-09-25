@@ -4,6 +4,7 @@ import axios from "axios";
 
 function AddMessage({currentChannelId}) {
     let userToken = localStorage.getItem('token');
+    let userName = localStorage.getItem('username');
 
     const sendMessage = (e) => {
         e.preventDefault();
@@ -15,7 +16,7 @@ function AddMessage({currentChannelId}) {
         const newMessage = {
             body: messageText,
             channelId: currentChannelId,
-            username: 'admin',
+            username: userName,
         }
         // console.log(newMessage);
         form.reset();
