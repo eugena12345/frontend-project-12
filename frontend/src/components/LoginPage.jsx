@@ -48,10 +48,10 @@ const LoginPage = () => {
     return (
         <div className="">
             <Header />
-            < div class="d-flex flex-row bd-highlight mb-3 " >
-                <div class="p-2 bd-highlight">
-                    <div class="row">
-                        <div class="col-md-8 mx-auto">
+            < div className="mb-3 " >
+                <div className="p-2 ">
+                    <div className="row">
+                        <div className="col-md-8 mx-auto">
                             <Form onSubmit={formik.handleSubmit}>
                                 <Form.Group className="mb-3" controlId="name">
                                     <Form.Label>Username</Form.Label>
@@ -73,7 +73,7 @@ const LoginPage = () => {
                                 </Button>
                             </Form>
                             <div className="registration" onClick={goToRegistration}>
-                                регистрация
+                                Нет аккаунта? <span className='text-primary'>Регистрация здесь</span>
                             </div>
                         </div>
                     </div>

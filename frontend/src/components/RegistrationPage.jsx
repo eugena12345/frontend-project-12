@@ -45,23 +45,14 @@ const RegistrationPage = () => {
               }).catch((error) => {
                 console.log(error);
             });
-              
-            // axios.post('/api/v1/login', user).then((response) => {
-            //     // console.log(response.data); // => { token: ..., username: 'admin' }
-            //     const currentUser = response.data;
-            //     console.log('currentUser', currentUser);
-            //     dispatch(autorizedActions.login({ ...currentUser, id: 1 }));
-            //     navigate('/', { replace: false });
-            // })
-                
         },
     });
 
     return (
         <div className="">
             <Header />
-            < div className="d-flex flex-row bd-highlight mb-3 " >
-                <div className="p-2 bd-highlight">
+            < div className="mb-3 " >
+                <div className="p-2">
                     <div className="row">
                         <div className="col-md-8 mx-auto">
                             <Form onSubmit={formik.handleSubmit}>
