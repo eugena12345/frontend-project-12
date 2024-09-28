@@ -8,11 +8,14 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Header from './Header';
 import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
+
 
 
 const RegistrationPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { t, i18n } = useTranslation();
     const [visibilityWarning, setVisibilityWarning] = useState('invisible');
     const warningStyle = `bg-danger text-light p-3 m-1 text-center ${visibilityWarning}`;
 
@@ -24,15 +27,15 @@ const RegistrationPage = () => {
         },
         validationSchema: yup.object({
             name: yup.string()
-                .required('Обязательное поле')
-                .min(3, 'Имя должно быть больше 3 занокв')
-                .max(20, 'Имя должно быть меньше 20 занокв'),
+                .required(t('validationError.required'))
+                .min(3, t('validationError.minNameLength'))
+                .max(20, t('validationError.maxNameLength')),
             password: yup.string()
-                .required('Обязательное поле')
-                .min(6, 'Пароль должен быть больше 6 символов'),
+                .required(t('validationError.required'))
+                .min(6, t('validationError.minPswLength')), 
             repeatPassword: yup.string()
-                .required('Обязательное поле')
-                .oneOf([yup.ref('password'), null], 'Пароль и подтверждение должны совпадать')
+                .required(t('validationError.required'))
+                .oneOf([yup.ref('password'), null], t('validationError.matchPsw'))
         }),
         onSubmit: (values) => {
             console.log(JSON.stringify(values, null, 2));
@@ -40,7 +43,7 @@ const RegistrationPage = () => {
 
             axios.post('/api/v1/signup', user)
                 .then((response) => {
-                    console.log(response.data); // => { token: ..., username: 'newuser' }
+                    console.log(response.data);
                     const currentUser = response.data;
                     console.log('currentUser', currentUser);
                     dispatch(autorizedActions.login({ ...currentUser, id: 1 }));
@@ -63,31 +66,28 @@ const RegistrationPage = () => {
                         <div className="col-md-8 mx-auto">
                             <Form onSubmit={formik.handleSubmit}>
                                 <Form.Group className="mb-3" controlId="name">
-                                    <Form.Label>Username</Form.Label>
-                                    <Form.Control type="name" placeholder="Enter name" onChange={formik.handleChange}
+                                    <Form.Label>{t('enterName')}</Form.Label>
+                                    <Form.Control type="name" placeholder={t('enterName')} onChange={formik.handleChange}
                                         value={formik.values.name} />
                                     <p className='text-danger small'>{formik.errors.name}</p>
-                                    <Form.Text className="text-muted">
-                                        We'll never share your email with anyone else.
-                                    </Form.Text>
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="password">
-                                    <Form.Label>Password</Form.Label>
-                                    <Form.Control type="password" placeholder="Password" onChange={formik.handleChange}
+                                    <Form.Label>{t('enterPassword')}</Form.Label>
+                                    <Form.Control type="password" placeholder={t('enterPassword')} onChange={formik.handleChange}
                                         value={formik.values.password} />
                                     <p className='text-danger small'>{formik.errors.password}</p>
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="repeatPassword">
-                                    <Form.Label>repeat password</Form.Label>
-                                    <Form.Control type="password" placeholder="repeat Password" onChange={formik.handleChange}
+                                    <Form.Label>{t('repeatPassword')}</Form.Label>
+                                    <Form.Control type="password" placeholder={t('repeatPassword')} onChange={formik.handleChange}
                                         value={formik.values.repeatPassword} />
                                     <p className='text-danger small'>{formik.errors.repeatPassword}</p>
                                 </Form.Group>
                                 <Button variant="primary" type="submit">
-                                    Submit
+                                    {t('register')}
                                 </Button>
-                                <div className={warningStyle}>Пользователь с таким именем уже существует</div>
+                                <div className={warningStyle}>{t('serverError.userExsist')}</div>
                             </Form>
 
                         </div>

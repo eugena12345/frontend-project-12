@@ -1,10 +1,14 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import axios from "axios";
+import { useTranslation } from 'react-i18next';
+
 
 function AddMessage({currentChannelId}) {
     let userToken = localStorage.getItem('token');
     let userName = localStorage.getItem('username');
+    const { t, i18n } = useTranslation();
+
 
     const sendMessage = (e) => {
         e.preventDefault();
@@ -36,7 +40,7 @@ function AddMessage({currentChannelId}) {
             <div className='d-flex flex-row'>
                 <input className='form-control me-2' type="text" name='message' />
                 <Button variant="primary" type="submit" >
-                    Send
+                    {t('send')}
                 </Button>
             </div>
         </Form>

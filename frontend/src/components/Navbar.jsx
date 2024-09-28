@@ -14,10 +14,13 @@ import { actions as currentChannelActions } from '../slices/actualChannelSlice.j
 import { actions as channelsSliceActions } from './../slices/channelsSlice.js';
 import { actions as messagesSliceActions } from './../slices/messageSlice.js';
 import ChannelNameModal from './ChannelNameModal.jsx';
+import { useTranslation } from 'react-i18next';
+
 
 
 function Navbar() {
     let userToken = localStorage.getItem('token');
+    const { t, i18n } = useTranslation();
     const [show, setShow] = useState(false);
     const [modalContent, setModalContent] = useState({});
     const handleClose = () => setShow(false);
@@ -104,7 +107,7 @@ function Navbar() {
         <div className="flex-column g-0">
             {/* defaultActiveKey="/home" */}
             <div className="mb-4 p-3 d-flex justify-content-between align-items-center">
-                <p className="m-2">Каналы</p>
+                <p className="m-2">{t('channels')}</p>
                 <div onClick={createChannel}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-plus-square" viewBox="0 0 16 16">
                         <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />

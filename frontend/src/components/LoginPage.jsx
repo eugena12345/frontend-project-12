@@ -6,13 +6,16 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Header from './Header';
+import { useTranslation } from 'react-i18next';
+
 
 
 const LoginPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    const { t, i18n } = useTranslation();
     let user = localStorage.getItem('token');
     useEffect(() => {
         if (user) {
@@ -23,12 +26,12 @@ const LoginPage = () => {
 
     const formik = useFormik({
         initialValues: {
-            name: '',
-            password: '',
+            floatingInput: '',
+            floatingPassword: '',
         },
         onSubmit: (values) => {
             console.log(JSON.stringify(values, null, 2));
-            const user = { username: values.name, password: values.password }
+            const user = { username: values.floatingInput, password: values.floatingPassword }
             axios.post('/api/v1/login', user).then((response) => {
                 // console.log(response.data); // => { token: ..., username: 'admin' }
                 const currentUser = response.data;
@@ -53,27 +56,36 @@ const LoginPage = () => {
                     <div className="row">
                         <div className="col-md-8 mx-auto">
                             <Form onSubmit={formik.handleSubmit}>
+
                                 <Form.Group className="mb-3" controlId="name">
-                                    <Form.Label>Username</Form.Label>
-                                    <Form.Control type="name" placeholder="Enter name" onChange={formik.handleChange}
-                                        value={formik.values.name} />
-                                    <Form.Text className="text-muted">
-                                        We'll never share your email with anyone else.
-                                    </Form.Text>
+                                    <FloatingLabel
+                                        controlId="floatingInput"
+                                        label={t('enterName')}
+                                        className="mb-3"
+                                    >
+
+                                        <Form.Control type="text" placeholder="Enter name" onChange={formik.handleChange}
+                                            value={formik.values.floatingInput} />
+                                    </FloatingLabel>
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="password">
-                                    <Form.Label>Password</Form.Label>
-                                    <Form.Control type="password" placeholder="Password" onChange={formik.handleChange}
-                                        value={formik.values.password} />
+                                    <FloatingLabel
+                                        controlId="floatingPassword"
+                                        label={t('enterPassword')}
+                                        className="mb-3"
+                                    >
+                                        <Form.Control type="password" placeholder="Password" onChange={formik.handleChange}
+                                            value={formik.values.floatingPassword} />
+                                    </FloatingLabel>
                                 </Form.Group>
 
                                 <Button variant="primary" type="submit">
-                                    Submit
+                                    {t('logIn')}
                                 </Button>
                             </Form>
                             <div className="registration" onClick={goToRegistration}>
-                                Нет аккаунта? <span className='text-primary'>Регистрация здесь</span>
+                                {t('noAccount')} <a href='#' className='text-primary'>{t('registrationHere')}</a>
                             </div>
                         </div>
                     </div>
