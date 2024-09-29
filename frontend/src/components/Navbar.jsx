@@ -65,8 +65,8 @@ function Navbar() {
     }
 
     const changeChannelName = (newName, channelId) => {
-        const censoredChannelName = filter.clean(newName);
-        axios.patch(`/api/v1/channels/${channelId}`, censoredChannelName, {
+        const censoredChannelName = filter.clean(newName.name);
+        axios.patch(`/api/v1/channels/${channelId}`, {name:censoredChannelName}, {
             headers: {
                 Authorization: `Bearer ${userToken}`,
             },
