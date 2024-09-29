@@ -13,6 +13,8 @@ export default {
     register: 'Зарегистрироваться',
     noAccount: 'Нет аккаунта?',
     registrationHere: 'Регистрация здесь',
+    removeChannel: 'Удалить канал',
+    sure: 'Уверены?',
     validationError: {
       required: 'Обязательное поле',
       minNameLength: 'Имя должно быть больше 3 знаков',
@@ -27,6 +29,10 @@ export default {
       createChannel: 'Канал создан',
       renameChannel: 'Канал переименован',
       removeChannel: 'Канал удален',
-    }
+    },
+    button: {
+      cancel: 'Отмена',
+      delete: 'Удалить',
+    },
   },
 };

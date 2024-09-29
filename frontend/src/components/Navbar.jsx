@@ -12,6 +12,7 @@ import { actions as currentChannelActions } from '../slices/actualChannelSlice.j
 import { actions as channelsSliceActions } from './../slices/channelsSlice.js';
 import { actions as messagesSliceActions } from './../slices/messageSlice.js';
 import ChannelNameModal from './ChannelNameModal.jsx';
+import ConfirmationModal from './ConfirmationModal.jsx';
 import { useTranslation } from 'react-i18next';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -21,8 +22,10 @@ function Navbar() {
     let userToken = localStorage.getItem('token');
     const { t, i18n } = useTranslation();
     const [show, setShow] = useState(false);
+    const [showConf, setShowConf] = useState(false);
     const [modalContent, setModalContent] = useState({});
     const handleClose = () => setShow(false);
+    const handleCloseConf = () => setShowConf(false);
     const handleShow = () => setShow(true);
     const dispatch = useDispatch();
     const channels = useSelector(channelsSelectors.selectAll);
@@ -84,6 +87,15 @@ function Navbar() {
         handleShow();
     }
 
+    const deleteChannel = (channelId) => {
+        setModalContent({
+            //text: 'Создание нового канала',
+            modalCallback: removeChannel,
+            id: channelId,
+        });
+        setShowConf(channelId);
+    }
+
     const removeChannel = (channelId) => {
         //console.log(channelId);
         axios.delete(`/api/v1/channels/${channelId}`, {
@@ -121,6 +133,11 @@ function Navbar() {
                 channelsNameColl={channelsNameColl}
                 modalContent={modalContent}
             />
+            <ConfirmationModal 
+            show={showConf} 
+            handleClose={handleCloseConf}
+            modalContent={modalContent}
+            />
 
             <div>
                 {channels.map(
@@ -135,7 +152,7 @@ function Navbar() {
                                     <Dropdown.Menu className="super-colors">
                                         <Dropdown.Item eventKey="1" onClick={() => renameChannel(channel.id)}>Переименовать</Dropdown.Item>
 
-                                        <Dropdown.Item eventKey="2" onClick={() => removeChannel(channel.id)}>Удалить</Dropdown.Item>
+                                        <Dropdown.Item eventKey="2" onClick={() => deleteChannel(channel.id)}>Удалить</Dropdown.Item>
 
                                     </Dropdown.Menu>
                                 </>
