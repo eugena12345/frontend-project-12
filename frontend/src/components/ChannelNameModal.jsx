@@ -6,7 +6,8 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 
 
-const ChannelNameModal = ({show, handleClose, channelsNameColl, modalContent}) => {
+
+const ChannelNameModal = ({ show, handleClose, channelsNameColl, modalContent }) => {
     console.log(modalContent);
     const formik = useFormik({
         initialValues: {
@@ -30,39 +31,39 @@ const ChannelNameModal = ({show, handleClose, channelsNameColl, modalContent}) =
         },
     });
 
-return (
-    <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>{modalContent.text}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form onSubmit={formik.handleSubmit}>
-                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        
-                            <Form.Label>Название канала</Form.Label>
-                            <Form.Control
-                                name="channelName"
-                                type="text"
-                                value={formik.values.channelName}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                            />
-                            {formik.submitCount > 0 && formik.errors.channelName && (
-                                <p className='text-danger small'>{formik.errors.channelName}</p>
-                            )}
-                        </Form.Group>
-                        <div className='d-flex justify-content-end'>
-                            <Button variant="secondary m-1" onClick={handleClose}>
-                                Отмена
-                            </Button>
-                            <Button variant="primary" type='submit'>
-                                Создать
-                            </Button>
-                        </div>
-                    </Form>
-                </Modal.Body>
-            </Modal>
-)
+    return (
+        <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+                <Modal.Title>{modalContent.text}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <Form onSubmit={formik.handleSubmit}>
+                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+
+                        <Form.Label>Название канала</Form.Label>
+                        <Form.Control
+                            name="channelName"
+                            type="text"
+                            value={formik.values.channelName}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                        />
+                        {formik.submitCount > 0 && formik.errors.channelName && (
+                            <p className='text-danger small'>{formik.errors.channelName}</p>
+                        )}
+                    </Form.Group>
+                    <div className='d-flex justify-content-end'>
+                        <Button variant="secondary m-1" onClick={handleClose}>
+                            Отмена
+                        </Button>
+                        <Button variant="primary" type='submit'>
+                            Создать
+                        </Button>
+                    </div>
+                </Form>
+            </Modal.Body>
+        </Modal>
+    )
 };
 
 export default ChannelNameModal;

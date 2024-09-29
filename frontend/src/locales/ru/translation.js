@@ -23,5 +23,10 @@ export default {
     serverError: {
       userExsist: 'Пользователь с таким именем уже существует',
     },
+    notify: {
+      createChannel: 'Канал создан',
+      renameChannel: 'Канал переименован',
+      removeChannel: 'Канал удален',
+    }
   },
 };

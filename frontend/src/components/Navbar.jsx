@@ -2,19 +2,19 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { useState } from 'react';
-
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { selectors as channelsSelectors } from './../slices/channelsSlice.js'; // 
 import { selectors as currentChannelSelectors } from './../slices/actualChannelSlice.js';
 import { selectors as messagesSelectors } from './../slices/messageSlice.js'; // 
-
 import { useDispatch } from 'react-redux';
 import { actions as currentChannelActions } from '../slices/actualChannelSlice.js';
 import { actions as channelsSliceActions } from './../slices/channelsSlice.js';
 import { actions as messagesSliceActions } from './../slices/messageSlice.js';
 import ChannelNameModal from './ChannelNameModal.jsx';
 import { useTranslation } from 'react-i18next';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -30,8 +30,6 @@ function Navbar() {
     const currentChannel = useSelector(currentChannelSelectors.selectAll)[0];
     const messages = useSelector(messagesSelectors.selectAll);
     console.log('messages', messages);
-    //console.log('currentChannel', currentChannel);
-    //console.log('channels из навбара', channels);
     const channelsNameColl = channels.map((channel) => channel.name);
     const selectChannel = (e) => {
         e.preventDefault();
@@ -39,6 +37,7 @@ function Navbar() {
         dispatch(currentChannelActions.deleteCurrentChannel());
         dispatch(currentChannelActions.addCurrentChannel(newCurrentChannel))
     }
+    const notify = (notifyMessage) => toast(t(notifyMessage));
 
     const addNewChannel = (newChannel) => {
         axios.post('/api/v1/channels', newChannel, {
@@ -49,7 +48,7 @@ function Navbar() {
             console.log('отчет по созданию нового канала', response.data); // => { id: '3', name: 'new channel', removable: true }
             handleClose();
             dispatch(channelsSliceActions.addChannel(response.data));
-
+            notify('notify.createChannel');
         });
     }
     const createChannel = () => {
@@ -68,7 +67,8 @@ function Navbar() {
             },
         }).then((response) => {
             console.log(response.data); // => { id: '3', name: 'new name channel', removable: true }
-            dispatch(channelsSliceActions.updateChannel({ id: response.data.id, changes: {name: response.data.name} }));
+            dispatch(channelsSliceActions.updateChannel({ id: response.data.id, changes: { name: response.data.name } }));
+            notify('notify.renameChannel');
         });
 
     };
@@ -81,8 +81,6 @@ function Navbar() {
         });
         handleShow();
     }
-
-
 
     const removeChannel = (channelId) => {
         //console.log(channelId);
@@ -99,7 +97,7 @@ function Navbar() {
             dispatch(currentChannelActions.deleteCurrentChannel());
             const defaultChannel = { id: '1', name: 'general', removable: false };
             dispatch(currentChannelActions.addCurrentChannel(defaultChannel));
-            // также удалить все сообщения с этого канала и перебросить на general, если это актуальный
+            notify('notify.removeChannel');
         });
     }
 
@@ -145,6 +143,7 @@ function Navbar() {
                     })
                 }
             </div>
+                <ToastContainer />
         </div>
     );
 }
