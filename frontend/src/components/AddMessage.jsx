@@ -2,6 +2,10 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import axios from "axios";
 import { useTranslation } from 'react-i18next';
+import filter from 'leo-profanity';
+
+filter.loadDictionary('ru');
+console.log(filter.getDictionary());
 
 
 function AddMessage({currentChannelId}) {
@@ -15,14 +19,12 @@ function AddMessage({currentChannelId}) {
         console.log(e);
         const form = e.target;
         const messageText = e.target[0].value;
-        // const text = formData.querySelector(('name'));
-        // console.log(messageText);
+        const censoredMessage = filter.clean(messageText);
         const newMessage = {
-            body: messageText,
+            body: censoredMessage,
             channelId: currentChannelId,
             username: userName,
         }
-        // console.log(newMessage);
         form.reset();
 
         axios.post('/api/v1/messages', newMessage, {

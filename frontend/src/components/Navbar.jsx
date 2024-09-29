@@ -15,8 +15,7 @@ import ChannelNameModal from './ChannelNameModal.jsx';
 import { useTranslation } from 'react-i18next';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-
+import filter from 'leo-profanity';
 
 function Navbar() {
     let userToken = localStorage.getItem('token');
@@ -40,7 +39,9 @@ function Navbar() {
     const notify = (notifyMessage) => toast(t(notifyMessage));
 
     const addNewChannel = (newChannel) => {
-        axios.post('/api/v1/channels', newChannel, {
+        console.log('newChannel', newChannel)
+        const censoredChannelName = filter.clean(newChannel.name);
+        axios.post('/api/v1/channels', {name: censoredChannelName}, {
             headers: {
                 Authorization: `Bearer ${userToken}`,
             },
@@ -61,7 +62,8 @@ function Navbar() {
     }
 
     const changeChannelName = (newName, channelId) => {
-        axios.patch(`/api/v1/channels/${channelId}`, newName, {
+        const censoredChannelName = filter.clean(newName);
+        axios.patch(`/api/v1/channels/${channelId}`, censoredChannelName, {
             headers: {
                 Authorization: `Bearer ${userToken}`,
             },
@@ -143,7 +145,7 @@ function Navbar() {
                     })
                 }
             </div>
-                <ToastContainer />
+            <ToastContainer />
         </div>
     );
 }
