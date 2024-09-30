@@ -1,5 +1,3 @@
-// import { useSelector } from "react-redux";
-// import { selectors as userSelectors } from '../slices/auorizeSlice.js';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import { actions as channelsActions } from '../slices/channelsSlice.js';
@@ -12,7 +10,7 @@ import { io } from 'socket.io-client';
 import Header from './Header.jsx';
 import ActualChat from './ActualCaht.jsx';
 
-const socket = io('/');  //    http://0.0.0.0:5001 '<https://api/v1/messages>'
+const socket = io('/');
 
 const PageOne = () => {
     let userToken = localStorage.getItem('token');
@@ -22,11 +20,6 @@ const PageOne = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    // const user = useSelector((state) => {
-    //     console.log('state', JSON.stringify(state.user));
-    //     return userSelectors.selectById(state, 1)
-    // });
-
     useEffect(() => {
         if (!user) {
             console.log("юзер не авторизован");
@@ -40,7 +33,7 @@ const PageOne = () => {
                 console.log('axios response channels', response.data); // =>[{ id: '1', name: 'general', removable: false }, ...]
                 setCHannels(response.data);
                 dispatch(channelsActions.addChannels(response.data));
-                // найти канал джеренрал и его задиспатчить
+                // найти канал дженерал и его задиспатчить
                 const currentChannel = { id: '1', name: 'general', removable: false };
                 dispatch(currentChannelActions.addCurrentChannel(currentChannel));
             });
@@ -56,11 +49,21 @@ const PageOne = () => {
         }
 
     }, [user, navigate, dispatch]);
-    // console.log('channels', channels);
-    // console.log(socket);
     socket.on('newMessage', (payload) => {
-        console.log(payload); // => { body: "new message", channelId: 7, id: 8, username: "admin" }
         dispatch(messagesActions.addMessage(payload));
+    });
+
+    socket.on('newChannel', (payload) => {
+        dispatch(channelsActions.addChannel(payload));
+    });
+
+    socket.on('removeChannel', (payload) => {
+        dispatch(channelsActions.removeChannel(payload.id));
+        //  удалить сообщения и перекинуть в канал
+    });
+
+    socket.on('renameChannel', (payload) => {
+        dispatch(channelsActions.updateChannel({ id: payload.id, changes: { name: payload.name } }));
     });
 
     return (
