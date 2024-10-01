@@ -83,6 +83,7 @@ function Navbar() {
             text: 'Переименовать канал',
             modalCallback: changeChannelName,
             id: channelId,
+            oldChannelName: '!!!!it works',
         });
         handleShow();
     }

@@ -9,6 +9,8 @@ import * as yup from 'yup';
 
 const ChannelNameModal = ({ show, handleClose, channelsNameColl, modalContent }) => {
     console.log(modalContent);
+    const oldChannelName = modalContent.oldChannelName;
+    console.log(oldChannelName)
     const formik = useFormik({
         initialValues: {
             channelName: '',
@@ -25,9 +27,9 @@ const ChannelNameModal = ({ show, handleClose, channelsNameColl, modalContent })
             const channelId = modalContent.id;
             console.log(newChannel);
             modalContent.modalCallback(newChannel, channelId);
-            values.channelName = '';
+          //  values.channelName = '';
             handleClose();
-            //почему не закрывается автоматически если менять название канала
+            // почему не закрывается автоматически если менять название канала только после handleClose
         },
     });
 
@@ -38,12 +40,13 @@ const ChannelNameModal = ({ show, handleClose, channelsNameColl, modalContent })
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={formik.handleSubmit}>
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Group className="mb-3 focus-ring" controlId="exampleForm.ControlInput1">
 
                         <Form.Label>Название канала</Form.Label>
                         <Form.Control
                             name="channelName"
                             type="text"
+                            autoFocus
                             value={formik.values.channelName}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
