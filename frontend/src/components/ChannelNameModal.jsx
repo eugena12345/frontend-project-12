@@ -1,6 +1,7 @@
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import { useTranslation } from 'react-i18next';
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -8,6 +9,8 @@ import * as yup from 'yup';
 
 
 const ChannelNameModal = ({ show, handleClose, channelsNameColl, modalContent }) => {
+    const { t, i18n } = useTranslation();
+
     console.log(modalContent);
     const oldChannelName = modalContent.oldChannelName;
     console.log(oldChannelName)
@@ -42,7 +45,7 @@ const ChannelNameModal = ({ show, handleClose, channelsNameColl, modalContent })
                 <Form onSubmit={formik.handleSubmit}>
                     <Form.Group className="mb-3 focus-ring" controlId="exampleForm.ControlInput1">
 
-                        <Form.Label>Название канала</Form.Label>
+                        <Form.Label>{t('channelName')}</Form.Label>
                         <Form.Control
                             name="channelName"
                             type="text"
@@ -57,10 +60,10 @@ const ChannelNameModal = ({ show, handleClose, channelsNameColl, modalContent })
                     </Form.Group>
                     <div className='d-flex justify-content-end'>
                         <Button variant="secondary m-1" onClick={handleClose}>
-                            Отмена
+                            {t('button.cancel')}
                         </Button>
                         <Button variant="primary" type='submit'>
-                            Создать
+                        {t('button.create')}
                         </Button>
                     </div>
                 </Form>

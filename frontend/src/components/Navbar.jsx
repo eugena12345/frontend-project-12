@@ -151,9 +151,9 @@ function Navbar() {
                                 <>
                                     <Dropdown.Toggle split variant="btn" id="dropdown-custom-2" />
                                     <Dropdown.Menu className="super-colors">
-                                        <Dropdown.Item eventKey="1" onClick={() => renameChannel(channel.id)}>Переименовать</Dropdown.Item>
+                                        <Dropdown.Item eventKey="1" onClick={() => renameChannel(channel.id)}>{t('button.rename')}</Dropdown.Item>
 
-                                        <Dropdown.Item eventKey="2" onClick={() => deleteChannel(channel.id)}>Удалить</Dropdown.Item>
+                                        <Dropdown.Item eventKey="2" onClick={() => deleteChannel(channel.id)}>{t('button.delete')}</Dropdown.Item>
 
                                     </Dropdown.Menu>
                                 </>

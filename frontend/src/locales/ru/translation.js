@@ -15,6 +15,9 @@ export default {
     registrationHere: 'Регистрация здесь',
     removeChannel: 'Удалить канал',
     sure: 'Уверены?',
+    channelName: 'Название канала',
+    goTo: 'перейти на',
+    autorizationPage: 'страницу авторизации',
     validationError: {
       required: 'Обязательное поле',
       minNameLength: 'Имя должно быть больше 3 знаков',
@@ -33,6 +36,8 @@ export default {
     button: {
       cancel: 'Отмена',
       delete: 'Удалить',
+      create: 'Создать',
+      rename: 'Переименовать',
     },
   },
 };

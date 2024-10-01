@@ -1,11 +1,15 @@
 import { Link } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
+
 
 const NotFoundPage = () => {
+    const { t, i18n } = useTranslation();
+
     return ((
         <div>
             404 (not found)
-            перейти на 
-            <Link to="/login"> страницу авторизации</Link>
+            {t('goTo')} 
+            <Link to="/login"> {t('autorizationPage')}</Link>
         </div>
     ))
 }
