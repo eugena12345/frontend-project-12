@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import { selectors as currentChannelSelectors } from './../slices/actualChannelSlice.js';
 import { selectors as messagesSelectors } from "../slices/messageSlice.js";
 import { useTranslation } from 'react-i18next';
+import React, { useEffect, useRef, useState } from 'react';
+
 
 
 const ActualChat = () => {
@@ -11,13 +13,21 @@ const ActualChat = () => {
     const { t, i18n } = useTranslation();
 
     const currentChannel = useSelector(currentChannelSelectors.selectAll)[0];
-    console.log('currentChannel', currentChannel);
+    // console.log('currentChannel', currentChannel);
     const messages = useSelector(messagesSelectors.selectAll);
-    console.log('messages!!!!!!!!!!!!!! /n', messages);
-
+    // console.log('messages!!!!!!!!!!!!!! /n', messages);
+    const messageEl = useRef(null);
     const currentMessages = currentChannel ?
         messages.filter((message) => message.channelId === currentChannel.id)
         : [];
+    useEffect(() => {
+        if (messageEl) {
+            messageEl.current.addEventListener('DOMNodeInserted', event => {
+                const { currentTarget: target } = event;
+                target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
+            });
+        }
+    }, [])
 
 
 
@@ -29,8 +39,8 @@ const ActualChat = () => {
                         <p className="m-0">#{currentChannel.name}</p>
                         <span>{t('message', { count: currentMessages.length })}</span>
                     </div>
-                    <div className='chat-messages'>
-                        <div className="overflow-auto px-5">
+                    <div className='chat-messages '>
+                        <div className="overflow-auto px-5" ref={messageEl}>
                             {currentMessages.map((message) => {
                                 return (
                                     <p key={message.id}><b>{message.username}:</b> {message.body}</p>
