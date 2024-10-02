@@ -27,6 +27,7 @@ export default {
     },
     serverError: {
       userExsist: 'Пользователь с таким именем уже существует',
+      userNotExsist: 'Неверные имя пользователя или пароль',
     },
     notify: {
       createChannel: 'Канал создан',

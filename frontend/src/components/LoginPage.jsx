@@ -3,7 +3,7 @@ import axios from 'axios';
 import { actions as autorizedActions } from '../slices/auorizeSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
@@ -11,15 +11,17 @@ import Header from './Header';
 import { useTranslation } from 'react-i18next';
 
 
-
 const LoginPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { t, i18n } = useTranslation();
     let user = localStorage.getItem('token');
+    const [visibilityWarning, setVisibilityWarning] = useState('invisible');
+    const warningStyle = `bg-danger text-light p-3 m-1 text-center ${visibilityWarning}`;
+
     useEffect(() => {
         if (user) {
-            console.log("юзер авторизован");
+           // console.log("юзер авторизован");
             navigate('/', { replace: false });
         }
     });
@@ -30,17 +32,20 @@ const LoginPage = () => {
             floatingPassword: '',
         },
         onSubmit: (values) => {
-            console.log(JSON.stringify(values, null, 2));
+          //  console.log(JSON.stringify(values, null, 2));
             const user = { username: values.floatingInput, password: values.floatingPassword }
             axios.post('/api/v1/login', user).then((response) => {
                 // console.log(response.data); // => { token: ..., username: 'admin' }
                 const currentUser = response.data;
-                console.log('currentUser', currentUser);
+           //     console.log('currentUser', currentUser);
                 dispatch(autorizedActions.login({ ...currentUser, id: 1 }));
                 navigate('/', { replace: false });
             })
                 .catch((error) => {
-                    console.log(error);
+                 //   console.log(error);
+                    if (error.status === 401) {
+                        setVisibilityWarning('visible');
+                    }
                 });
         },
     });
@@ -87,6 +92,8 @@ const LoginPage = () => {
                             <div className="registration" onClick={goToRegistration}>
                                 {t('noAccount')} <a href='#' className='text-primary'>{t('registrationHere')}</a>
                             </div>
+                            <div className={warningStyle}>{t('serverError.userNotExsist')}</div>
+
                         </div>
                     </div>
                 </div>

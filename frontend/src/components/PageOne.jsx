@@ -22,7 +22,7 @@ const PageOne = () => {
     const navigate = useNavigate();
     useEffect(() => {
         if (!user) {
-            console.log("юзер не авторизован");
+          //  console.log("юзер не авторизован");
             navigate('/login', { replace: false });
         } else {
             axios.get('/api/v1/channels', {
@@ -30,7 +30,7 @@ const PageOne = () => {
                     Authorization: `Bearer ${user}`,
                 },
             }).then((response) => {
-                console.log('axios response channels', response.data); // =>[{ id: '1', name: 'general', removable: false }, ...]
+           //     console.log('axios response channels', response.data); // =>[{ id: '1', name: 'general', removable: false }, ...]
                 setCHannels(response.data);
                 dispatch(channelsActions.addChannels(response.data));
                 // найти канал дженерал и его задиспатчить
@@ -42,7 +42,7 @@ const PageOne = () => {
                     Authorization: `Bearer ${user}`,
                 },
             }).then((response) => {
-                console.log('axios response messages', response.data); // =>[{ id: '1', body: 'text message', channelId: '1', username: 'admin }, ...]
+             //   console.log('axios response messages', response.data); // =>[{ id: '1', body: 'text message', channelId: '1', username: 'admin }, ...]
                 setMessages(response.data);
                 dispatch(messagesActions.addMessages(response.data));
             });

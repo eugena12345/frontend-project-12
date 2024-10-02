@@ -31,7 +31,7 @@ function Navbar() {
     const channels = useSelector(channelsSelectors.selectAll);
     const currentChannel = useSelector(currentChannelSelectors.selectAll)[0];
     const messages = useSelector(messagesSelectors.selectAll);
-    console.log('messages', messages);
+   // console.log('messages', messages);
     const channelsNameColl = channels.map((channel) => channel.name);
     const selectChannel = (e) => {
         e.preventDefault();
@@ -42,19 +42,19 @@ function Navbar() {
     const notify = (notifyMessage) => toast(t(notifyMessage));
 
     const addNewChannel = (newChannel) => {
-        console.log('newChannel', newChannel)
+    //    console.log('newChannel', newChannel)
         const censoredChannelName = filter.clean(newChannel.name);
         axios.post('/api/v1/channels', { name: censoredChannelName }, {
             headers: {
                 Authorization: `Bearer ${userToken}`,
             },
         }).then((response) => {
-            console.log('отчет по созданию нового канала', response.data); // => { id: '3', name: 'new channel', removable: true }
+      //      console.log('отчет по созданию нового канала', response.data); // => { id: '3', name: 'new channel', removable: true }
             handleClose();
             dispatch(channelsSliceActions.addChannel(response.data));
             notify('notify.createChannel');
             const newActualChannel = response.data;
-            console.log('newActualChannel after create', newActualChannel)
+        //    console.log('newActualChannel after create', newActualChannel)
             dispatch(currentChannelActions.deleteCurrentChannel());
             dispatch(currentChannelActions.addCurrentChannel(newActualChannel));
 
@@ -76,9 +76,11 @@ function Navbar() {
                 Authorization: `Bearer ${userToken}`,
             },
         }).then((response) => {
-            console.log(response.data); // => { id: '3', name: 'new name channel', removable: true }
+         //   console.log(response.data); // => { id: '3', name: 'new name channel', removable: true }
             dispatch(channelsSliceActions.updateChannel({ id: response.data.id, changes: { name: response.data.name } }));
             notify('notify.renameChannel');
+            dispatch(currentChannelActions.deleteCurrentChannel());
+            dispatch(currentChannelActions.addCurrentChannel(response.data));
         });
 
     };

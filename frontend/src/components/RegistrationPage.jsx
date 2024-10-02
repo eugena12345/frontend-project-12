@@ -38,18 +38,18 @@ const RegistrationPage = () => {
                 .oneOf([yup.ref('password'), null], t('validationError.matchPsw'))
         }),
         onSubmit: (values) => {
-            console.log(JSON.stringify(values, null, 2));
+          //  console.log(JSON.stringify(values, null, 2));
             const user = { username: values.name, password: values.password }
 
             axios.post('/api/v1/signup', user)
                 .then((response) => {
-                    console.log(response.data);
+               //     console.log(response.data);
                     const currentUser = response.data;
-                    console.log('currentUser', currentUser);
+                //    console.log('currentUser', currentUser);
                     dispatch(autorizedActions.login({ ...currentUser, id: 1 }));
                     navigate('/', { replace: false });
                 }).catch((error) => {
-                    console.log(error);
+                 //   console.log(error);
                     if (error.status === 409) {
                         setVisibilityWarning('visible');
                     }
