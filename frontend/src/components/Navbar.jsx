@@ -140,7 +140,7 @@ function Navbar() {
             modalContent={modalContent}
             />
 
-            <div>
+            <div className='channels'>
                 {channels.map(
                     (channel) => {
                         const classStyle = channel.id === currentChannel.id ?

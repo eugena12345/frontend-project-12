@@ -12,11 +12,16 @@ code {
     monospace;
 }
 
-.chat-messages {
+.chat-messages{
   overflow: auto;
   height: 55vh;
 }
 
 button#dropdown-custom-2 {
 flex: none;
+}
+
+.channels {
+  overflow: auto;
+  height: 65vh;
 }
