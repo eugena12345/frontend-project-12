@@ -44,7 +44,7 @@ function Navbar() {
     const addNewChannel = (newChannel) => {
         console.log('newChannel', newChannel)
         const censoredChannelName = filter.clean(newChannel.name);
-        axios.post('/api/v1/channels', {name: censoredChannelName}, {
+        axios.post('/api/v1/channels', { name: censoredChannelName }, {
             headers: {
                 Authorization: `Bearer ${userToken}`,
             },
@@ -53,6 +53,11 @@ function Navbar() {
             handleClose();
             dispatch(channelsSliceActions.addChannel(response.data));
             notify('notify.createChannel');
+            const newActualChannel = response.data;
+            console.log('newActualChannel after create', newActualChannel)
+            dispatch(currentChannelActions.deleteCurrentChannel());
+            dispatch(currentChannelActions.addCurrentChannel(newActualChannel));
+
         });
     }
     const createChannel = () => {
@@ -66,7 +71,7 @@ function Navbar() {
 
     const changeChannelName = (newName, channelId) => {
         const censoredChannelName = filter.clean(newName.name);
-        axios.patch(`/api/v1/channels/${channelId}`, {name:censoredChannelName}, {
+        axios.patch(`/api/v1/channels/${channelId}`, { name: censoredChannelName }, {
             headers: {
                 Authorization: `Bearer ${userToken}`,
             },
@@ -134,10 +139,10 @@ function Navbar() {
                 channelsNameColl={channelsNameColl}
                 modalContent={modalContent}
             />
-            <ConfirmationModal 
-            show={showConf} 
-            handleClose={handleCloseConf}
-            modalContent={modalContent}
+            <ConfirmationModal
+                show={showConf}
+                handleClose={handleCloseConf}
+                modalContent={modalContent}
             />
 
             <div className='channels'>
