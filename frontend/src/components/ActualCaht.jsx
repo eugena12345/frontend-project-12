@@ -11,25 +11,21 @@ import React, { useEffect, useRef, useState } from 'react';
 const ActualChat = () => {
     let userToken = localStorage.getItem('token');
     const { t, i18n } = useTranslation();
-
     const currentChannel = useSelector(currentChannelSelectors.selectAll)[0];
-    // console.log('currentChannel', currentChannel);
     const messages = useSelector(messagesSelectors.selectAll);
-    // console.log('messages!!!!!!!!!!!!!! /n', messages);
     const messageEl = useRef(null);
     const currentMessages = currentChannel ?
         messages.filter((message) => message.channelId === currentChannel.id)
         : [];
-    useEffect(() => {
-        if (messageEl) {
-            messageEl.current.addEventListener('DOMNodeInserted', event => {
-                const { currentTarget: target } = event;
-                target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
-            });
-        }
-    }, [])
-
-
+        //при загрузке дает ошибку
+    // useEffect(() => {
+    //     if (messageEl) {
+    //         messageEl.current.addEventListener('DOMNodeInserted', event => {
+    //             const { currentTarget: target } = event;
+    //             target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
+    //         });
+    //     }
+    // }, [])
 
     return (
         <div className='d-flex flex-column h-100'>

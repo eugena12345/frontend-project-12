@@ -21,7 +21,7 @@ const LoginPage = () => {
 
     useEffect(() => {
         if (user) {
-           // console.log("юзер авторизован");
+            // console.log("юзер авторизован");
             navigate('/', { replace: false });
         }
     });
@@ -32,17 +32,17 @@ const LoginPage = () => {
             floatingPassword: '',
         },
         onSubmit: (values) => {
-          //  console.log(JSON.stringify(values, null, 2));
+            //  console.log(JSON.stringify(values, null, 2));
             const user = { username: values.floatingInput, password: values.floatingPassword }
             axios.post('/api/v1/login', user).then((response) => {
                 // console.log(response.data); // => { token: ..., username: 'admin' }
                 const currentUser = response.data;
-           //     console.log('currentUser', currentUser);
+                //     console.log('currentUser', currentUser);
                 dispatch(autorizedActions.login({ ...currentUser, id: 1 }));
                 navigate('/', { replace: false });
             })
                 .catch((error) => {
-                 //   console.log(error);
+                    //   console.log(error);
                     if (error.status === 401) {
                         setVisibilityWarning('visible');
                     }

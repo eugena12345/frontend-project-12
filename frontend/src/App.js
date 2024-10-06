@@ -9,13 +9,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function App() {
   return (
     <BrowserRouter>
-    <Routes>
-      <Route path="*" element={<NotFoundPage />} />
-      <Route path="/" element={<PageOne />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/signup" element={<RegistrationPage />} /> 
-    </Routes>
-  </BrowserRouter>
+      <Routes>
+        <Route path="*" element={<NotFoundPage />} />
+        <Route path="/" element={<PageOne />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<RegistrationPage />} />
+      </Routes>
+    </BrowserRouter>
 
   );
 }

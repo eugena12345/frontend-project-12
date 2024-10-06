@@ -11,9 +11,9 @@ import * as yup from 'yup';
 const ChannelNameModal = ({ show, handleClose, channelsNameColl, modalContent }) => {
     const { t, i18n } = useTranslation();
 
-    console.log(modalContent);
+    // console.log(modalContent);
     const oldChannelName = modalContent.oldChannelName;
-    console.log(oldChannelName)
+    // console.log(oldChannelName)
     const formik = useFormik({
         initialValues: {
             channelName: '',
@@ -28,7 +28,7 @@ const ChannelNameModal = ({ show, handleClose, channelsNameColl, modalContent })
         onSubmit: (values) => {
             const newChannel = { name: values.channelName };
             const channelId = modalContent.id;
-            console.log(newChannel);
+            // console.log(newChannel);
             modalContent.modalCallback(newChannel, channelId);
           //  values.channelName = '';
             handleClose();

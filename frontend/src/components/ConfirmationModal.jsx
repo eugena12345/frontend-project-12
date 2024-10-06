@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 
 const ConfirmationModal = ({ show, handleClose, modalContent }) => {
-    console.log(modalContent);
+    // console.log(modalContent);
     const { t, i18n } = useTranslation();
     const handleSubmit = (e) => {
         e.preventDefault();
