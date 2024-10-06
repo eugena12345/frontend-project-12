@@ -5,20 +5,20 @@ import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 
 filter.loadDictionary('ru');
-console.log(filter.getDictionary());
-
 
 function AddMessage({currentChannelId}) {
     let userToken = localStorage.getItem('token');
     let userName = localStorage.getItem('username');
     const { t, i18n } = useTranslation();
 
-
     const sendMessage = (e) => {
         e.preventDefault();
         console.log(e);
         const form = e.target;
         const messageText = e.target[0].value;
+        if (messageText.trim() === '') {
+            return;
+        }
         const censoredMessage = filter.clean(messageText);
         const newMessage = {
             body: censoredMessage,
