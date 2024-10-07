@@ -20,10 +20,10 @@ export default {
     autorizationPage: 'страницу авторизации',
     validationError: {
       required: 'Обязательное поле',
-      minNameLength: 'Имя должно быть больше 3 знаков',
-      maxNameLength: 'Имя должно быть меньше 20 знаков',
-      minPswLength: 'Пароль должен быть больше 6 символов',
-      matchPsw: 'Пароль и подтверждение должны совпадать',
+      minNameLength: 'Имя пользователя должно быть от 3 до 20 символов',
+      maxNameLength: 'Имя пользователя должно быть от 3 до 20 символов',
+      minPswLength: 'Пароль должен быть не менее 6 символов',
+      matchPsw: 'Пароли должны совпадать',
     },
     serverError: {
       userExsist: 'Пользователь с таким именем уже существует',
@@ -33,13 +33,13 @@ export default {
       createChannel: 'Канал создан',
       renameChannel: 'Канал переименован',
       removeChannel: 'Канал удален',
-      networkError: 'Ошибка сети',
+      networkError: 'Ошибка соединения',
     },
     button: {
       cancel: 'Отмена',
       delete: 'Удалить',
-      create: 'Создать',
-      rename: 'Переименовать',
+      create: 'Отправить',
+      rename: 'Отправить',
     },
   },
 };
