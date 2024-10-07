@@ -33,6 +33,7 @@ export default {
       createChannel: 'Канал создан',
       renameChannel: 'Канал переименован',
       removeChannel: 'Канал удален',
+      networkError: 'Ошибка сети',
     },
     button: {
       cancel: 'Отмена',
