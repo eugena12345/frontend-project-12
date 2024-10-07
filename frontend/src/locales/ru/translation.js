@@ -39,7 +39,7 @@ export default {
       cancel: 'Отмена',
       delete: 'Удалить',
       create: 'Отправить',
-      rename: 'Отправить',
+      rename: 'Переименовать',
     },
   },
 };
