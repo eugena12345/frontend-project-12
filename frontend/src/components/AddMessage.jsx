@@ -3,8 +3,8 @@ import Form from 'react-bootstrap/Form';
 import axios from "axios";
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 
 filter.loadDictionary('ru');
 
@@ -12,7 +12,7 @@ function AddMessage({currentChannelId}) {
     let userToken = localStorage.getItem('token');
     let userName = localStorage.getItem('username');
     const { t, i18n } = useTranslation();
-    const notify = (notifyMessage) => toast(t(notifyMessage));
+    // const notify = (notifyMessage) => toast(t(notifyMessage));
 
     const sendMessage = (e) => {
         e.preventDefault();
@@ -39,7 +39,7 @@ function AddMessage({currentChannelId}) {
         })
         .catch((error) => {
             if (axios.isAxiosError(error)) {
-                notify('notify.networkError');
+//                notify('notify.networkError');
                 }
         });
     }
@@ -55,7 +55,7 @@ function AddMessage({currentChannelId}) {
                 </Button>
             </div>
         </Form>
-        <ToastContainer />
+        {/* <ToastContainer /> */}
         </>
     );
 }
