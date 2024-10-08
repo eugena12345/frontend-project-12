@@ -1,15 +1,15 @@
-import { createSlice, createEntityAdapter } from "@reduxjs/toolkit";
+import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 
 const currentChannelAdapter = createEntityAdapter();
 const initialState = currentChannelAdapter.getInitialState();
 
 const currentChannelSlice = createSlice({
-    name: 'currentChannel',
-    initialState,
-    reducers: {
-        addCurrentChannel: currentChannelAdapter.addOne,
-        deleteCurrentChannel: currentChannelAdapter.removeAll,
-    },
+  name: 'currentChannel',
+  initialState,
+  reducers: {
+    addCurrentChannel: currentChannelAdapter.addOne,
+    deleteCurrentChannel: currentChannelAdapter.removeAll,
+  },
 });
 
 export const { actions } = currentChannelSlice;

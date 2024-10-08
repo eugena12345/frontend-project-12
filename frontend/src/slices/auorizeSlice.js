@@ -4,21 +4,21 @@ const autorizeAdapter = createEntityAdapter();
 const initialState = autorizeAdapter.getInitialState();
 
 const slice = createSlice({
-    name: 'user',
-    initialState,
-    reducers: {
-        login: (state, action) => {
-            console.log(action);
-            // autorizeAdapter.addOne(state, action.payload);
-            // console.log(JSON.stringify(state));
-            localStorage.setItem('token', action.payload.token);
-            localStorage.setItem('username', action.payload.username);
-        },
-            
-        logout: (state, action) => { localStorage.removeItem('token')},
-        //autorizeAdapter.removeOne,
-    }
-    });
+  name: 'user',
+  initialState,
+  reducers: {
+    login: (state, action) => {
+      console.log(action);
+      // autorizeAdapter.addOne(state, action.payload);
+      // console.log(JSON.stringify(state));
+      localStorage.setItem('token', action.payload.token);
+      localStorage.setItem('username', action.payload.username);
+    },
+
+    logout: (state, action) => { localStorage.removeItem('token'); },
+    // autorizeAdapter.removeOne,
+  },
+});
 
 export const { actions } = slice;
 export default slice.reducer;

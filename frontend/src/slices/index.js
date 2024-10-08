@@ -5,10 +5,10 @@ import currentChannelReducer from './actualChannelSlice.js';
 import messagesReducer from './messageSlice.js';
 
 export default configureStore({
-    reducer: {
-        user: userReducer,
-        channels: channelsReducer,
-        currentChannel: currentChannelReducer,
-        messages: messagesReducer,
-    }
-})
+  reducer: {
+    user: userReducer,
+    channels: channelsReducer,
+    currentChannel: currentChannelReducer,
+    messages: messagesReducer,
+  },
+});
