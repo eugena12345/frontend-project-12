@@ -20,10 +20,11 @@ export default {
     autorizationPage: 'страницу авторизации',
     validationError: {
       required: 'Обязательное поле',
-      minNameLength: 'Имя пользователя должно быть от 3 до 20 символов',
-      maxNameLength: 'Имя пользователя должно быть от 3 до 20 символов',
+      minNameLength: 'От 3 до 20 символов',
+      maxNameLength: 'От 3 до 20 символов',
       minPswLength: 'Пароль должен быть не менее 6 символов',
       matchPsw: 'Пароли должны совпадать',
+      sameName: 'Такое название уже существует',
     },
     serverError: {
       userExsist: 'Пользователь с таким именем уже существует',
