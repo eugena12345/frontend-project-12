@@ -11,12 +11,12 @@ import * as yup from 'yup';
 const ChannelNameModal = ({ show, handleClose, channelsNameColl, modalContent }) => {
     const { t, i18n } = useTranslation();
 
-    // console.log(modalContent);
+  console.log(modalContent);
     const oldChannelName = modalContent.oldChannelName;
-    // console.log(oldChannelName)
+     console.log(oldChannelName);
     const formik = useFormik({
         initialValues: {
-            channelName: '',
+            channelName: `${oldChannelName}`,
         },
         validationSchema: yup.object({
             channelName: yup.string()
@@ -30,7 +30,7 @@ const ChannelNameModal = ({ show, handleClose, channelsNameColl, modalContent })
             const channelId = modalContent.id;
             // console.log(newChannel);
             modalContent.modalCallback(newChannel, channelId);
-          //  values.channelName = '';
+            //  values.channelName = '';
             handleClose();
             // почему не закрывается автоматически если менять название канала только после handleClose
         },
@@ -63,13 +63,13 @@ const ChannelNameModal = ({ show, handleClose, channelsNameColl, modalContent })
                             {t('button.cancel')}
                         </Button>
                         <Button variant="primary" type='submit'>
-                        {t('button.create')}
+                            {t('button.create')}
                         </Button>
                     </div>
                 </Form>
             </Modal.Body>
         </Modal>
-    )
+    );
 };
 
 export default ChannelNameModal;

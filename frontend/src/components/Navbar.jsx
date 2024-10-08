@@ -64,7 +64,9 @@ function Navbar() {
         setModalContent({
             text: 'Создание нового канала',
             modalCallback: addNewChannel,
-            id: null
+            id: null,
+            oldChannelName: '',
+
         });
         handleShow();
     }
