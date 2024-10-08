@@ -88,11 +88,12 @@ function Navbar() {
     };
 
     const renameChannel = (channelId) => {
+        const oldChannelName = channels.filter((channel) => channel.id === channelId)[0].name;
         setModalContent({
             text: 'Переименовать канал',
             modalCallback: changeChannelName,
             id: channelId,
-            oldChannelName: '!!!!it works',
+            oldChannelName,
         });
         handleShow();
     }
