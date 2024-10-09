@@ -8,18 +8,11 @@ const channelsSlice = createSlice({
   initialState,
   reducers: {
     addChannels: (state, action) => {
-      console.log(action);
       channelsAdapter.addMany(state, action.payload);
-      console.log(state);
-      // console.log(JSON.stringify(state));
-      // localStorage.setItem('token', action.payload.token);
     },
     addChannel: channelsAdapter.addOne,
     removeChannel: channelsAdapter.removeOne,
     updateChannel: channelsAdapter.updateOne,
-
-    // logout: (state, action) => { localStorage.removeItem('token')},
-    // autorizeAdapter.removeOne,
   },
 });
 

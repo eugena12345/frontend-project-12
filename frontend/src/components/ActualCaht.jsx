@@ -1,4 +1,3 @@
-// import Nav from 'react-bootstrap/Nav';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import React, { useEffect, useRef } from 'react';
@@ -7,7 +6,6 @@ import { selectors as currentChannelSelectors } from '../slices/actualChannelSli
 import { selectors as messagesSelectors } from '../slices/messageSlice';
 
 const ActualChat = () => {
-  // let userToken = localStorage.getItem('token');
   const messageEl = useRef(null);
   const { t } = useTranslation();
   const currentChannel = useSelector(currentChannelSelectors.selectAll)[0];
@@ -15,7 +13,6 @@ const ActualChat = () => {
   const currentMessages = currentChannel
     ? messages.filter((message) => message.channelId === currentChannel.id)
     : [];
-    // при загрузке дает ошибку
   useEffect(() => {
     if (messageEl.current !== null) {
       messageEl.current.addEventListener('DOMNodeInserted', (event) => {

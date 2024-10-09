@@ -1,8 +1,8 @@
-import { configureStore, current } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './auorizeSlice';
-import channelsReducer from './channelsSlice.js';
-import currentChannelReducer from './actualChannelSlice.js';
-import messagesReducer from './messageSlice.js';
+import channelsReducer from './channelsSlice';
+import currentChannelReducer from './actualChannelSlice';
+import messagesReducer from './messageSlice';
 
 export default configureStore({
   reducer: {
