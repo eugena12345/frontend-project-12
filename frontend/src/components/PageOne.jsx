@@ -2,14 +2,14 @@ import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import {
   useDispatch,
-  //  useSelector
 } from 'react-redux';
 import axios from 'axios';
 import { io } from 'socket.io-client';
+import store from '../slices/index';
+
 import { actions as channelsActions } from '../slices/channelsSlice';
 import {
   actions as currentChannelActions,
-  // selectors as currentChannelSelectors,
 } from '../slices/actualChannelSlice';
 import { actions as messagesActions } from '../slices/messageSlice';
 
@@ -43,14 +43,12 @@ const PageOne = () => {
           Authorization: `Bearer ${user}`,
         },
       }).then((response) => {
-      //   console.log('axios response messages', response.data);
-      // =>[{ id: '1', body: 'text message', channelId: '1', username: 'admin }, ...]
+        //   console.log('axios response messages', response.data);
+        // =>[{ id: '1', body: 'text message', channelId: '1', username: 'admin }, ...]
         dispatch(messagesActions.addMessages(response.data));
       });
     }
   }, [user, navigate, dispatch]);
-
-  // const currentChannel = useSelector(currentChannelSelectors.selectAll)[0];
 
   socket.on('newMessage', (payload) => {
     dispatch(messagesActions.addMessage(payload));
@@ -66,14 +64,13 @@ const PageOne = () => {
   });
 
   socket.on('renameChannel', (payload) => {
-    // console.log(currentChannel);
-
     dispatch(channelsActions.updateChannel({ id: payload.id, changes: { name: payload.name } }));
-
-    // if (isCurrentChannel(payload.id)) {
-    // dispatch(currentChannelActions
-    //  .updateCurrentChannel({ id: payload.id, changes: { name: payload.name } }));
-    // }
+    const state = store.getState();
+    const currentChannel = state.currentChannel.ids[0];
+    if (currentChannel === payload.id) {
+      dispatch(currentChannelActions
+        .updateCurrentChannel({ id: payload.id, changes: { name: payload.name } }));
+    }
   });
 
   return (
