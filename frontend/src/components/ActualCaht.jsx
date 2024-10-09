@@ -1,56 +1,63 @@
 // import Nav from 'react-bootstrap/Nav';
-import AddMessage from "./AddMessage";
-import { useSelector } from "react-redux";
-import { selectors as currentChannelSelectors } from './../slices/actualChannelSlice.js';
-import { selectors as messagesSelectors } from "../slices/messageSlice.js";
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import React, { useEffect, useRef, useState } from 'react';
-
-
+import React, { useEffect, useRef } from 'react';
+import AddMessage from './AddMessage';
+import { selectors as currentChannelSelectors } from '../slices/actualChannelSlice';
+import { selectors as messagesSelectors } from '../slices/messageSlice';
 
 const ActualChat = () => {
-    let userToken = localStorage.getItem('token');
-    const { t, i18n } = useTranslation();
-    const currentChannel = useSelector(currentChannelSelectors.selectAll)[0];
-    const messages = useSelector(messagesSelectors.selectAll);
-    const messageEl = useRef(null);
-    const currentMessages = currentChannel ?
-        messages.filter((message) => message.channelId === currentChannel.id)
-        : [];
-        //при загрузке дает ошибку
-    // useEffect(() => {
-    //     if (messageEl) {
-    //         messageEl.current.addEventListener('DOMNodeInserted', event => {
-    //             const { currentTarget: target } = event;
-    //             target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
-    //         });
-    //     }
-    // }, [])
+  // let userToken = localStorage.getItem('token');
+  const messageEl = useRef(null);
+  const { t } = useTranslation();
+  const currentChannel = useSelector(currentChannelSelectors.selectAll)[0];
+  const messages = useSelector(messagesSelectors.selectAll);
+  const currentMessages = currentChannel
+    ? messages.filter((message) => message.channelId === currentChannel.id)
+    : [];
+    // при загрузке дает ошибку
+  useEffect(() => {
+    if (messageEl.current !== null) {
+      messageEl.current.addEventListener('DOMNodeInserted', (event) => {
+        const { currentTarget: target } = event;
+        target.scrollTo({ top: target.scrollHeight, behavior: 'smooth' });
+      });
+    }
+  });
 
-    return (
-        <div className='d-flex flex-column h-100'>
-            {currentChannel &&
-                <>
-                    <div className="bg-light mb-4 p-3 shadow-sm small">
-                        <p className="m-0">#{currentChannel.name}</p>
-                        <span>{t('message', { count: currentMessages.length })}</span>
-                    </div>
-                    <div className='chat-messages '>
-                        <div className="overflow-auto px-5" ref={messageEl}>
-                            {currentMessages.map((message) => {
-                                return (
-                                    <p key={message.id}><b>{message.username}:</b> {message.body}</p>
-                                )
-                            })}
-                        </div>
-                    </div>
-                    <div className="mt-auto px-5 py-3">
-                        <AddMessage currentChannelId={currentChannel.id} />
-                    </div>
-                </>
-            }
+  return (
+    <div className="d-flex flex-column h-100">
+      {currentChannel
+      && (
+      <>
+        <div className="bg-light mb-4 p-3 shadow-sm small">
+          <p className="m-0">
+            #
+            {currentChannel.name}
+          </p>
+          <span>{t('message', { count: currentMessages.length })}</span>
         </div>
-    )
+        <div className="chat-messages">
+          <div className="overflow-auto px-5" ref={messageEl}>
+            {currentMessages.map((msg) => (
+              <p key={msg.id}>
+                <b>
+                  {msg.username}
+                  :
+                  {' '}
+                </b>
+                {msg.body}
+              </p>
+            ))}
+          </div>
+        </div>
+        <div className="mt-auto px-5 py-3">
+          <AddMessage currentChannelId={currentChannel.id} />
+        </div>
+      </>
+      )}
+    </div>
+  );
 };
 
 export default ActualChat;
