@@ -1,11 +1,18 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import {
+  useDispatch,
+  //  useSelector
+} from 'react-redux';
 import axios from 'axios';
 import { io } from 'socket.io-client';
 import { actions as channelsActions } from '../slices/channelsSlice';
-import { actions as currentChannelActions } from '../slices/actualChannelSlice';
+import {
+  actions as currentChannelActions,
+  // selectors as currentChannelSelectors,
+} from '../slices/actualChannelSlice';
 import { actions as messagesActions } from '../slices/messageSlice';
+
 import Navbar from './Navbar';
 import Header from './Header';
 import ActualChat from './ActualCaht';
@@ -15,14 +22,10 @@ const socket = io('/');
 const PageOne = () => {
   const userToken = localStorage.getItem('token');
   const [user, setUser] = useState(userToken);
-  // const [channels, setCHannels] = useState([]);
-  // const [messages, setMessages] = useState([]);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
     if (!user) {
-      //  console.log("юзер не авторизован");
       navigate('/login', { replace: false });
     } else {
       axios.get('/api/v1/channels', {
@@ -30,13 +33,10 @@ const PageOne = () => {
           Authorization: `Bearer ${user}`,
         },
       }).then((response) => {
-      //     console.log('axios response channels', response.data);
-      // =>[{ id: '1', name: 'general', removable: false }, ...]
-        // setCHannels(response.data);
         dispatch(channelsActions.addChannels(response.data));
         // найти канал дженерал и его задиспатчить
-        const currentChannel = { id: '1', name: 'general', removable: false };
-        dispatch(currentChannelActions.addCurrentChannel(currentChannel));
+        const initialCurrentChannel = { id: '1', name: 'general', removable: false };
+        dispatch(currentChannelActions.addCurrentChannel(initialCurrentChannel));
       });
       axios.get('/api/v1/messages', {
         headers: {
@@ -45,11 +45,13 @@ const PageOne = () => {
       }).then((response) => {
       //   console.log('axios response messages', response.data);
       // =>[{ id: '1', body: 'text message', channelId: '1', username: 'admin }, ...]
-        // setMessages(response.data);
         dispatch(messagesActions.addMessages(response.data));
       });
     }
   }, [user, navigate, dispatch]);
+
+  // const currentChannel = useSelector(currentChannelSelectors.selectAll)[0];
+
   socket.on('newMessage', (payload) => {
     dispatch(messagesActions.addMessage(payload));
   });
@@ -64,7 +66,14 @@ const PageOne = () => {
   });
 
   socket.on('renameChannel', (payload) => {
+    // console.log(currentChannel);
+
     dispatch(channelsActions.updateChannel({ id: payload.id, changes: { name: payload.name } }));
+
+    // if (isCurrentChannel(payload.id)) {
+    // dispatch(currentChannelActions
+    //  .updateCurrentChannel({ id: payload.id, changes: { name: payload.name } }));
+    // }
   });
 
   return (
