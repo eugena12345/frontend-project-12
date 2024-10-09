@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 
 import Form from 'react-bootstrap/Form';
@@ -17,7 +18,12 @@ const ChannelNameModal = (
   },
 ) => {
   const { t } = useTranslation();
-  const oldChannelName = modalContent.oldChannelName;
+  const {
+    text,
+    modalCallback,
+    id,
+    oldChannelName,
+  } = modalContent;
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -32,19 +38,16 @@ const ChannelNameModal = (
     }),
     onSubmit: (values) => {
       const newChannel = { name: values.channelName };
-      const channelId = modalContent.id;
-      // console.log(newChannel);
-      modalContent.modalCallback(newChannel, channelId);
-      values.channelName = '';
+      const channelId = id;
+      modalCallback(newChannel, channelId);
       handleClose();
-      // почему не закрывается автоматически если менять название канала только после handleClose
     },
   });
 
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>{modalContent.text}</Modal.Title>
+        <Modal.Title>{text}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
