@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
+import { toast } from 'react-toastify';
 
 filter.loadDictionary('ru');
 
@@ -38,7 +39,7 @@ const AddMessage = ({ currentChannelId }) => {
     })
       .catch((error) => {
         if (axios.isAxiosError(error)) {
-          //                notify('notify.networkError');
+          toast(t('notify.networkError'));
         }
       });
   };

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
@@ -31,14 +32,18 @@ const LoginPage = () => {
     },
     onSubmit: (values) => {
       const newUser = { username: values.floatingInput, password: values.floatingPassword };
-      axios.post('/api/v1/login', newUser).then((response) => {
-        const currentUser = response.data;
-        dispatch(autorizedActions.login({ ...currentUser, id: 1 }));
-        navigate('/', { replace: false });
-      })
+      axios.post('/api/v1/login', newUser)
+        .then((response) => {
+          const currentUser = response.data;
+          dispatch(autorizedActions.login({ ...currentUser, id: 1 }));
+          navigate('/', { replace: false });
+        })
         .catch((error) => {
           if (error.status === 401) {
             setVisibilityWarning('visible');
+          }
+          if (axios.isAxiosError(error)) {
+            toast(t('notify.networkError'));
           }
         });
     },

@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react';
 import {
   useDispatch,
 } from 'react-redux';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 import { io } from 'socket.io-client';
+import { useTranslation } from 'react-i18next';
 import store from '../slices/index';
-
 import { actions as channelsActions } from '../slices/channelsSlice';
 import {
   actions as currentChannelActions,
@@ -24,6 +25,8 @@ const PageOne = () => {
   const [user, setUser] = useState(userToken);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
   useEffect(() => {
     if (!user) {
       navigate('/login', { replace: false });
@@ -32,21 +35,34 @@ const PageOne = () => {
         headers: {
           Authorization: `Bearer ${user}`,
         },
-      }).then((response) => {
-        dispatch(channelsActions.addChannels(response.data));
-        // найти канал дженерал и его задиспатчить
-        const initialCurrentChannel = { id: '1', name: 'general', removable: false };
-        dispatch(currentChannelActions.addCurrentChannel(initialCurrentChannel));
-      });
+      })
+        .then((response) => {
+          dispatch(channelsActions.addChannels(response.data));
+          // найти канал дженерал и его задиспатчить
+          const initialCurrentChannel = { id: '1', name: 'general', removable: false };
+          dispatch(currentChannelActions.addCurrentChannel(initialCurrentChannel));
+        })
+        .catch((error) => {
+          if (axios.isAxiosError(error)) {
+            toast(t('notify.networkError'));
+          }
+        });
+
       axios.get('/api/v1/messages', {
         headers: {
           Authorization: `Bearer ${user}`,
         },
-      }).then((response) => {
+      })
+        .then((response) => {
         //   console.log('axios response messages', response.data);
         // =>[{ id: '1', body: 'text message', channelId: '1', username: 'admin }, ...]
-        dispatch(messagesActions.addMessages(response.data));
-      });
+          dispatch(messagesActions.addMessages(response.data));
+        })
+        .catch((error) => {
+          if (axios.isAxiosError(error)) {
+            toast(t('notify.networkError'));
+          }
+        });
     }
   }, [user, navigate, dispatch]);
 

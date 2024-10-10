@@ -5,8 +5,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { ToastContainer, toast } from 'react-toastify';
 import filter from 'leo-profanity';
+import { toast } from 'react-toastify';
 import { selectors as channelsSelectors, actions as channelsSliceActions } from '../slices/channelsSlice';
 import { selectors as currentChannelSelectors, actions as currentChannelActions } from '../slices/actualChannelSlice';
 import { selectors as messagesSelectors, actions as messagesSliceActions } from '../slices/messageSlice';
@@ -49,6 +49,10 @@ const Navbar = () => {
       const newActualChannel = response.data;
       dispatch(currentChannelActions.deleteCurrentChannel());
       dispatch(currentChannelActions.addCurrentChannel(newActualChannel));
+    }).catch((error) => {
+      if (axios.isAxiosError(error)) {
+        toast(t('notify.networkError'));
+      }
     });
   };
   const createChannel = () => {
@@ -74,6 +78,10 @@ const Navbar = () => {
       notify('notify.renameChannel');
       dispatch(currentChannelActions.deleteCurrentChannel());
       dispatch(currentChannelActions.addCurrentChannel(response.data));
+    }).catch((error) => {
+      if (axios.isAxiosError(error)) {
+        toast(t('notify.networkError'));
+      }
     });
   };
 
@@ -103,6 +111,10 @@ const Navbar = () => {
       const defaultChannel = { id: '1', name: 'general', removable: false };
       dispatch(currentChannelActions.addCurrentChannel(defaultChannel));
       notify('notify.removeChannel');
+    }).catch((error) => {
+      if (axios.isAxiosError(error)) {
+        toast(t('notify.networkError'));
+      }
     });
   };
   const deleteChannel = (channelId) => {
@@ -148,9 +160,7 @@ const Navbar = () => {
                       <Dropdown.Toggle split variant="btn" id="dropdown-custom-2" />
                       <Dropdown.Menu className="super-colors">
                         <Dropdown.Item eventKey="1" onClick={() => renameChannel(channel.id)}>{t('button.rename')}</Dropdown.Item>
-
                         <Dropdown.Item eventKey="2" onClick={() => deleteChannel(channel.id)}>{t('button.delete')}</Dropdown.Item>
-
                       </Dropdown.Menu>
                     </>
                   )
@@ -160,7 +170,6 @@ const Navbar = () => {
           },
         )}
       </div>
-      <ToastContainer />
     </div>
   );
 };

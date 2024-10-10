@@ -1,5 +1,6 @@
 import { useFormik } from 'formik';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -46,6 +47,9 @@ const RegistrationPage = () => {
         }).catch((error) => {
           if (error.status === 409) {
             setVisibilityWarning('visible');
+          }
+          if (axios.isAxiosError(error)) {
+            toast(t('notify.networkError'));
           }
         });
     },
