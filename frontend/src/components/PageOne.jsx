@@ -64,7 +64,7 @@ const PageOne = () => {
           }
         });
     }
-  }, [user, navigate, dispatch]);
+  }, [user, navigate, dispatch, t]);
 
   socket.on('newMessage', (payload) => {
     dispatch(messagesActions.addMessage(payload));
