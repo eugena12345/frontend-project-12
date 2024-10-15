@@ -3,10 +3,11 @@ env:
   es2021: true
 
 extends:
+  - react
   - airbnb
-  - plugin:react/recommended
+  #- plugin:react/recommended
   # - plugin:functional/recommended
-  - plugin:react-hooks/recommended
+  #- plugin:react-hooks/recommended
 
 parserOptions:
   ecmaFeatures:
