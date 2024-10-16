@@ -7,14 +7,14 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { actions as autorizedActions } from '../slices/auorizeSlice';
 
-const Header = ({ setUser }) => {
+const Header = ({ onLogoutClick }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const userToken = localStorage.getItem('token');
 
   const logout = () => {
-    setUser(null);
+    onLogoutClick();
     dispatch(autorizedActions.logout());
   };
 

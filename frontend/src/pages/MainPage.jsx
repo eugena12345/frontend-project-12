@@ -92,7 +92,7 @@ const MainPage = () => {
   return (
     <div className="container  vh-100 mw-100 d-flex flex-column">
       <div className="row ">
-        <Header setUser={setUser} />
+        <Header onLogoutClick={() => setUser(null)} />
       </div>
       <div className="row  m-3 mh-100 h-100">
         <div className="container overflow-hidden rounded shadow flex-row">
