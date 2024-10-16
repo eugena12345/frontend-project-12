@@ -20,7 +20,7 @@ import ActualChat from './ActualCaht';
 
 const socket = io('/');
 
-const PageOne = () => {
+const MainPage = () => {
   const userToken = localStorage.getItem('token');
   const [user, setUser] = useState(userToken);
   const dispatch = useDispatch();
@@ -110,4 +110,4 @@ const PageOne = () => {
   );
 };
 
-export default PageOne;
+export default MainPage;

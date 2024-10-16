@@ -1,7 +1,7 @@
 import './App.css';
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import PageOne from './components/PageOne';
+import MainPage from './components/MainPage';
 import LoginPage from './components/LoginPage';
 import NotFoundPage from './components/NotFoundPage';
 import RegistrationPage from './components/RegistrationPage';
@@ -11,7 +11,7 @@ const App = () => (
   <BrowserRouter>
     <Routes>
       <Route path="*" element={<NotFoundPage />} />
-      <Route path="/" element={<PageOne />} />
+      <Route path="/" element={<MainPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<RegistrationPage />} />
     </Routes>
