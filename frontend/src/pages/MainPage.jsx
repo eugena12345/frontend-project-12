@@ -5,9 +5,7 @@ import {
 } from 'react-redux';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { io } from 'socket.io-client';
 import { useTranslation } from 'react-i18next';
-import store from '../slices/index';
 import { actions as channelsActions } from '../slices/channelsSlice';
 import {
   actions as currentChannelActions,
@@ -17,8 +15,6 @@ import { actions as messagesActions } from '../slices/messageSlice';
 import Navbar from '../components/Navbar';
 import Header from '../components/Header';
 import ActualChat from '../components/ActualCaht';
-
-const socket = io('/');
 
 const MainPage = () => {
   const userToken = localStorage.getItem('token');
@@ -65,29 +61,6 @@ const MainPage = () => {
         });
     }
   }, [user, navigate, dispatch, t]);
-
-  socket.on('newMessage', (payload) => {
-    dispatch(messagesActions.addMessage(payload));
-  });
-
-  socket.on('newChannel', (payload) => {
-    dispatch(channelsActions.addChannel(payload));
-  });
-
-  socket.on('removeChannel', (payload) => {
-    dispatch(channelsActions.removeChannel(payload.id));
-    //  удалить сообщения и перекинуть в канал
-  });
-
-  socket.on('renameChannel', (payload) => {
-    dispatch(channelsActions.updateChannel({ id: payload.id, changes: { name: payload.name } }));
-    const state = store.getState();
-    const currentChannel = state.currentChannel.ids[0];
-    if (currentChannel === payload.id) {
-      dispatch(currentChannelActions
-        .updateCurrentChannel({ id: payload.id, changes: { name: payload.name } }));
-    }
-  });
 
   return (
     <div className="container  vh-100 mw-100 d-flex flex-column">
