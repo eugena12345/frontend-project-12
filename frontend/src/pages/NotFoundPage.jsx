@@ -7,7 +7,7 @@ const NotFoundPage = () => {
 
   return ((
     <div>
-      404 (not found)
+      {t('404')}
       {t('goTo')}
       <Link to="/login">
         {' '}

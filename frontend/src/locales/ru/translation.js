@@ -18,6 +18,7 @@ export default {
     channelName: 'Название канала',
     goTo: 'перейти на',
     autorizationPage: 'страницу авторизации',
+    404: '404 (not found) Страница не найдена ',
     validationError: {
       required: 'Обязательное поле',
       minNameLength: 'От 3 до 20 символов',
