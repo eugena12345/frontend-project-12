@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useTranslation } from 'react-i18next';
-import Header from './Header';
+import Header from '../components/Header';
 import { actions as autorizedActions } from '../slices/auorizeSlice';
 
 const LoginPage = () => {

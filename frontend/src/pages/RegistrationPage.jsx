@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 import * as yup from 'yup';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Header from './Header';
+import Header from '../components/Header';
 import { actions as autorizedActions } from '../slices/auorizeSlice';
 
 const RegistrationPage = () => {

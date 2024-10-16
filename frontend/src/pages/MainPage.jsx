@@ -14,9 +14,9 @@ import {
 } from '../slices/actualChannelSlice';
 import { actions as messagesActions } from '../slices/messageSlice';
 
-import Navbar from './Navbar';
-import Header from './Header';
-import ActualChat from './ActualCaht';
+import Navbar from '../components/Navbar';
+import Header from '../components/Header';
+import ActualChat from '../components/ActualCaht';
 
 const socket = io('/');
 

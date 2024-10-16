@@ -1,10 +1,10 @@
 import './App.css';
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import MainPage from './components/MainPage';
-import LoginPage from './components/LoginPage';
-import NotFoundPage from './components/NotFoundPage';
-import RegistrationPage from './components/RegistrationPage';
+import MainPage from './pages/MainPage';
+import LoginPage from './pages/LoginPage';
+import NotFoundPage from './pages/NotFoundPage';
+import RegistrationPage from './pages/RegistrationPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => (
