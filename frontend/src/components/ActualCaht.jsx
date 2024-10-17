@@ -2,8 +2,8 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import React, { useEffect, useRef } from 'react';
 import AddMessage from './AddMessage';
-import { selectors as currentChannelSelectors } from '../slices/actualChannelSlice';
-import { selectors as messagesSelectors } from '../slices/messageSlice';
+import { selectors as currentChannelSelectors } from '../store/slices/actualChannelSlice';
+import { selectors as messagesSelectors } from '../store/slices/messageSlice';
 
 const ActualChat = () => {
   const messageEl = useRef(null);

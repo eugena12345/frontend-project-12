@@ -7,13 +7,13 @@ import { I18nextProvider } from 'react-i18next';
 import { ToastContainer } from 'react-toastify';
 import { io } from 'socket.io-client';
 import App from './App';
-import store from './slices/index';
+import store from './store/index';
 import i18n from './i18n';
-import { actions as channelsAct } from './slices/channelsSlice';
+import { actions as channelsAct } from './store/slices/channelsSlice';
 import {
   actions as currentChannelActions,
-} from './slices/actualChannelSlice';
-import { actions as messagesActions } from './slices/messageSlice';
+} from './store/slices/actualChannelSlice';
+import { actions as messagesActions } from './store/slices/messageSlice';
 
 console.log(store);
 const socket = io('/');

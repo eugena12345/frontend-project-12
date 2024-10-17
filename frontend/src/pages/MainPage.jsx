@@ -6,11 +6,11 @@ import {
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
-import { actions as channelsActions } from '../slices/channelsSlice';
+import { actions as channelsActions } from '../store/slices/channelsSlice';
 import {
   actions as currentChannelActions,
-} from '../slices/actualChannelSlice';
-import { actions as messagesActions } from '../slices/messageSlice';
+} from '../store/slices/actualChannelSlice';
+import { actions as messagesActions } from '../store/slices/messageSlice';
 
 import Navbar from '../components/Navbar';
 import Header from '../components/Header';

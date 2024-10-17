@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { actions as autorizedActions } from '../slices/auorizeSlice';
+import { actions as autorizedActions } from '../store/slices/auorizeSlice';
 
 const Header = ({ onLogoutClick }) => {
   const navigate = useNavigate();

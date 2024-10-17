@@ -9,7 +9,7 @@ import * as yup from 'yup';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Header from '../components/Header';
-import { actions as autorizedActions } from '../slices/auorizeSlice';
+import { actions as autorizedActions } from '../store/slices/auorizeSlice';
 
 const RegistrationPage = () => {
   const dispatch = useDispatch();
