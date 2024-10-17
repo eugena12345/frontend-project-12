@@ -36,6 +36,7 @@ export default {
       renameChannel: 'Канал переименован',
       removeChannel: 'Канал удален',
       networkError: 'Ошибка соединения',
+      notAutorized: 'Пользователь не авторизован',
     },
     button: {
       cancel: 'Отмена',

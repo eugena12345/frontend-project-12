@@ -11,6 +11,7 @@ import {
   actions as currentChannelActions,
 } from '../store/slices/actualChannelSlice';
 import { actions as messagesActions } from '../store/slices/messageSlice';
+import { actions as autorizeActions } from '../store/slices/auorizeSlice';
 
 import Navbar from '../components/Navbar';
 import Header from '../components/Header';
@@ -24,48 +25,57 @@ const MainPage = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    if (!user) {
-      navigate('/login', { replace: false });
-    } else {
-      axios.get('/api/v1/channels', {
-        headers: {
-          Authorization: `Bearer ${user}`,
-        },
+    axios.get('/api/v1/channels', {
+      headers: {
+        Authorization: `Bearer ${user}`,
+      },
+    })
+      .then((response) => {
+        dispatch(channelsActions.addChannels(response.data));
+        // найти канал дженерал и его задиспатчить
+        const initialCurrentChannel = { id: '1', name: 'general', removable: false };
+        dispatch(currentChannelActions.addCurrentChannel(initialCurrentChannel));
       })
-        .then((response) => {
-          dispatch(channelsActions.addChannels(response.data));
-          // найти канал дженерал и его задиспатчить
-          const initialCurrentChannel = { id: '1', name: 'general', removable: false };
-          dispatch(currentChannelActions.addCurrentChannel(initialCurrentChannel));
-        })
-        .catch((error) => {
-          if (axios.isAxiosError(error)) {
+      .catch((error) => {
+        if (axios.isAxiosError(error)) {
+          if (error.status === 401) {
+            toast(t('notify.notAutorized'));
+          } else {
             toast(t('notify.networkError'));
           }
-        });
+        }
+      });
 
-      axios.get('/api/v1/messages', {
-        headers: {
-          Authorization: `Bearer ${user}`,
-        },
-      })
-        .then((response) => {
+    axios.get('/api/v1/messages', {
+      headers: {
+        Authorization: `Bearer ${user}`,
+      },
+    })
+      .then((response) => {
         //   console.log('axios response messages', response.data);
         // =>[{ id: '1', body: 'text message', channelId: '1', username: 'admin }, ...]
-          dispatch(messagesActions.addMessages(response.data));
-        })
-        .catch((error) => {
-          if (axios.isAxiosError(error)) {
+        dispatch(messagesActions.addMessages(response.data));
+      })
+      .catch((error) => {
+        if (axios.isAxiosError(error)) {
+          if (error.status === 401) {
+            toast(t('notify.notAutorized'));
+          } else {
             toast(t('notify.networkError'));
           }
-        });
-    }
+        }
+      });
   }, [user, navigate, dispatch, t]);
+
+  const logout = () => {
+    setUser(null);
+    dispatch(autorizeActions.logout());
+  };
 
   return (
     <div className="container  vh-100 mw-100 d-flex flex-column">
       <div className="row ">
-        <Header onLogoutClick={() => setUser(null)} />
+        <Header onLogoutClick={logout} />
       </div>
       <div className="row  m-3 mh-100 h-100">
         <div className="container overflow-hidden rounded shadow flex-row">

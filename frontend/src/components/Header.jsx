@@ -16,6 +16,9 @@ const Header = ({ onLogoutClick }) => {
   const logout = () => {
     onLogoutClick();
     dispatch(autorizedActions.logout());
+    // мне не нравится что нужно принудительно выбрасывать на страницу.
+    // а на главной странице повторно защита не срабатывает автоматически при кноплке логаут
+    navigate('/login', { replace: false });
   };
 
   const goToMainPage = () => {
