@@ -14,6 +14,7 @@ import {
   actions as currentChannelActions,
 } from './store/slices/actualChannelSlice';
 import { actions as messagesActions } from './store/slices/messageSlice';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 console.log(store);
 const socket = io('/');
