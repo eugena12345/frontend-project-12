@@ -98,7 +98,7 @@ const LoginPage = () => {
                 {t('noAccount')}
                 {' '}
                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                <a href="#" className="text-primary">{t('registrationHere')}</a>
+                <p className="text-primary"><u>{t('registrationHere')}</u></p>
               </div>
             </div>
           </div>
