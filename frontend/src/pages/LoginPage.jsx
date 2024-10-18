@@ -2,7 +2,7 @@ import { useFormik } from 'formik';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { toast } from 'react-toastify';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -15,13 +15,6 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const user = localStorage.getItem('token');
-
-  useEffect(() => {
-    if (user) {
-      navigate('/', { replace: false });
-    }
-  });
 
   const formik = useFormik({
     initialValues: {
