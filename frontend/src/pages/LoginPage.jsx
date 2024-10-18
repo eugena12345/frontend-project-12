@@ -2,7 +2,7 @@ import { useFormik } from 'formik';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -16,8 +16,6 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const user = localStorage.getItem('token');
-  const [visibilityWarning, setVisibilityWarning] = useState('invisible');
-  const warningStyle = `bg-danger text-light p-3 m-1 text-center ${visibilityWarning}`;
 
   useEffect(() => {
     if (user) {
@@ -30,7 +28,7 @@ const LoginPage = () => {
       username: '',
       password: '',
     },
-    onSubmit: (values) => {
+    onSubmit: (values, actions) => {
       const newUser = { username: values.username, password: values.password };
       axios.post('/api/v1/login', newUser)
         .then((response) => {
@@ -40,9 +38,8 @@ const LoginPage = () => {
         })
         .catch((error) => {
           if (error.status === 401) {
-            setVisibilityWarning('visible');
-          }
-          if (axios.isAxiosError(error)) {
+            actions.setFieldError('password', t('serverError.userNotExsist'));
+          } else if (axios.isAxiosError(error)) {
             toast(t('notify.networkError'));
           }
         });
@@ -74,6 +71,7 @@ const LoginPage = () => {
                       onChange={formik.handleChange}
                       value={formik.values.username}
                     />
+
                   </FloatingLabel>
                 </Form.Group>
 
@@ -91,11 +89,16 @@ const LoginPage = () => {
                     />
                   </FloatingLabel>
                 </Form.Group>
+                {
+                  formik.errors.password
+                  && <p className="bg-danger text-light p-3 m-1 text-center">{formik.errors.password}</p>
+                }
 
                 <Button variant="primary" type="submit">
                   {t('logIn')}
                 </Button>
               </Form>
+
               {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,
                jsx-a11y/no-static-element-interactions */}
               <div className="registration" onClick={goToRegistration}>
@@ -104,8 +107,6 @@ const LoginPage = () => {
                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                 <a href="#" className="text-primary">{t('registrationHere')}</a>
               </div>
-              <div className={warningStyle}>{t('serverError.userNotExsist')}</div>
-
             </div>
           </div>
         </div>
