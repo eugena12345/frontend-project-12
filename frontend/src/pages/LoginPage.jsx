@@ -27,11 +27,11 @@ const LoginPage = () => {
 
   const formik = useFormik({
     initialValues: {
-      floatingInput: '',
-      floatingPassword: '',
+      username: '',
+      password: '',
     },
     onSubmit: (values) => {
-      const newUser = { username: values.floatingInput, password: values.floatingPassword };
+      const newUser = { username: values.username, password: values.password };
       axios.post('/api/v1/login', newUser)
         .then((response) => {
           const currentUser = response.data;
@@ -63,7 +63,7 @@ const LoginPage = () => {
 
                 <Form.Group className="mb-3" controlId="name">
                   <FloatingLabel
-                    controlId="floatingInput"
+                    controlId="username"
                     label={t('enterName')}
                     className="mb-3"
                   >
@@ -72,14 +72,14 @@ const LoginPage = () => {
                       type="text"
                       placeholder="Enter name"
                       onChange={formik.handleChange}
-                      value={formik.values.floatingInput}
+                      value={formik.values.username}
                     />
                   </FloatingLabel>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="password">
                   <FloatingLabel
-                    controlId="floatingPassword"
+                    controlId="password"
                     label={t('enterPassword')}
                     className="mb-3"
                   >
@@ -87,7 +87,7 @@ const LoginPage = () => {
                       type="password"
                       placeholder="Password"
                       onChange={formik.handleChange}
-                      value={formik.values.floatingPassword}
+                      value={formik.values.password}
                     />
                   </FloatingLabel>
                 </Form.Group>
