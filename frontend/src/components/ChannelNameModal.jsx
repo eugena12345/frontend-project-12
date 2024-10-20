@@ -23,6 +23,10 @@ const ChannelNameModal = ({ show, onHide, channelsNameColl }) => {
   const userToken = store.getState().user.ids[0];
   const dispatch = useDispatch();
   const notify = (notifyMessage) => toast(t(notifyMessage));
+  const setCurrentChannel = (channelData) => {
+    dispatch(currentChannelActions.deleteCurrentChannel());
+    dispatch(currentChannelActions.addCurrentChannel(channelData));
+  };
 
   const addNewChannel = (newChannel) => {
     const censoredChannelName = filter.clean(newChannel.name);
@@ -32,8 +36,7 @@ const ChannelNameModal = ({ show, onHide, channelsNameColl }) => {
         dispatch(channelsSliceActions.addChannel(response.data));
         notify('notify.createChannel');
         const newActualChannel = response.data;
-        dispatch(currentChannelActions.deleteCurrentChannel());
-        dispatch(currentChannelActions.addCurrentChannel(newActualChannel));
+        setCurrentChannel(newActualChannel);
       }).catch((error) => {
         if (axios.isAxiosError(error)) {
           notify('notify.networkError');

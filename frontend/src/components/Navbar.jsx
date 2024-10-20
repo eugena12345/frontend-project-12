@@ -21,7 +21,6 @@ const Navbar = () => {
   const [show, setShow] = useState(false);
   const [showRename, setShowRename] = useState({ open: false, data: {} });
   const [showConf, setShowConf] = useState({ open: false, data: {} });
-  // const [modalContent, setModalContent] = useState({});
   const handleClose = () => setShow(false);
   const handleCloseRename = () => setShowRename({ open: false, data: {} });
 
@@ -32,11 +31,14 @@ const Navbar = () => {
   const currentChannel = useSelector(currentChannelSelectors.selectAll)[0];
   const messages = useSelector(messagesSelectors.selectAll);
   const channelsNameColl = channels.map((channel) => channel.name);
+  const setCurrentChannel = (channelData) => {
+    dispatch(currentChannelActions.deleteCurrentChannel());
+    dispatch(currentChannelActions.addCurrentChannel(channelData));
+  };
   const selectChannel = (e) => {
     e.preventDefault();
     const [newCurrentChannel] = channels.filter((channel) => channel.id === e.target.id);
-    dispatch(currentChannelActions.deleteCurrentChannel());
-    dispatch(currentChannelActions.addCurrentChannel(newCurrentChannel));
+    setCurrentChannel(newCurrentChannel);
   };
   const notify = (notifyMessage) => toast(t(notifyMessage));
 
@@ -64,9 +66,8 @@ const Navbar = () => {
       const messagesForDelete = messages.filter((message) => message.channelId === deletedChannelID)
         .map((item) => item.id);
       dispatch(messagesSliceActions.removeMessages(messagesForDelete));
-      dispatch(currentChannelActions.deleteCurrentChannel());
       const defaultChannel = { id: '1', name: 'general', removable: false };
-      dispatch(currentChannelActions.addCurrentChannel(defaultChannel));
+      setCurrentChannel(defaultChannel);
       notify('notify.removeChannel');
     }).catch((error) => {
       if (axios.isAxiosError(error)) {
@@ -94,7 +95,6 @@ const Navbar = () => {
         show={show}
         onHide={handleClose}
         channelsNameColl={channelsNameColl}
-        // modalContent={modalContent}
       />
       <RenameChannelModal
         show={showRename.open}

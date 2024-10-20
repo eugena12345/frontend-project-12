@@ -18,7 +18,6 @@ import store from '../store';
 const RenameChannelModal = ({
   show, onHide, channelsNameColl, modalContent,
 }) => {
-  console.log(modalContent);
   const { t } = useTranslation();
   const {
     id,
@@ -28,7 +27,10 @@ const RenameChannelModal = ({
 
   const userToken = store.getState().user.ids[0];
   const notify = (notifyMessage) => toast(t(notifyMessage));
-
+  const setCurrentChannel = (channelData) => {
+    dispatch(currentChannelActions.deleteCurrentChannel());
+    dispatch(currentChannelActions.addCurrentChannel(channelData));
+  };
   const changeChannelName = (newName, channelId) => {
     const censoredChannelName = filter.clean(newName.name);
     patchChangedChannelName(channelId, censoredChannelName, userToken)
@@ -36,8 +38,7 @@ const RenameChannelModal = ({
         dispatch(channelsSliceActions
           .updateChannel({ id: response.data.id, changes: { name: response.data.name } }));
         notify('notify.renameChannel');
-        dispatch(currentChannelActions.deleteCurrentChannel());
-        dispatch(currentChannelActions.addCurrentChannel(response.data));
+        setCurrentChannel(response.data);
       }).catch((error) => {
         if (axios.isAxiosError(error)) {
           notify('notify.networkError');
@@ -59,8 +60,6 @@ const RenameChannelModal = ({
     }),
     onSubmit: (values) => {
       const newChannel = { name: values.channelName };
-      console.log('id', id);
-      // const channelId = id;
       changeChannelName(newChannel, id);
       onHide();
     },
