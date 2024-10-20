@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import React from 'react';
 import * as yup from 'yup';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -16,8 +16,6 @@ const RegistrationPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [visibilityWarning, setVisibilityWarning] = useState('invisible');
-  const warningStyle = `bg-danger text-light p-3 m-1 text-center ${visibilityWarning}`;
 
   const formik = useFormik({
     initialValues: {
@@ -37,7 +35,7 @@ const RegistrationPage = () => {
         .required(t('validationError.required'))
         .oneOf([yup.ref('password'), null], t('validationError.matchPsw')),
     }),
-    onSubmit: (values) => {
+    onSubmit: (values, actions) => {
       const user = { username: values.name, password: values.password };
 
       registrateNewUser(user)
@@ -47,7 +45,7 @@ const RegistrationPage = () => {
           navigate('/', { replace: false });
         }).catch((error) => {
           if (error.status === 409) {
-            setVisibilityWarning('visible');
+            actions.setFieldError('name', t('serverError.userExsist'));
           }
           if (axios.isAxiosError(error)) {
             toast(t('notify.networkError'));
@@ -95,10 +93,13 @@ const RegistrationPage = () => {
                   />
                   <p className="text-danger small">{formik.errors.repeatPassword}</p>
                 </Form.Group>
+                {
+                  formik.errors.name
+                  && <p className="bg-danger text-light p-3 m-1 text-center">{formik.errors.name}</p>
+                }
                 <Button variant="primary" type="submit">
                   {t('register')}
                 </Button>
-                <div className={warningStyle}>{t('serverError.userExsist')}</div>
               </Form>
 
             </div>
