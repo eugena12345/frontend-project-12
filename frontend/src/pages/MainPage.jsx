@@ -17,6 +17,7 @@ import { getChannels, getMessages } from '../servises/api';
 import Navbar from '../components/Navbar';
 import Header from '../components/Header';
 import ActualChat from '../components/ActualCaht';
+import errors from '../servises/errorCodes';
 
 const MainPage = () => {
   const userToken = localStorage.getItem('token');
@@ -35,7 +36,7 @@ const MainPage = () => {
       })
       .catch((error) => {
         if (axios.isAxiosError(error)) {
-          if (error.status === 401) {
+          if (error.status === errors.userNotExsist) {
             toast(t('notify.notAutorized'));
           } else {
             toast(t('notify.networkError'));
@@ -49,7 +50,7 @@ const MainPage = () => {
       })
       .catch((error) => {
         if (axios.isAxiosError(error)) {
-          if (error.status === 401) {
+          if (error.status === errors.userNotExsist) {
             toast(t('notify.notAutorized'));
           } else {
             toast(t('notify.networkError'));

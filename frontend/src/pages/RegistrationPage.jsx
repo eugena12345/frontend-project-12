@@ -11,6 +11,7 @@ import Button from 'react-bootstrap/Button';
 import Header from '../components/Header';
 import { actions as autorizedActions } from '../store/slices/auorizeSlice';
 import { registrateNewUser } from '../servises/api';
+import errors from '../servises/errorCodes';
 
 const RegistrationPage = () => {
   const dispatch = useDispatch();
@@ -44,7 +45,7 @@ const RegistrationPage = () => {
           dispatch(autorizedActions.login({ ...currentUser, id: 1 }));
           navigate('/', { replace: false });
         }).catch((error) => {
-          if (error.status === 409) {
+          if (error.status === errors.userExist) {
             actions.setFieldError('name', t('serverError.userExsist'));
           }
           if (axios.isAxiosError(error)) {

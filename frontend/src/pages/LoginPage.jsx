@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import Header from '../components/Header';
 import { actions as autorizedActions } from '../store/slices/auorizeSlice';
 import { postNewUser } from '../servises/api';
+import errors from '../servises/errorCodes';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ const LoginPage = () => {
           navigate('/', { replace: false });
         })
         .catch((error) => {
-          if (error.status === 401) {
+          if (error.status === errors.userNotExsist) {
             actions.setFieldError('password', t('serverError.userNotExsist'));
           } else if (axios.isAxiosError(error)) {
             toast(t('notify.networkError'));
