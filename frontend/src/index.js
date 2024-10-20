@@ -27,7 +27,12 @@ socket.on('newChannel', (payload) => {
 
 socket.on('removeChannel', (payload) => {
   store.dispatch(channelsAct.removeChannel(payload.id));
-  //  удалить сообщения и перекинуть в канал
+  const { entities } = store.getState().messages;
+  const messageForRemove = Object.values(entities)
+    .filter((item) => item.channelId === payload.id);
+  const messageIdsForRemove = messageForRemove.map((filtredItem) => filtredItem.id);
+  store.dispatch(messagesActions.removeMessages(messageIdsForRemove));
+  //  перекинуть в канал
 });
 
 socket.on('renameChannel', (payload) => {
