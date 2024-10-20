@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
@@ -16,7 +15,6 @@ import {
 import { actions as messagesActions } from './store/slices/messageSlice';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-console.log(store);
 const socket = io('/');
 
 socket.on('newMessage', (payload) => {
