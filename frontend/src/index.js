@@ -16,6 +16,10 @@ import { actions as messagesActions } from './store/slices/messageSlice';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const socket = io('/');
+const setCurrentChannel = (channelData) => {
+  store.dispatch(currentChannelActions.deleteCurrentChannel());
+  store.dispatch(currentChannelActions.addCurrentChannel(channelData));
+};
 
 socket.on('newMessage', (payload) => {
   store.dispatch(messagesActions.addMessage(payload));
@@ -32,7 +36,8 @@ socket.on('removeChannel', (payload) => {
     .filter((item) => item.channelId === payload.id);
   const messageIdsForRemove = messageForRemove.map((filtredItem) => filtredItem.id);
   store.dispatch(messagesActions.removeMessages(messageIdsForRemove));
-  //  перекинуть в канал
+  const defaultChannel = { id: '1', name: 'general', removable: false };
+  setCurrentChannel(defaultChannel);
 });
 
 socket.on('renameChannel', (payload) => {
