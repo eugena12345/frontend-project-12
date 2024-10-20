@@ -18,12 +18,14 @@ import store from '../store';
 const RenameChannelModal = ({
   show, onHide, channelsNameColl, modalContent,
 }) => {
+  console.log(modalContent);
   const { t } = useTranslation();
   const {
     id,
     oldChannelName,
   } = modalContent;
   const dispatch = useDispatch();
+
   const userToken = store.getState().user.ids[0];
   const notify = (notifyMessage) => toast(t(notifyMessage));
 
@@ -57,8 +59,9 @@ const RenameChannelModal = ({
     }),
     onSubmit: (values) => {
       const newChannel = { name: values.channelName };
-      const channelId = id;
-      changeChannelName(newChannel, channelId);
+      console.log('id', id);
+      // const channelId = id;
+      changeChannelName(newChannel, id);
       onHide();
     },
   });

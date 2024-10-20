@@ -19,12 +19,11 @@ const Navbar = () => {
   const userToken = store.getState().user.ids[0];
   const { t } = useTranslation();
   const [show, setShow] = useState(false);
-  const [showRename, setShowRename] = useState(false);
-
-  const [showConf, setShowConf] = useState(false);
-  const [modalContent, setModalContent] = useState({});
+  const [showRename, setShowRename] = useState({ open: false, data: {} });
+  const [showConf, setShowConf] = useState({ open: false, data: {} });
+  // const [modalContent, setModalContent] = useState({});
   const handleClose = () => setShow(false);
-  const handleCloseRename = () => setShowRename(false);
+  const handleCloseRename = () => setShowRename({ open: false, data: {} });
 
   const handleCloseConf = () => setShowConf(false);
   const handleShow = () => setShow(true);
@@ -45,11 +44,13 @@ const Navbar = () => {
 
   const renameChannel = (channelId) => {
     const oldChannelName = channels.filter((channel) => channel.id === channelId)[0].name;
-    setModalContent({
-      id: channelId,
-      oldChannelName,
+    setShowRename({
+      open: true,
+      data: {
+        id: channelId,
+        oldChannelName,
+      },
     });
-    setShowRename(true);
   };
 
   const removeChannel = (channelId) => {
@@ -74,11 +75,13 @@ const Navbar = () => {
     });
   };
   const deleteChannel = (channelId) => {
-    setModalContent({
-      modalCallback: removeChannel,
-      id: channelId,
+    setShowConf({
+      open: true,
+      data: {
+        modalCallback: removeChannel,
+        id: channelId,
+      },
     });
-    setShowConf(channelId);
   };
 
   return (
@@ -94,15 +97,15 @@ const Navbar = () => {
         // modalContent={modalContent}
       />
       <RenameChannelModal
-        show={showRename}
+        show={showRename.open}
         onHide={handleCloseRename}
         channelsNameColl={channelsNameColl}
-        modalContent={modalContent}
+        modalContent={showRename.data}
       />
       <ConfirmationModal
-        show={showConf}
+        show={showConf.open}
         handleClose={handleCloseConf}
-        modalContent={modalContent}
+        modalContent={showConf.data}
       />
 
       <div className="channels">
