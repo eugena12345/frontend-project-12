@@ -1,5 +1,6 @@
 export default {
   translation: {
+    hexletChat: 'Hexlet chat',
     logOut: 'Выйти',
     send: 'Отправить',
     message_one: '{{count}} сообщение',

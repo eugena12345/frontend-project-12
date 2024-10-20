@@ -29,7 +29,7 @@ const Header = ({ onLogoutClick }) => {
     <Nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-primary px-4">
       {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,
        jsx-a11y/no-noninteractive-element-interactions */}
-      <h2 className="h-2 text-white" onClick={goToMainPage}>Hexlet chat</h2>
+      <h2 className="h-2 text-white" onClick={goToMainPage}>{t('hexletChat')}</h2>
       <div className="p-2 ms-auto">
         {userToken && <Button className="btn btn-outline-light" onClick={logout}>{t('logOut')}</Button>}
       </div>
