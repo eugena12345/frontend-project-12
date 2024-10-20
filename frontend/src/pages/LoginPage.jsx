@@ -28,7 +28,8 @@ const LoginPage = () => {
       postNewUser(newUser)
         .then((response) => {
           const currentUser = response.data;
-          dispatch(autorizedActions.login({ ...currentUser, id: 1 }));
+          console.log('currentUser', currentUser);
+          dispatch(autorizedActions.login({ ...currentUser, id: currentUser.token }));
           navigate('/', { replace: false });
         })
         .catch((error) => {

@@ -14,9 +14,10 @@ import ChannelNameModal from './ChannelNameModal';
 import ConfirmationModal from './ConfirmationModal';
 import 'react-toastify/dist/ReactToastify.css';
 import { postNewChannel, patchChangedChannelName } from '../servises/api';
+import store from '../store';
 
 const Navbar = () => {
-  const userToken = localStorage.getItem('token');
+  const userToken = store.getState().user.ids[0];
   const { t } = useTranslation();
   const [show, setShow] = useState(false);
   const [showConf, setShowConf] = useState(false);

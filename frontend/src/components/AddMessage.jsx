@@ -6,13 +6,14 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
+import { selectors as userSelectors } from '../store/slices/auorizeSlice';
 import { postNewMessage } from '../servises/api';
 
 filter.loadDictionary('ru');
 
 const AddMessage = ({ currentChannelId }) => {
-  const userToken = localStorage.getItem('token');
-  const userName = localStorage.getItem('username');
+  const { token, username } = useSelector(userSelectors.selectAll)[0];
   const { t } = useTranslation();
 
   const sendMessage = (e) => {
@@ -26,11 +27,11 @@ const AddMessage = ({ currentChannelId }) => {
     const newMessage = {
       body: censoredMessage,
       channelId: currentChannelId,
-      username: userName,
+      username,
     };
     form.reset();
 
-    postNewMessage(newMessage, userToken)
+    postNewMessage(newMessage, token)
       .then(() => {
       //  console.log(response.data);
       // => { id: '1', body: 'new message', channelId: '1', username: 'admin }

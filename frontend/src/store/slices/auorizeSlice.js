@@ -8,13 +8,19 @@ const slice = createSlice({
   initialState,
   reducers: {
     login: (state, action) => {
+      // console.log(action);
       localStorage.setItem('token', action.payload.token);
       localStorage.setItem('username', action.payload.username);
+      autorizeAdapter.addOne(state, action.payload);
     },
 
-    logout: () => { localStorage.removeItem('token'); },
+    logout: (state) => {
+      localStorage.removeItem('token');
+      autorizeAdapter.removeAll(state);
+    },
   },
 });
 
 export const { actions } = slice;
 export default slice.reducer;
+export const selectors = autorizeAdapter.getSelectors((state) => state.user);

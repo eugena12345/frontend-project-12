@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react'; // , useState
 import {
   useDispatch,
 } from 'react-redux';
@@ -18,10 +18,10 @@ import Navbar from '../components/Navbar';
 import Header from '../components/Header';
 import ActualChat from '../components/ActualCaht';
 import errors from '../servises/errorCodes';
+import store from '../store/index';
 
 const MainPage = () => {
-  const userToken = localStorage.getItem('token');
-  const [user, setUser] = useState(userToken);
+  const userToken = store.getState().user.ids[0];
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -57,12 +57,9 @@ const MainPage = () => {
           }
         }
       });
-  }, [user, navigate, dispatch, t, userToken]);
+  }, [navigate, dispatch, t, userToken]);
 
-  const logout = () => {
-    setUser(null);
-    dispatch(autorizeActions.logout());
-  };
+  const logout = () => dispatch(autorizeActions.logout());
 
   return (
     <div className="container  vh-100 mw-100 d-flex flex-column">

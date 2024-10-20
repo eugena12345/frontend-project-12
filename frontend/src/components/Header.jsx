@@ -6,12 +6,13 @@ import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { actions as autorizedActions } from '../store/slices/auorizeSlice';
+import store from '../store';
 
 const Header = ({ onLogoutClick }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const userToken = localStorage.getItem('token');
+  const userToken = store.getState().user.ids[0];
 
   const logout = () => {
     onLogoutClick();
