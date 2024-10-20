@@ -13,6 +13,7 @@ import { selectors as messagesSelectors, actions as messagesSliceActions } from 
 import ChannelNameModal from './ChannelNameModal';
 import ConfirmationModal from './ConfirmationModal';
 import 'react-toastify/dist/ReactToastify.css';
+import { postNewChannel, patchChangedChannelName } from '../servises/api';
 
 const Navbar = () => {
   const userToken = localStorage.getItem('token');
@@ -38,22 +39,19 @@ const Navbar = () => {
 
   const addNewChannel = (newChannel) => {
     const censoredChannelName = filter.clean(newChannel.name);
-    axios.post('/api/v1/channels', { name: censoredChannelName }, {
-      headers: {
-        Authorization: `Bearer ${userToken}`,
-      },
-    }).then((response) => {
-      handleClose();
-      dispatch(channelsSliceActions.addChannel(response.data));
-      notify('notify.createChannel');
-      const newActualChannel = response.data;
-      dispatch(currentChannelActions.deleteCurrentChannel());
-      dispatch(currentChannelActions.addCurrentChannel(newActualChannel));
-    }).catch((error) => {
-      if (axios.isAxiosError(error)) {
-        toast(t('notify.networkError'));
-      }
-    });
+    postNewChannel(censoredChannelName, userToken)
+      .then((response) => {
+        handleClose();
+        dispatch(channelsSliceActions.addChannel(response.data));
+        notify('notify.createChannel');
+        const newActualChannel = response.data;
+        dispatch(currentChannelActions.deleteCurrentChannel());
+        dispatch(currentChannelActions.addCurrentChannel(newActualChannel));
+      }).catch((error) => {
+        if (axios.isAxiosError(error)) {
+          toast(t('notify.networkError'));
+        }
+      });
   };
   const createChannel = () => {
     setModalContent({
@@ -68,21 +66,18 @@ const Navbar = () => {
 
   const changeChannelName = (newName, channelId) => {
     const censoredChannelName = filter.clean(newName.name);
-    axios.patch(`/api/v1/channels/${channelId}`, { name: censoredChannelName }, {
-      headers: {
-        Authorization: `Bearer ${userToken}`,
-      },
-    }).then((response) => {
-      dispatch(channelsSliceActions
-        .updateChannel({ id: response.data.id, changes: { name: response.data.name } }));
-      notify('notify.renameChannel');
-      dispatch(currentChannelActions.deleteCurrentChannel());
-      dispatch(currentChannelActions.addCurrentChannel(response.data));
-    }).catch((error) => {
-      if (axios.isAxiosError(error)) {
-        toast(t('notify.networkError'));
-      }
-    });
+    patchChangedChannelName(channelId, censoredChannelName, userToken)
+      .then((response) => {
+        dispatch(channelsSliceActions
+          .updateChannel({ id: response.data.id, changes: { name: response.data.name } }));
+        notify('notify.renameChannel');
+        dispatch(currentChannelActions.deleteCurrentChannel());
+        dispatch(currentChannelActions.addCurrentChannel(response.data));
+      }).catch((error) => {
+        if (axios.isAxiosError(error)) {
+          toast(t('notify.networkError'));
+        }
+      });
   };
 
   const renameChannel = (channelId) => {

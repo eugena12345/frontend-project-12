@@ -12,6 +12,7 @@ import {
 } from '../store/slices/actualChannelSlice';
 import { actions as messagesActions } from '../store/slices/messageSlice';
 import { actions as autorizeActions } from '../store/slices/auorizeSlice';
+import { getChannels, getMessages } from '../servises/api';
 
 import Navbar from '../components/Navbar';
 import Header from '../components/Header';
@@ -25,11 +26,7 @@ const MainPage = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    axios.get('/api/v1/channels', {
-      headers: {
-        Authorization: `Bearer ${user}`,
-      },
-    })
+    getChannels(userToken)
       .then((response) => {
         dispatch(channelsActions.addChannels(response.data));
         // найти канал дженерал и его задиспатчить
@@ -46,14 +43,8 @@ const MainPage = () => {
         }
       });
 
-    axios.get('/api/v1/messages', {
-      headers: {
-        Authorization: `Bearer ${user}`,
-      },
-    })
+    getMessages(userToken)
       .then((response) => {
-        //   console.log('axios response messages', response.data);
-        // =>[{ id: '1', body: 'text message', channelId: '1', username: 'admin }, ...]
         dispatch(messagesActions.addMessages(response.data));
       })
       .catch((error) => {
@@ -65,7 +56,7 @@ const MainPage = () => {
           }
         }
       });
-  }, [user, navigate, dispatch, t]);
+  }, [user, navigate, dispatch, t, userToken]);
 
   const logout = () => {
     setUser(null);

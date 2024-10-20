@@ -10,6 +10,7 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useTranslation } from 'react-i18next';
 import Header from '../components/Header';
 import { actions as autorizedActions } from '../store/slices/auorizeSlice';
+import { postNewUser } from '../servises/api';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const LoginPage = () => {
     },
     onSubmit: (values, actions) => {
       const newUser = { username: values.username, password: values.password };
-      axios.post('/api/v1/login', newUser)
+      postNewUser(newUser)
         .then((response) => {
           const currentUser = response.data;
           dispatch(autorizedActions.login({ ...currentUser, id: 1 }));

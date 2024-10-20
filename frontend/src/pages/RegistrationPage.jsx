@@ -10,6 +10,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Header from '../components/Header';
 import { actions as autorizedActions } from '../store/slices/auorizeSlice';
+import { registrateNewUser } from '../servises/api';
 
 const RegistrationPage = () => {
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ const RegistrationPage = () => {
     onSubmit: (values) => {
       const user = { username: values.name, password: values.password };
 
-      axios.post('/api/v1/signup', user)
+      registrateNewUser(user)
         .then((response) => {
           const currentUser = response.data;
           dispatch(autorizedActions.login({ ...currentUser, id: 1 }));

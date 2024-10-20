@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
+import { postNewMessage } from '../servises/api';
 
 filter.loadDictionary('ru');
 
@@ -29,14 +30,11 @@ const AddMessage = ({ currentChannelId }) => {
     };
     form.reset();
 
-    axios.post('/api/v1/messages', newMessage, {
-      headers: {
-        Authorization: `Bearer ${userToken}`,
-      },
-    }).then(() => {
+    postNewMessage(newMessage, userToken)
+      .then(() => {
       //  console.log(response.data);
       // => { id: '1', body: 'new message', channelId: '1', username: 'admin }
-    })
+      })
       .catch((error) => {
         if (axios.isAxiosError(error)) {
           toast(t('notify.networkError'));
