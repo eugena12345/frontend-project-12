@@ -1,39 +1,41 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-
+import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
-import axios from 'axios';
-
+import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
+import { toast } from 'react-toastify';
 import * as yup from 'yup';
 import filter from 'leo-profanity';
-import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
 import { actions as channelsSliceActions } from '../store/slices/channelsSlice';
 import { actions as currentChannelActions } from '../store/slices/actualChannelSlice';
-
-import { postNewChannel } from '../servises/api';
+import { patchChangedChannelName } from '../servises/api';
 import store from '../store';
 
-const ChannelNameModal = ({ show, onHide, channelsNameColl }) => {
+const RenameChannelModal = ({
+  show, onHide, channelsNameColl, modalContent,
+}) => {
   const { t } = useTranslation();
-  const userToken = store.getState().user.ids[0];
+  const {
+    id,
+    oldChannelName,
+  } = modalContent;
   const dispatch = useDispatch();
+  const userToken = store.getState().user.ids[0];
   const notify = (notifyMessage) => toast(t(notifyMessage));
 
-  const addNewChannel = (newChannel) => {
-    const censoredChannelName = filter.clean(newChannel.name);
-    postNewChannel(censoredChannelName, userToken)
+  const changeChannelName = (newName, channelId) => {
+    const censoredChannelName = filter.clean(newName.name);
+    patchChangedChannelName(channelId, censoredChannelName, userToken)
       .then((response) => {
-        onHide();
-        dispatch(channelsSliceActions.addChannel(response.data));
-        notify('notify.createChannel');
-        const newActualChannel = response.data;
+        dispatch(channelsSliceActions
+          .updateChannel({ id: response.data.id, changes: { name: response.data.name } }));
+        notify('notify.renameChannel');
         dispatch(currentChannelActions.deleteCurrentChannel());
-        dispatch(currentChannelActions.addCurrentChannel(newActualChannel));
+        dispatch(currentChannelActions.addCurrentChannel(response.data));
       }).catch((error) => {
         if (axios.isAxiosError(error)) {
           notify('notify.networkError');
@@ -42,9 +44,9 @@ const ChannelNameModal = ({ show, onHide, channelsNameColl }) => {
   };
 
   const formik = useFormik({
-    // enableReinitialize: true,
+    enableReinitialize: true,
     initialValues: {
-      channelName: '',
+      channelName: `${oldChannelName}`,
     },
     validationSchema: yup.object({
       channelName: yup.string()
@@ -55,7 +57,8 @@ const ChannelNameModal = ({ show, onHide, channelsNameColl }) => {
     }),
     onSubmit: (values) => {
       const newChannel = { name: values.channelName };
-      addNewChannel(newChannel);
+      const channelId = id;
+      changeChannelName(newChannel, channelId);
       onHide();
     },
   });
@@ -63,7 +66,7 @@ const ChannelNameModal = ({ show, onHide, channelsNameColl }) => {
   return (
     <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
-        <Modal.Title>{t('createChannel')}</Modal.Title>
+        <Modal.Title>{t('changeChannelName')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
@@ -95,4 +98,4 @@ const ChannelNameModal = ({ show, onHide, channelsNameColl }) => {
   );
 };
 
-export default ChannelNameModal;
+export default RenameChannelModal;

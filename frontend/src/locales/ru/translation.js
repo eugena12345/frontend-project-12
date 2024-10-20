@@ -18,6 +18,8 @@ export default {
     channelName: 'Название канала',
     goTo: 'перейти на',
     autorizationPage: 'страницу авторизации',
+    createChannel: 'Создание нового канала',
+    changeChannelName: 'Переименовать канал',
     404: '404 (not found) Страница не найдена ',
     validationError: {
       required: 'Обязательное поле',

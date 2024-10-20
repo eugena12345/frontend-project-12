@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
 import { selectors as channelsSelectors, actions as channelsSliceActions } from '../store/slices/channelsSlice';
 import { selectors as currentChannelSelectors, actions as currentChannelActions } from '../store/slices/actualChannelSlice';
@@ -13,16 +12,20 @@ import { selectors as messagesSelectors, actions as messagesSliceActions } from 
 import ChannelNameModal from './ChannelNameModal';
 import ConfirmationModal from './ConfirmationModal';
 import 'react-toastify/dist/ReactToastify.css';
-import { postNewChannel, patchChangedChannelName } from '../servises/api';
 import store from '../store';
+import RenameChannelModal from './RenameChannelModal';
 
 const Navbar = () => {
   const userToken = store.getState().user.ids[0];
   const { t } = useTranslation();
   const [show, setShow] = useState(false);
+  const [showRename, setShowRename] = useState(false);
+
   const [showConf, setShowConf] = useState(false);
   const [modalContent, setModalContent] = useState({});
   const handleClose = () => setShow(false);
+  const handleCloseRename = () => setShowRename(false);
+
   const handleCloseConf = () => setShowConf(false);
   const handleShow = () => setShow(true);
   const dispatch = useDispatch();
@@ -38,58 +41,15 @@ const Navbar = () => {
   };
   const notify = (notifyMessage) => toast(t(notifyMessage));
 
-  const addNewChannel = (newChannel) => {
-    const censoredChannelName = filter.clean(newChannel.name);
-    postNewChannel(censoredChannelName, userToken)
-      .then((response) => {
-        handleClose();
-        dispatch(channelsSliceActions.addChannel(response.data));
-        notify('notify.createChannel');
-        const newActualChannel = response.data;
-        dispatch(currentChannelActions.deleteCurrentChannel());
-        dispatch(currentChannelActions.addCurrentChannel(newActualChannel));
-      }).catch((error) => {
-        if (axios.isAxiosError(error)) {
-          toast(t('notify.networkError'));
-        }
-      });
-  };
-  const createChannel = () => {
-    setModalContent({
-      text: 'Создание нового канала',
-      modalCallback: addNewChannel,
-      id: null,
-      oldChannelName: '',
-
-    });
-    handleShow();
-  };
-
-  const changeChannelName = (newName, channelId) => {
-    const censoredChannelName = filter.clean(newName.name);
-    patchChangedChannelName(channelId, censoredChannelName, userToken)
-      .then((response) => {
-        dispatch(channelsSliceActions
-          .updateChannel({ id: response.data.id, changes: { name: response.data.name } }));
-        notify('notify.renameChannel');
-        dispatch(currentChannelActions.deleteCurrentChannel());
-        dispatch(currentChannelActions.addCurrentChannel(response.data));
-      }).catch((error) => {
-        if (axios.isAxiosError(error)) {
-          toast(t('notify.networkError'));
-        }
-      });
-  };
+  const createChannel = () => handleShow();
 
   const renameChannel = (channelId) => {
     const oldChannelName = channels.filter((channel) => channel.id === channelId)[0].name;
     setModalContent({
-      text: 'Переименовать канал',
-      modalCallback: changeChannelName,
       id: channelId,
       oldChannelName,
     });
-    handleShow();
+    setShowRename(true);
   };
 
   const removeChannel = (channelId) => {
@@ -109,7 +69,7 @@ const Navbar = () => {
       notify('notify.removeChannel');
     }).catch((error) => {
       if (axios.isAxiosError(error)) {
-        toast(t('notify.networkError'));
+        notify('notify.networkError');
       }
     });
   };
@@ -129,7 +89,13 @@ const Navbar = () => {
       </div>
       <ChannelNameModal
         show={show}
-        handleClose={handleClose}
+        onHide={handleClose}
+        channelsNameColl={channelsNameColl}
+        // modalContent={modalContent}
+      />
+      <RenameChannelModal
+        show={showRename}
+        onHide={handleCloseRename}
         channelsNameColl={channelsNameColl}
         modalContent={modalContent}
       />
