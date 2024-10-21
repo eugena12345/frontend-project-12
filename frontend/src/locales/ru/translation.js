@@ -7,6 +7,7 @@ export default {
     message_few: '{{count}} сообщения',
     message_many: '{{count}} сooбщений',
     channels: 'Каналы',
+    enterNik: 'Ваш ник',
     enterName: 'Имя пользователя',
     enterPassword: 'Пароль',
     repeatPassword: 'Подтвердите пароль',

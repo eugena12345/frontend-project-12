@@ -56,13 +56,13 @@ const LoginPage = () => {
                 <Form.Group className="mb-3" controlId="name">
                   <FloatingLabel
                     controlId="username"
-                    label={t('enterName')}
+                    label={t('enterNik')}
                     className="mb-3"
                   >
 
                     <Form.Control
                       type="text"
-                      placeholder="Enter name"
+                      placeholder={t('enterNik')}
                       onChange={formik.handleChange}
                       value={formik.values.username}
                     />
