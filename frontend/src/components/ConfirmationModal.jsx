@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
@@ -13,6 +12,7 @@ const ConfirmationModal = ({ show, handleClose, modalContent }) => {
     modalContent.modalCallback(id);
     handleClose();
   };
+  // handle поднять аздесь принимать  onClose show
 
   return (
     <Modal show={show} onHide={handleClose}>
