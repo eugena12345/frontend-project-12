@@ -17,7 +17,7 @@ export default {
     registrationHere: 'Регистрация здесь',
     removeChannel: 'Удалить канал',
     sure: 'Уверены?',
-    channelName: 'Название канала',
+    channelName: 'Имя канала',
     goTo: 'перейти на',
     autorizationPage: 'страницу авторизации',
     createChannel: 'Создание нового канала',
