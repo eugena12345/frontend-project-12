@@ -18,6 +18,7 @@ export default {
     removeChannel: 'Удалить канал',
     sure: 'Уверены?',
     channelName: 'Имя канала',
+    channelManagement: 'Управление каналом',
     goTo: 'перейти на',
     autorizationPage: 'страницу авторизации',
     createChannel: 'Создание нового канала',
