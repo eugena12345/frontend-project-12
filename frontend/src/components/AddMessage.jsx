@@ -46,7 +46,7 @@ const AddMessage = ({ currentChannelId }) => {
   return (
     <Form onSubmit={sendMessage}>
       <div className="d-flex flex-row">
-        <input className="form-control me-2" type="text" name="message" />
+        <input className="form-control me-2" aria-label="Новое сообщение" type="text" name="message" />
         <Button variant="primary" type="submit">
           {t('send')}
         </Button>
