@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import { selectors as userSelectors } from '../store/slices/auorizeSlice';
 import { postNewMessage } from '../servises/api';
 
-filter.loadDictionary('ru');
+filter.loadDictionary('en');
 
 const AddMessage = ({ currentChannelId }) => {
   const { token, username } = useSelector(userSelectors.selectAll)[0];
