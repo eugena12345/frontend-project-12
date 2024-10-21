@@ -29,22 +29,19 @@ const ChannelNameModal = ({ show, onHide, channelsNameColl }) => {
   };
 
   const addNewChannel = (newChannel) => {
-    const isNameGood = !filter.check(newChannel.name);
-    const censoredChannelName = newChannel.name;
-    if (isNameGood) {
-      postNewChannel(censoredChannelName, userToken)
-        .then((response) => {
-          onHide();
-          dispatch(channelsSliceActions.addChannel(response.data));
-          notify('notify.createChannel');
-          const newActualChannel = response.data;
-          setCurrentChannel(newActualChannel);
-        }).catch((error) => {
-          if (axios.isAxiosError(error)) {
-            notify('notify.networkError');
-          }
-        });
-    }
+    const censoredChannelName = filter.clean(newChannel.name);
+    postNewChannel(censoredChannelName, userToken)
+      .then((response) => {
+        onHide();
+        dispatch(channelsSliceActions.addChannel(response.data));
+        notify('notify.createChannel');
+        const newActualChannel = response.data;
+        setCurrentChannel(newActualChannel);
+      }).catch((error) => {
+        if (axios.isAxiosError(error)) {
+          notify('notify.networkError');
+        }
+      });
   };
 
   const formik = useFormik({
