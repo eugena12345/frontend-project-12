@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import axios from 'axios';
 import Form from 'react-bootstrap/Form';
@@ -49,7 +48,7 @@ const RenameChannelModal = ({
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      channelName: `${oldChannelName}`,
+      channelName: oldChannelName,
     },
     validationSchema: yup.object({
       channelName: yup.string()
