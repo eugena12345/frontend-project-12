@@ -26,7 +26,7 @@ export default {
       required: 'Обязательное поле',
       minNameLength: 'От 3 до 20 символов',
       maxNameLength: 'От 3 до 20 символов',
-      minPswLength: 'Пароль должен быть не менее 6 символов',
+      minPswLength: 'Не менее 6 символов',
       matchPsw: 'Пароли должны совпадать',
       sameName: 'Такое название уже существует',
     },

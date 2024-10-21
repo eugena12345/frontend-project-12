@@ -23,6 +23,7 @@ const RegistrationPage = () => {
       name: '',
       password: '',
       repeatPassword: '',
+      other: null,
     },
     validationSchema: yup.object({
       name: yup.string()
@@ -46,7 +47,7 @@ const RegistrationPage = () => {
           navigate('/', { replace: false });
         }).catch((error) => {
           if (error.status === errors.userExist) {
-            actions.setFieldError('name', t('serverError.userExsist'));
+            actions.setFieldError('other', t('serverError.userExsist'));
           }
           if (axios.isAxiosError(error)) {
             toast(t('notify.networkError'));
@@ -94,10 +95,13 @@ const RegistrationPage = () => {
                   />
                   <p className="text-danger small">{formik.errors.repeatPassword}</p>
                 </Form.Group>
-                {
-                  formik.errors.name
-                  && <p className="bg-danger text-light p-3 m-1 text-center">{formik.errors.name}</p>
+                <Form.Group controlId="other">
+                  {
+                  formik.errors.other
+                  && <p className="bg-danger text-light p-3 m-1 text-center">{formik.errors.other}</p>
                 }
+                </Form.Group>
+
                 <Button variant="primary" type="submit">
                   {t('register')}
                 </Button>
