@@ -42,7 +42,7 @@ const RegistrationPage = () => {
       registrateNewUser(user)
         .then((response) => {
           const currentUser = response.data;
-          dispatch(autorizedActions.login({ ...currentUser, id: 1 }));
+          dispatch(autorizedActions.login({ ...currentUser, id: currentUser.token }));
           navigate('/', { replace: false });
         }).catch((error) => {
           if (error.status === errors.userExist) {
