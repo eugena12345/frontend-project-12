@@ -115,7 +115,7 @@ const Navbar = () => {
               ? 'btn text-start text-truncate active' : 'btn text-start text-truncate';
             return (
               <Dropdown as={ButtonGroup} className="d-flex mb-1" key={channel.id}>
-                <Button variant={classStyle} id={channel.id} onClick={selectChannel}>
+                <Button role="button" variant={classStyle} id={channel.id} onClick={selectChannel}>
                   #
                   {channel.name}
                 </Button>
