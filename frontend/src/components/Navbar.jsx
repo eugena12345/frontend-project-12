@@ -116,7 +116,7 @@ const Navbar = () => {
             return (
               <Dropdown as={ButtonGroup} className="d-flex mb-1" key={channel.id}>
                 <Button role="button" variant={classStyle} id={channel.id} onClick={selectChannel}>
-                  #
+                  {'# '}
                   {channel.name}
                 </Button>
                 {channel.removable

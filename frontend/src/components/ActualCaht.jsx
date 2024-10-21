@@ -29,7 +29,7 @@ const ActualChat = () => {
       <>
         <div className="bg-light mb-4 p-3 shadow-sm small">
           <p className="m-0">
-            #
+            {'# '}
             {currentChannel.name}
           </p>
           <span>{t('message', { count: currentMessages.length })}</span>
