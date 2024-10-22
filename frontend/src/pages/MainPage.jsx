@@ -15,8 +15,9 @@ import { actions as autorizeActions } from '../store/slices/auorizeSlice';
 import { getChannels, getMessages } from '../servises/api';
 
 import Navbar from '../components/Navbar';
-import Header from '../components/Header';
+// mport Header from '../components/Header';
 import ActualChat from '../components/ActualCaht';
+import Layout from '../components/Layout';
 import errors from '../servises/errorCodes';
 import store from '../store/index';
 
@@ -62,23 +63,26 @@ const MainPage = () => {
   const logout = () => dispatch(autorizeActions.logout());
 
   return (
-    <div className="container  vh-100 mw-100 d-flex flex-column">
-      <div className="row ">
-        <Header onLogoutClick={logout} />
+    // <div className="container  vh-100 mw-100 d-flex flex-column">
+    //   <div className="row ">
+    //     <Header onLogoutClick={logout} />
+    //   </div>
+    //   <div className="row  m-3 mh-100 h-100">
+    //     <div className="container overflow-hidden rounded shadow flex-row">
+    //       <div className="row flex-md-row">
+    <Layout logout={logout}>
+
+      <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
+        <Navbar />
       </div>
-      <div className="row  m-3 mh-100 h-100">
-        <div className="container overflow-hidden rounded shadow flex-row">
-          <div className="row flex-md-row">
-            <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
-              <Navbar />
-            </div>
-            <div className="col p-0 h-100">
-              <ActualChat />
-            </div>
-          </div>
-        </div>
+      <div className="col p-0 h-100">
+        <ActualChat />
       </div>
-    </div>
+    </Layout>
+  //       </div>
+  //     </div>
+  //   </div>
+  // </div>
   );
 };
 

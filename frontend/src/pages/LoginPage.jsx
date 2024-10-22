@@ -8,7 +8,8 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useTranslation } from 'react-i18next';
-import Header from '../components/Header';
+// import Header from '../components/Header';
+import Layout from '../components/Layout';
 import { actions as autorizedActions } from '../store/slices/auorizeSlice';
 import { postNewUser } from '../servises/api';
 import errors from '../servises/errorCodes';
@@ -45,8 +46,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="">
-      <Header />
+    <Layout>
       <div className="mb-3 ">
         <div className="p-2 ">
           <div className="row">
@@ -104,7 +104,7 @@ const LoginPage = () => {
           </div>
         </div>
       </div>
-    </div>
+    </Layout>
 
   );
 };

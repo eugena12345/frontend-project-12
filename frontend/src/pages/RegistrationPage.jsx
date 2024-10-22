@@ -8,7 +8,8 @@ import React from 'react';
 import * as yup from 'yup';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Header from '../components/Header';
+// import Header from '../components/Header';
+import Layout from '../components/Layout';
 import { actions as autorizedActions } from '../store/slices/auorizeSlice';
 import { registrateNewUser } from '../servises/api';
 import errors from '../servises/errorCodes';
@@ -57,8 +58,7 @@ const RegistrationPage = () => {
   });
 
   return (
-    <div className="">
-      <Header />
+    <Layout>
       <div className="mb-3 ">
         <div className="p-2">
           <div className="row">
@@ -111,7 +111,7 @@ const RegistrationPage = () => {
           </div>
         </div>
       </div>
-    </div>
+    </Layout>
   );
 };
 
