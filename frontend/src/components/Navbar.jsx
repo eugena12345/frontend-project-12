@@ -112,7 +112,7 @@ const Navbar = () => {
         {channels.map(
           (channel) => {
             const classStyle = channel.id === currentChannel.id
-              ? 'btn text-start text-truncate active' : 'btn text-start text-truncate';
+              ? 'w-100 rounded-0 text-start text-truncate btn btn-secondary' : 'btn text-start text-truncate';
             return (
               <Dropdown as={ButtonGroup} className="d-flex mb-1" key={channel.id}>
                 <Button role="button" variant={classStyle} id={channel.id} onClick={selectChannel}>
