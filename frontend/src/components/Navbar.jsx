@@ -1,5 +1,5 @@
 import Dropdown from 'react-bootstrap/Dropdown';
-import Button from 'react-bootstrap/Button';
+// import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import React, { useState } from 'react';
 import axios from 'axios';
@@ -112,13 +112,16 @@ const Navbar = () => {
         {channels.map(
           (channel) => {
             const classStyle = channel.id === currentChannel.id
-              ? 'w-100 rounded-0 text-start text-truncate btn btn-secondary' : 'btn text-start text-truncate';
+              ? 'w-100 rounded-0 text-start text-truncate btn btn-secondary' : 'w-100 rounded-0 text-start btn';
             return (
               <Dropdown as={ButtonGroup} className="d-flex mb-1" key={channel.id}>
-                <Button role="button" variant={classStyle} id={channel.id} onClick={selectChannel}>
+                {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,
+                 jsx-a11y/interactive-supports-focus */}
+                <div role="button" className={classStyle} id={channel.id} onClick={selectChannel}>
+                  {/* variant */}
                   {`# ${channel.name}`}
                   {/* {} */}
-                </Button>
+                </div>
                 {channel.removable
                   ? (
                     <>
