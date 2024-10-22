@@ -39,7 +39,7 @@ export default {
     notify: {
       createChannel: 'Канал создан',
       renameChannel: 'Канал переименован',
-      removeChannel: 'Канал удален',
+      removeChannel: 'Канал удалён',
       networkError: 'Ошибка соединения',
       notAutorized: 'Пользователь не авторизован',
     },
