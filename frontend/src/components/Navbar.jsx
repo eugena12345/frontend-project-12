@@ -122,8 +122,10 @@ const Navbar = () => {
                 {channel.removable
                   ? (
                     <>
-                      <Dropdown.Toggle split variant="btn" id="dropdown-custom-2" />
-                      <span className="visually-hidden">{t('channelManagement')}</span>
+                      <Dropdown.Toggle split variant="btn" id="dropdown-custom-2">
+                        <span className="visually-hidden">{t('channelManagement')}</span>
+                      </Dropdown.Toggle>
+
                       <Dropdown.Menu className="super-colors">
                         <Dropdown.Item eventKey="1" onClick={() => renameChannel(channel.id)}>{t('button.rename')}</Dropdown.Item>
                         <Dropdown.Item eventKey="2" onClick={() => deleteChannel(channel.id)}>{t('button.delete')}</Dropdown.Item>
