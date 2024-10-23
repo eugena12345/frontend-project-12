@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import filter from 'leo-profanity';
 import { selectors as channelsSelectors, actions as channelsSliceActions } from '../store/slices/channelsSlice';
 import { selectors as currentChannelSelectors, actions as currentChannelActions } from '../store/slices/actualChannelSlice';
 import { selectors as messagesSelectors, actions as messagesSliceActions } from '../store/slices/messageSlice';
@@ -14,6 +15,7 @@ import ConfirmationModal from './ConfirmationModal';
 import 'react-toastify/dist/ReactToastify.css';
 import store from '../store';
 import RenameChannelModal from './RenameChannelModal';
+import { postNewChannel } from '../servises/api';
 
 const Navbar = () => {
   const userToken = store.getState().user.ids[0];
@@ -43,6 +45,29 @@ const Navbar = () => {
   const notify = (notifyMessage) => toast(t(notifyMessage));
 
   const createChannel = () => handleShow();
+
+  const addNewChannel = (newChannel) => {
+    const censoredChannelName = filter.clean(newChannel.name);
+    postNewChannel(censoredChannelName, userToken)
+      .then((response) => {
+        handleClose();
+        dispatch(channelsSliceActions.addChannel(response.data));
+        notify('notify.createChannel');
+        const newActualChannel = response.data;
+        setCurrentChannel(newActualChannel);
+      }).catch((error) => {
+        if (axios.isAxiosError(error)) {
+          notify('notify.networkError');
+        }
+      });
+  };
+
+  // onSubmit:
+  const onSubmitAddNewChannel = (values) => {
+    const newChannel = { name: values.channelName };
+    addNewChannel(newChannel);
+    handleClose();
+  };
 
   const renameChannel = (channelId) => {
     const oldChannelName = channels.filter((channel) => channel.id === channelId)[0].name;
@@ -95,6 +120,7 @@ const Navbar = () => {
         show={show}
         onHide={handleClose}
         channelsNameColl={channelsNameColl}
+        onSubmit={onSubmitAddNewChannel}
       />
       <RenameChannelModal
         show={showRename.open}

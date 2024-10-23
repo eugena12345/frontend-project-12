@@ -5,45 +5,14 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
-import axios from 'axios';
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import filter from 'leo-profanity';
-import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
-import { actions as channelsSliceActions } from '../store/slices/channelsSlice';
-import { actions as currentChannelActions } from '../store/slices/actualChannelSlice';
 
-import { postNewChannel } from '../servises/api';
-import store from '../store';
-
-const ChannelNameModal = ({ show, onHide, channelsNameColl }) => {
+const ChannelNameModal = ({
+  show, onHide, channelsNameColl, onSubmit,
+}) => {
   const { t } = useTranslation();
-  const userToken = store.getState().user.ids[0];
-  const dispatch = useDispatch();
-  const notify = (notifyMessage) => toast(t(notifyMessage));
-  const setCurrentChannel = (channelData) => {
-    dispatch(currentChannelActions.deleteCurrentChannel());
-    dispatch(currentChannelActions.addCurrentChannel(channelData));
-  };
-
-  const addNewChannel = (newChannel) => {
-    const censoredChannelName = filter.clean(newChannel.name);
-    postNewChannel(censoredChannelName, userToken)
-      .then((response) => {
-        onHide();
-        dispatch(channelsSliceActions.addChannel(response.data));
-        notify('notify.createChannel');
-        const newActualChannel = response.data;
-        setCurrentChannel(newActualChannel);
-      }).catch((error) => {
-        if (axios.isAxiosError(error)) {
-          notify('notify.networkError');
-        }
-      });
-  };
-
   const formik = useFormik({
     // enableReinitialize: true,
     initialValues: {
@@ -56,11 +25,7 @@ const ChannelNameModal = ({ show, onHide, channelsNameColl }) => {
         .max(20, t('validationError.maxNameLength'))
         .notOneOf(channelsNameColl, t('validationError.sameName')),
     }),
-    onSubmit: (values) => {
-      const newChannel = { name: values.channelName };
-      addNewChannel(newChannel);
-      onHide();
-    },
+    onSubmit,
   });
 
   return (
