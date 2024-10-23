@@ -4,15 +4,17 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
 
-const ConfirmationModal = ({ show, handleClose, modalContent }) => {
+const ConfirmationModal = ({
+  show, onClose, modalContent, handleClose,
+}) => {
   const { t } = useTranslation();
   const handleSubmit = (e) => {
     e.preventDefault();
     const { id } = modalContent;
-    modalContent.modalCallback(id);
-    handleClose();
+    onClose(id);
   };
   // handle поднять аздесь принимать  onClose show
+  // почему не принимать handleClose, если нужно сделать отмену и я передумала удалять
 
   return (
     <Modal show={show} onHide={handleClose}>

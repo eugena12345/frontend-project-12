@@ -129,6 +129,11 @@ const Navbar = () => {
     });
   };
 
+  const onClose = (id) => {
+    removeChannel(id);
+    handleCloseConf();
+  };
+
   return (
     <div className="flex-column g-0">
       <div className="mb-4 p-3 d-flex justify-content-between align-items-center">
@@ -150,8 +155,9 @@ const Navbar = () => {
       />
       <ConfirmationModal
         show={showConf.open}
-        handleClose={handleCloseConf}
+        onClose={onClose}
         modalContent={showConf.data}
+        handleClose={handleCloseConf}
       />
 
       <div className="channels">
