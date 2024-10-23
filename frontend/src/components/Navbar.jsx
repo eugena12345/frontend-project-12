@@ -1,5 +1,4 @@
 import Dropdown from 'react-bootstrap/Dropdown';
-// import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import React, { useState } from 'react';
 import axios from 'axios';
@@ -15,7 +14,7 @@ import ConfirmationModal from './ConfirmationModal';
 import 'react-toastify/dist/ReactToastify.css';
 import store from '../store';
 import RenameChannelModal from './RenameChannelModal';
-import { postNewChannel } from '../servises/api';
+import { postNewChannel, patchChangedChannelName } from '../servises/api';
 
 const Navbar = () => {
   const userToken = store.getState().user.ids[0];
@@ -62,7 +61,6 @@ const Navbar = () => {
       });
   };
 
-  // onSubmit:
   const onSubmitAddNewChannel = (values) => {
     const newChannel = { name: values.channelName };
     addNewChannel(newChannel);
@@ -78,6 +76,27 @@ const Navbar = () => {
         oldChannelName,
       },
     });
+  };
+
+  const changeChannelName = (newName, channelId) => {
+    const censoredChannelName = filter.clean(newName.name);
+    patchChangedChannelName(channelId, censoredChannelName, userToken)
+      .then((response) => {
+        dispatch(channelsSliceActions
+          .updateChannel({ id: response.data.id, changes: { name: response.data.name } }));
+        notify('notify.renameChannel');
+        setCurrentChannel(response.data);
+      }).catch((error) => {
+        if (axios.isAxiosError(error)) {
+          notify('notify.networkError');
+        }
+      });
+  };
+
+  const onSubmitRenameCHannel = (values, id) => {
+    const newChannel = { name: values.channelName };
+    changeChannelName(newChannel, id);
+    handleCloseRename();
   };
 
   const removeChannel = (channelId) => {
@@ -127,6 +146,7 @@ const Navbar = () => {
         onHide={handleCloseRename}
         channelsNameColl={channelsNameColl}
         modalContent={showRename.data}
+        onSubmit={onSubmitRenameCHannel}
       />
       <ConfirmationModal
         show={showConf.open}
