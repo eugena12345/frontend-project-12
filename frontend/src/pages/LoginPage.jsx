@@ -27,7 +27,6 @@ const LoginPage = () => {
     postNewUser(newUser)
       .then((response) => {
         const currentUser = response.data;
-        console.log('currentUser', currentUser);
         dispatch(autorizedActions.login({ ...currentUser, id: currentUser.token }));
         navigate('/', { replace: false });
       })

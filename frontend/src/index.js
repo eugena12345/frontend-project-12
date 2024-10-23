@@ -17,8 +17,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const socket = io('/');
 const setCurrentChannel = (channelData) => {
-  store.dispatch(currentChannelActions.deleteCurrentChannel());
-  store.dispatch(currentChannelActions.addCurrentChannel(channelData));
+  // store.dispatch(currentChannelActions.deleteCurrentChannel());
+  store.dispatch(currentChannelActions.setCurrentChannel(channelData));
 };
 
 socket.on('newMessage', (payload) => {

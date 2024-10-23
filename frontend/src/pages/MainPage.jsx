@@ -33,7 +33,7 @@ const MainPage = () => {
         dispatch(channelsActions.addChannels(response.data));
         // найти канал дженерал и его задиспатчить
         const initialCurrentChannel = { id: '1', name: 'general', removable: false };
-        dispatch(currentChannelActions.addCurrentChannel(initialCurrentChannel));
+        dispatch(currentChannelActions.setCurrentChannel(initialCurrentChannel));
       })
       .catch((error) => {
         if (axios.isAxiosError(error)) {

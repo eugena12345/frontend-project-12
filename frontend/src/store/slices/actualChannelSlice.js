@@ -7,9 +7,11 @@ const currentChannelSlice = createSlice({
   name: 'currentChannel',
   initialState,
   reducers: {
-    addCurrentChannel: currentChannelAdapter.addOne,
-    deleteCurrentChannel: currentChannelAdapter.removeAll,
-    updateCurrentChannel: currentChannelAdapter.updateOne,
+    setCurrentChannel: (state, action) => {
+      currentChannelAdapter.removeAll(state);
+      currentChannelAdapter.setOne(state, action.payload);
+      // setOne - только добавляет в общий state, а не заменяет
+    },
   },
 });
 

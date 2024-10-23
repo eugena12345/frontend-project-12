@@ -33,8 +33,8 @@ const Navbar = () => {
   const messages = useSelector(messagesSelectors.selectAll);
   const channelsNameColl = channels.map((channel) => channel.name);
   const setCurrentChannel = (channelData) => {
-    dispatch(currentChannelActions.deleteCurrentChannel());
-    dispatch(currentChannelActions.addCurrentChannel(channelData));
+    // dispatch(currentChannelActions.deleteCurrentChannel());
+    dispatch(currentChannelActions.setCurrentChannel(channelData));
   };
   const selectChannel = (e) => {
     e.preventDefault();
