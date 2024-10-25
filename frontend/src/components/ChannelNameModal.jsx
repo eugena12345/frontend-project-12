@@ -25,7 +25,10 @@ const ChannelNameModal = ({
         .max(20, t('validationError.maxNameLength'))
         .notOneOf(channelsNameColl, t('validationError.sameName')),
     }),
-    onSubmit,
+    onSubmit: (values) => {
+      onSubmit(values);
+      formik.resetForm();
+    },
   });
 
   return (
