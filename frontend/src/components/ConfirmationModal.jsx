@@ -32,7 +32,7 @@ const ConfirmationModal = ({
             <Button variant="secondary m-1" onClick={handleClose}>
               {t('button.cancel')}
             </Button>
-            <Button variant="danger" type="submit">
+            <Button variant="danger  m-1" type="submit">
               {t('button.delete')}
             </Button>
           </div>

@@ -44,7 +44,7 @@ export default {
       notAutorized: 'Пользователь не авторизован',
     },
     button: {
-      cancel: 'Отмена',
+      cancel: 'Отменить',
       delete: 'Удалить',
       create: 'Отправить',
       rename: 'Переименовать',

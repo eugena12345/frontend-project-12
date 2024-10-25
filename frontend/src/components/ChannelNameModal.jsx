@@ -53,7 +53,7 @@ const ChannelNameModal = ({
             <Button variant="secondary m-1" onClick={onHide}>
               {t('button.cancel')}
             </Button>
-            <Button variant="primary" type="submit">
+            <Button variant="primary m-1" type="submit">
               {t('button.create')}
             </Button>
           </div>
