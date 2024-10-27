@@ -44,10 +44,10 @@ const RenameChannelModal = ({
             <Form.Control
               name="channelName"
               type="text"
-              autoFocus
               value={formik.values.channelName}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
+              autoFocus
             />
             {formik.submitCount > 0 && formik.errors.channelName && (
             <p className="text-danger small">{formik.errors.channelName}</p>

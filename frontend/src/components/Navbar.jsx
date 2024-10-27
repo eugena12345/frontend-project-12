@@ -135,8 +135,8 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex-column g-0">
-      <div className="mb-4 p-3 d-flex justify-content-between align-items-center">
+    <div className="d-flex flex-column h-100 ">
+      <div className="d-flex justify-content-between align-items-center">
         <p className="m-2">{t('channels')}</p>
         <button type="button" className="btn btn-outline-primary" onClick={createChannel}>+</button>
       </div>
@@ -160,7 +160,7 @@ const Navbar = () => {
         handleClose={handleCloseConf}
       />
 
-      <div className="channels">
+      <div className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
         {channels.map(
           (channel) => {
             const classStyle = channel.id === currentChannel.id
@@ -170,9 +170,7 @@ const Navbar = () => {
                 {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,
                  jsx-a11y/interactive-supports-focus */}
                 <div role="button" className={classStyle} id={channel.id} onClick={selectChannel}>
-                  {/* variant */}
                   {`# ${channel.name}`}
-                  {/* {} */}
                 </div>
                 {channel.removable
                   ? (
