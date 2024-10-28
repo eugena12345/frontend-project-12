@@ -1,47 +1,24 @@
-import axios from 'axios';
 import routes from './routes';
+import base from './interceptors';
 
-export const postNewUser = (newUser) => axios.post(routes.login(), newUser);
-export const registrateNewUser = (newUser) => axios.post('/api/v1/signup', newUser);
+export const postNewUser = (newUser) => base.post(routes.login(), newUser);
+export const registrateNewUser = (newUser) => base.post('/api/v1/signup', newUser);
 
-export const getChannels = (userToken) => axios.get(routes.getChannels(), {
-  headers: {
-    Authorization: `Bearer ${userToken}`,
-  },
-});
+export const getChannels = () => base.get(routes.getChannels());
 
-export const getMessages = (userToken) => axios.get(routes.getMessages(), {
-  headers: {
-    Authorization: `Bearer ${userToken}`,
-  },
-});
+export const getMessages = () => base.get(routes.getMessages());
 
-export const postNewMessage = (newMessage, userToken) => axios.post(
+export const postNewMessage = (newMessage) => base.post(
   routes.postMessage(),
   newMessage,
-  {
-    headers: {
-      Authorization: `Bearer ${userToken}`,
-    },
-  },
 );
 
-export const postNewChannel = (censoredChannelName, userToken) => axios.post(
+export const postNewChannel = (censoredChannelName) => base.post(
   routes.postChannel(),
   { name: censoredChannelName },
-  {
-    headers: {
-      Authorization: `Bearer ${userToken}`,
-    },
-  },
 );
 
-export const patchChangedChannelName = (channelId, censoredChannelName, userToken) => axios.patch(
+export const patchChangedChannelName = (channelId, censoredChannelName) => base.patch(
   routes.changeName(channelId),
   { name: censoredChannelName },
-  {
-    headers: {
-      Authorization: `Bearer ${userToken}`,
-    },
-  },
 );
