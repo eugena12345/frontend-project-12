@@ -4,7 +4,6 @@ const token = localStorage.getItem('token');
 const username = localStorage.getItem('username');
 
 const initialState = { token, username };
-console.log('auth initialState', initialState);
 
 const slice = createSlice({
   name: 'user',
@@ -13,7 +12,6 @@ const slice = createSlice({
     login: (state, action) => {
       localStorage.setItem('token', action.payload.token);
       localStorage.setItem('username', action.payload.username);
-      console.log('auth state', state);
       // eslint-disable-next-line no-param-reassign
       state.username = action.payload.username;
       // eslint-disable-next-line no-param-reassign

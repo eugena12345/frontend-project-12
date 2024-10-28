@@ -18,7 +18,6 @@ import { postNewChannel, patchChangedChannelName } from '../servises/api';
 
 const Navbar = () => {
   const userToken = store.getState().user.token;
-  console.log(userToken);
   const { t } = useTranslation();
   const [show, setShow] = useState(false);
   const [showRename, setShowRename] = useState({ open: false, data: {} });
