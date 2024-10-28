@@ -28,7 +28,7 @@ const MainPage = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    getChannels(userToken)
+    getChannels() // userToken
       .then((response) => {
         dispatch(channelsActions.addChannels(response.data));
         // найти канал дженерал и его задиспатчить
@@ -45,7 +45,7 @@ const MainPage = () => {
         }
       });
 
-    getMessages(userToken)
+    getMessages() // userToken
       .then((response) => {
         dispatch(messagesActions.addMessages(response.data));
       })

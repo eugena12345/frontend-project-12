@@ -14,7 +14,7 @@ import store from '../store';
 filter.loadDictionary('en');
 
 const AddMessage = ({ currentChannelId }) => {
-  const { token, username } = store.getState().user; // useSelector(userSelectors.selectAll)[0];
+  const { username } = store.getState().user; // token, useSelector(userSelectors.selectAll)[0];
   const { t } = useTranslation();
 
   const sendMessage = (e) => {
@@ -32,7 +32,7 @@ const AddMessage = ({ currentChannelId }) => {
     };
     form.reset();
 
-    postNewMessage(newMessage, token)
+    postNewMessage(newMessage) // , token
       .then(() => {
       //  console.log(response.data);
       // => { id: '1', body: 'new message', channelId: '1', username: 'admin }

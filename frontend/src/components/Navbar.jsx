@@ -47,7 +47,7 @@ const Navbar = () => {
 
   const addNewChannel = (newChannel) => {
     const censoredChannelName = filter.clean(newChannel.name);
-    postNewChannel(censoredChannelName, userToken)
+    postNewChannel(censoredChannelName) // , userToken
       .then((response) => {
         handleClose();
         dispatch(channelsSliceActions.addChannel(response.data));
@@ -80,7 +80,7 @@ const Navbar = () => {
 
   const changeChannelName = (newName, channelId) => {
     const censoredChannelName = filter.clean(newName.name);
-    patchChangedChannelName(channelId, censoredChannelName, userToken)
+    patchChangedChannelName(channelId, censoredChannelName) // , userToken
       .then((response) => {
         dispatch(channelsSliceActions
           .updateChannel({ id: response.data.id, changes: { name: response.data.name } }));
