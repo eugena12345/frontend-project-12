@@ -12,7 +12,7 @@ const Header = ({ onLogoutClick }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const userToken = store.getState().user.ids[0];
+  const userToken = store.getState().user.token;
 
   const logout = () => {
     onLogoutClick();

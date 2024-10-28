@@ -6,14 +6,16 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
-import { useSelector } from 'react-redux';
-import { selectors as userSelectors } from '../store/slices/auorizeSlice';
+// import { useSelector } from 'react-redux';
+// import { selectors as userSelectors } from '../store/slices/auorizeSlice';
 import { postNewMessage } from '../servises/api';
+import store from '../store';
 
 filter.loadDictionary('en');
 
 const AddMessage = ({ currentChannelId }) => {
-  const { token, username } = useSelector(userSelectors.selectAll)[0];
+  const { token, username } = store.getState().user; // useSelector(userSelectors.selectAll)[0];
+  console.log('token, username', token, username);
   const { t } = useTranslation();
 
   const sendMessage = (e) => {

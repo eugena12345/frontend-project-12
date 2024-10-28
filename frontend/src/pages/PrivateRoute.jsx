@@ -4,7 +4,7 @@ import store from '../store';
 
 const PrivateRoute = ({ children }) => {
   const navigate = useNavigate();
-  const userToken = store.getState().user.ids[0];
+  const userToken = store.getState().user.token;
   useEffect(() => {
     if (!userToken) {
       navigate('/login', { replace: false });

@@ -22,7 +22,7 @@ import errors from '../servises/errorCodes';
 import store from '../store/index';
 
 const MainPage = () => {
-  const userToken = store.getState().user.ids[0];
+  const userToken = store.getState().user.token;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
