@@ -22,3 +22,5 @@ export const patchChangedChannelName = (channelId, censoredChannelName) => base.
   routes.changeName(channelId),
   { name: censoredChannelName },
 );
+
+export const removeChannelApi = (channelId) => base.delete(routes.removeChannelPath(channelId));

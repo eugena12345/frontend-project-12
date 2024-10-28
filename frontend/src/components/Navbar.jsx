@@ -12,12 +12,10 @@ import { selectors as messagesSelectors, actions as messagesSliceActions } from 
 import ChannelNameModal from './ChannelNameModal';
 import ConfirmationModal from './ConfirmationModal';
 import 'react-toastify/dist/ReactToastify.css';
-import store from '../store';
 import RenameChannelModal from './RenameChannelModal';
-import { postNewChannel, patchChangedChannelName } from '../servises/api';
+import { postNewChannel, patchChangedChannelName, removeChannelApi } from '../servises/api';
 
 const Navbar = () => {
-  const userToken = store.getState().user.token;
   const { t } = useTranslation();
   const [show, setShow] = useState(false);
   const [showRename, setShowRename] = useState({ open: false, data: {} });
@@ -33,7 +31,6 @@ const Navbar = () => {
   const messages = useSelector(messagesSelectors.selectAll);
   const channelsNameColl = channels.map((channel) => channel.name);
   const setCurrentChannel = (channelData) => {
-    // dispatch(currentChannelActions.deleteCurrentChannel());
     dispatch(currentChannelActions.setCurrentChannel(channelData));
   };
   const selectChannel = (e) => {
@@ -47,7 +44,7 @@ const Navbar = () => {
 
   const addNewChannel = (newChannel) => {
     const censoredChannelName = filter.clean(newChannel.name);
-    postNewChannel(censoredChannelName) // , userToken
+    postNewChannel(censoredChannelName)
       .then((response) => {
         handleClose();
         dispatch(channelsSliceActions.addChannel(response.data));
@@ -80,7 +77,7 @@ const Navbar = () => {
 
   const changeChannelName = (newName, channelId) => {
     const censoredChannelName = filter.clean(newName.name);
-    patchChangedChannelName(channelId, censoredChannelName) // , userToken
+    patchChangedChannelName(channelId, censoredChannelName)
       .then((response) => {
         dispatch(channelsSliceActions
           .updateChannel({ id: response.data.id, changes: { name: response.data.name } }));
@@ -100,24 +97,22 @@ const Navbar = () => {
   };
 
   const removeChannel = (channelId) => {
-    axios.delete(`/api/v1/channels/${channelId}`, {
-      headers: {
-        Authorization: `Bearer ${userToken}`,
-      },
-    }).then((response) => {
-      const deletedChannelID = response.data.id;
-      dispatch(channelsSliceActions.removeChannel(channelId));
-      const messagesForDelete = messages.filter((message) => message.channelId === deletedChannelID)
-        .map((item) => item.id);
-      dispatch(messagesSliceActions.removeMessages(messagesForDelete));
-      const defaultChannel = { id: '1', name: 'general', removable: false };
-      setCurrentChannel(defaultChannel);
-      notify('notify.removeChannel');
-    }).catch((error) => {
-      if (axios.isAxiosError(error)) {
-        notify('notify.networkError');
-      }
-    });
+    removeChannelApi(channelId)
+      .then((response) => {
+        const deletedChannelID = response.data.id;
+        dispatch(channelsSliceActions.removeChannel(channelId));
+        const messagesForDelete = messages
+          .filter((message) => message.channelId === deletedChannelID)
+          .map((item) => item.id);
+        dispatch(messagesSliceActions.removeMessages(messagesForDelete));
+        const defaultChannel = { id: '1', name: 'general', removable: false };
+        setCurrentChannel(defaultChannel);
+        notify('notify.removeChannel');
+      }).catch((error) => {
+        if (axios.isAxiosError(error)) {
+          notify('notify.networkError');
+        }
+      });
   };
   const deleteChannel = (channelId) => {
     setShowConf({
