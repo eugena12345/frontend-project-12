@@ -46,14 +46,14 @@ const LoginPage = () => {
           <div className="row">
             <div className="col-md-8 mx-auto">
               <LoginForm onSubmit={login} />
-              {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,
-             jsx-a11y/no-static-element-interactions */}
-              <div className="registration" onClick={goToRegistration}>
+              <div className="registration">
                 {t('noAccount')}
                 {' '}
                 <p className="text-primary">
                   {' '}
-                  <u>{t('registrationHere')}</u>
+                  {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,
+                  jsx-a11y/no-static-element-interactions */}
+                  <u onClick={goToRegistration}>{t('registrationHere')}</u>
                 </p>
               </div>
             </div>
