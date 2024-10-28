@@ -35,7 +35,7 @@ const ActualChat = () => {
           <span>{t('message', { count: currentMessages.length })}</span>
         </div>
         <div className="chat-messages overflow-auto px-5 ">
-          <div className="" ref={messageEl}>
+          <div className="text-break" ref={messageEl}>
             {currentMessages.map((msg) => (
               <p key={msg.id}>
                 <b>

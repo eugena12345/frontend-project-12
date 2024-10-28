@@ -15,7 +15,6 @@ filter.loadDictionary('en');
 
 const AddMessage = ({ currentChannelId }) => {
   const { token, username } = store.getState().user; // useSelector(userSelectors.selectAll)[0];
-  // console.log('token, username', token, username);
   const { t } = useTranslation();
 
   const sendMessage = (e) => {
