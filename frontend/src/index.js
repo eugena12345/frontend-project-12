@@ -46,7 +46,7 @@ socket.on('renameChannel', (payload) => {
   const currentChannel = state.currentChannel.ids[0];
   if (currentChannel === payload.id) {
     store.dispatch(currentChannelActions
-      .updateCurrentChannel({ id: payload.id, changes: { name: payload.name } }));
+      .setCurrentChannel(payload.name));
   }
 });
 
