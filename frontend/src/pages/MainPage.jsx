@@ -11,7 +11,7 @@ import {
   actions as currentChannelActions,
 } from '../store/slices/actualChannelSlice';
 import { actions as messagesActions } from '../store/slices/messageSlice';
-import { actions as autorizeActions } from '../store/slices/auorizeSlice';
+import { actions as autorizeActions } from '../store/slices/auth';
 import { getChannels, getMessages } from '../servises/api';
 
 import Navbar from '../components/Navbar';

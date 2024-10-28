@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer from './slices/auorizeSlice';
+import userReducer from './slices/auth';
 import channelsReducer from './slices/channelsSlice';
 import currentChannelReducer from './slices/actualChannelSlice';
 import messagesReducer from './slices/messageSlice';

@@ -10,7 +10,7 @@ import axios from 'axios';
 // import Header from '../components/Header';
 import Layout from '../components/Layout';
 import LoginForm from '../components/LoginForm';
-import { actions as autorizedActions } from '../store/slices/auorizeSlice';
+import { actions as autorizedActions } from '../store/slices/auth';
 import { postNewUser } from '../servises/api';
 import errors from '../servises/errorCodes';
 

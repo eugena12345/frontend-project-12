@@ -1,22 +1,22 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import Nav from 'react-bootstrap/Nav';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { actions as autorizedActions } from '../store/slices/auorizeSlice';
+// import { actions as autorizedActions } from '../store/slices/auth';
 import store from '../store';
 
 const Header = ({ onLogoutClick }) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const { t } = useTranslation();
-  const userToken = store.getState().user.token;
+  const userToken = store.getState().user?.token || null;
 
   const logout = () => {
     onLogoutClick();
-    dispatch(autorizedActions.logout());
+    // dispatch(autorizedActions.logout());
     // мне не нравится что нужно принудительно выбрасывать на страницу.
     // а на главной странице повторно защита не срабатывает автоматически при кноплке логаут
     navigate('/login', { replace: false });
