@@ -2,13 +2,16 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import React, { useEffect, useRef } from 'react';
 import AddMessage from './AddMessage';
-import { selectors as currentChannelSelectors } from '../store/slices/actualChannelSlice';
+import { selectors as channelsSelectors } from '../store/slices/channelsSlice';
+
 import { selectors as messagesSelectors } from '../store/slices/messageSlice';
 
 const ActualChat = () => {
   const messageEl = useRef(null);
   const { t } = useTranslation();
-  const currentChannel = useSelector(currentChannelSelectors.selectAll)[0];
+  const currentChannelID = useSelector((state) => state.channels.currentChannel);
+  // eslint-disable-next-line max-len
+  const currentChannel = useSelector((state) => channelsSelectors.selectById(state, currentChannelID));
   const messages = useSelector(messagesSelectors.selectAll);
   const currentMessages = currentChannel
     ? messages.filter((message) => message.channelId === currentChannel.id)

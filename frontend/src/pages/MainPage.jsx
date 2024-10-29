@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import React, { useEffect } from 'react'; // , useState
+import React, { useEffect } from 'react';
 import {
   useDispatch,
 } from 'react-redux';
@@ -7,15 +7,10 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { actions as channelsActions } from '../store/slices/channelsSlice';
-import {
-  actions as currentChannelActions,
-} from '../store/slices/actualChannelSlice';
 import { actions as messagesActions } from '../store/slices/messageSlice';
 import { actions as autorizeActions } from '../store/slices/auth';
 import { getChannels, getMessages } from '../servises/api';
-
 import Navbar from '../components/Navbar';
-// mport Header from '../components/Header';
 import ActualChat from '../components/ActualCaht';
 import Layout from '../components/Layout';
 import errors from '../servises/errorCodes';
@@ -28,12 +23,11 @@ const MainPage = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    getChannels() // userToken
+    getChannels()
       .then((response) => {
         dispatch(channelsActions.addChannels(response.data));
-        // найти канал дженерал и его задиспатчить
         const initialCurrentChannel = { id: '1', name: 'general', removable: false };
-        dispatch(currentChannelActions.setCurrentChannel(initialCurrentChannel));
+        dispatch(channelsActions.setCurrentChannel(initialCurrentChannel));
       })
       .catch((error) => {
         if (axios.isAxiosError(error)) {
@@ -45,7 +39,7 @@ const MainPage = () => {
         }
       });
 
-    getMessages() // userToken
+    getMessages()
       .then((response) => {
         dispatch(messagesActions.addMessages(response.data));
       })

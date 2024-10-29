@@ -9,16 +9,12 @@ import App from './App';
 import store from './store/index';
 import i18n from './i18n';
 import { actions as channelsAct } from './store/slices/channelsSlice';
-import {
-  actions as currentChannelActions,
-} from './store/slices/actualChannelSlice';
 import { actions as messagesActions } from './store/slices/messageSlice';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const socket = io('/');
 const setCurrentChannel = (channelData) => {
-  // store.dispatch(currentChannelActions.deleteCurrentChannel());
-  store.dispatch(currentChannelActions.setCurrentChannel(channelData));
+  store.dispatch(channelsAct.setCurrentChannel(channelData));
 };
 
 socket.on('newMessage', (payload) => {
@@ -43,10 +39,9 @@ socket.on('removeChannel', (payload) => {
 socket.on('renameChannel', (payload) => {
   store.dispatch(channelsAct.updateChannel({ id: payload.id, changes: { name: payload.name } }));
   const state = store.getState();
-  const currentChannel = state.currentChannel.ids[0];
+  const { currentChannel } = state.channels;
   if (currentChannel === payload.id) {
-    store.dispatch(currentChannelActions
-      .setCurrentChannel(payload.name));
+    store.dispatch(channelsAct.setCurrentChannel(payload));
   }
 });
 

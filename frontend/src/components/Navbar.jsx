@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import filter from 'leo-profanity';
 import { selectors as channelsSelectors, actions as channelsSliceActions } from '../store/slices/channelsSlice';
-import { selectors as currentChannelSelectors, actions as currentChannelActions } from '../store/slices/actualChannelSlice';
 import { selectors as messagesSelectors, actions as messagesSliceActions } from '../store/slices/messageSlice';
 import ChannelNameModal from './ChannelNameModal';
 import ConfirmationModal from './ConfirmationModal';
@@ -27,11 +26,11 @@ const Navbar = () => {
   const handleShow = () => setShow(true);
   const dispatch = useDispatch();
   const channels = useSelector(channelsSelectors.selectAll);
-  const currentChannel = useSelector(currentChannelSelectors.selectAll)[0];
+  const currentChannel = useSelector((state) => state.channels.currentChannel);
   const messages = useSelector(messagesSelectors.selectAll);
   const channelsNameColl = channels.map((channel) => channel.name);
   const setCurrentChannel = (channelData) => {
-    dispatch(currentChannelActions.setCurrentChannel(channelData));
+    dispatch(channelsSliceActions.setCurrentChannel(channelData));
   };
   const selectChannel = (e) => {
     e.preventDefault();
@@ -158,7 +157,7 @@ const Navbar = () => {
       <div className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
         {channels.map(
           (channel) => {
-            const classStyle = channel.id === currentChannel.id
+            const classStyle = channel.id === currentChannel
               ? 'w-100 rounded-0 text-start text-truncate btn btn-secondary' : 'w-100 rounded-0 text-start text-truncate btn';
             return (
               <Dropdown as={ButtonGroup} className="d-flex mb-1" key={channel.id}>
