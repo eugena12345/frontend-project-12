@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
@@ -15,10 +15,16 @@ const RenameChannelModal = ({
     oldChannelName,
   } = modalContent;
 
+  const inputRef = useRef();
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  });
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      channelName: oldChannelName,
+      channelName: oldChannelName || '',
     },
     validationSchema: yup.object({
       channelName: yup.string()
@@ -47,7 +53,8 @@ const RenameChannelModal = ({
               value={formik.values.channelName}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              autoFocus
+              // autoFocus
+              ref={inputRef}
             />
             {formik.submitCount > 0 && formik.errors.channelName && (
             <p className="text-danger small">{formik.errors.channelName}</p>
