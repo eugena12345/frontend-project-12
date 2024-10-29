@@ -18,9 +18,13 @@ const slice = createSlice({
       state.token = action.payload.token;
     },
 
-    logout: () => { // state
+    logout: (state) => { // state
       localStorage.removeItem('token');
       localStorage.removeItem('username');
+      // eslint-disable-next-line no-param-reassign
+      state.username = null;
+      // eslint-disable-next-line no-param-reassign
+      state.token = null;
     },
   },
 });
