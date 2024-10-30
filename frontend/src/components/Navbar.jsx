@@ -22,7 +22,7 @@ const Navbar = () => {
   const handleClose = () => setShow(false);
   const handleCloseRename = () => setShowRename({ open: false, data: {} });
 
-  const handleCloseConf = () => setShowConf(false);
+  const handleCloseConf = () => setShowConf({ open: false, data: {} });
   const handleShow = () => setShow(true);
   const dispatch = useDispatch();
   const channels = useSelector(channelsSelectors.selectAll);
@@ -117,14 +117,13 @@ const Navbar = () => {
     setShowConf({
       open: true,
       data: {
-        modalCallback: removeChannel,
         id: channelId,
       },
     });
   };
 
-  const onClose = (id) => {
-    removeChannel(id);
+  const removeChannelTrue = () => {
+    removeChannel(showConf.data.id);
     handleCloseConf();
   };
 
@@ -149,8 +148,7 @@ const Navbar = () => {
       />
       <ConfirmationModal
         show={showConf.open}
-        onClose={onClose}
-        modalContent={showConf.data}
+        onSubmit={removeChannelTrue}
         handleClose={handleCloseConf}
       />
 

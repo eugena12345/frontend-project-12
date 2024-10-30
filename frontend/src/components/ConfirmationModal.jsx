@@ -5,16 +5,13 @@ import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
 
 const ConfirmationModal = ({
-  show, onClose, modalContent, handleClose,
+  show, onSubmit, handleClose,
 }) => {
   const { t } = useTranslation();
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { id } = modalContent;
-    onClose(id);
+    onSubmit();
   };
-  // handle поднять аздесь принимать  onClose show
-  // почему не принимать handleClose, если нужно сделать отмену и я передумала удалять
 
   return (
     <Modal show={show} onHide={handleClose}>
