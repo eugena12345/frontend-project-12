@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import filter from 'leo-profanity';
 import { selectors as channelsSelectors, actions as channelsSliceActions } from '../store/slices/channelsSlice';
-import { selectors as messagesSelectors, actions as messagesSliceActions } from '../store/slices/messageSlice';
 import ChannelNameModal from './ChannelNameModal';
 import ConfirmationModal from './ConfirmationModal';
 import 'react-toastify/dist/ReactToastify.css';
@@ -27,7 +26,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const channels = useSelector(channelsSelectors.selectAll);
   const currentChannel = useSelector((state) => state.channels.currentChannel);
-  const messages = useSelector(messagesSelectors.selectAll);
+  console.log(currentChannel);
   const channelsNameColl = channels.map((channel) => channel.name);
   const setCurrentChannel = (channelData) => {
     dispatch(channelsSliceActions.setCurrentChannel(channelData));
@@ -98,14 +97,7 @@ const Navbar = () => {
 
   const removeChannel = (channelId) => {
     removeChannelApi(channelId)
-      .then((response) => {
-        const deletedChannelID = response.data.id;
-        dispatch(channelsSliceActions.removeChannel(channelId));
-        const messagesForDelete = messages
-          .filter((message) => message.channelId === deletedChannelID)
-          .map((item) => item.id);
-        dispatch(messagesSliceActions.removeMessages(messagesForDelete));
-        setCurrentChannel();
+      .then(() => {
         notify('notify.removeChannel');
       }).catch((error) => {
         if (axios.isAxiosError(error)) {

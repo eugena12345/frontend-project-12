@@ -13,9 +13,6 @@ import { actions as messagesActions } from './store/slices/messageSlice';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const socket = io('/');
-const setCurrentChannel = (channelData) => {
-  store.dispatch(channelsAct.setCurrentChannel(channelData));
-};
 
 socket.on('newMessage', (payload) => {
   store.dispatch(messagesActions.addMessage(payload));
@@ -32,7 +29,13 @@ socket.on('removeChannel', (payload) => {
     .filter((item) => item.channelId === payload.id);
   const messageIdsForRemove = messageForRemove.map((filtredItem) => filtredItem.id);
   store.dispatch(messagesActions.removeMessages(messageIdsForRemove));
-  setCurrentChannel();
+  const state = store.getState();
+  const { currentChannel } = state.channels;
+  if (currentChannel === payload.id) {
+    store.dispatch(channelsAct.setCurrentChannel());
+  }
+  // eslint-disable-next-line max-len
+  // Лучше не фильтровать на фронте сообщения а повторно вызвать запрос с получением сообщений и актуализировать их.
 });
 
 socket.on('renameChannel', (payload) => {
