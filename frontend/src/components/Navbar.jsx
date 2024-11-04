@@ -104,8 +104,8 @@ const Navbar = () => {
           .filter((message) => message.channelId === deletedChannelID)
           .map((item) => item.id);
         dispatch(messagesSliceActions.removeMessages(messagesForDelete));
-        const defaultChannel = { id: '1', name: 'general', removable: false };
-        setCurrentChannel(defaultChannel);
+        // const defaultChannel = { id: '1', name: 'general', removable: false };
+        setCurrentChannel();
         notify('notify.removeChannel');
       }).catch((error) => {
         if (axios.isAxiosError(error)) {
