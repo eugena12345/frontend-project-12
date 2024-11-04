@@ -1,12 +1,11 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
-import { toast } from 'react-toastify';
 import { postNewMessage } from '../servises/api';
 import store from '../store';
+import { errorHandler } from '../servises/interceptors';
 
 filter.loadDictionary('en');
 
@@ -31,9 +30,7 @@ const AddMessage = ({ currentChannelId }) => {
 
     postNewMessage(newMessage)
       .catch((error) => {
-        if (axios.isAxiosError(error)) {
-          toast(t('notify.networkError'));
-        }
+        errorHandler(error);
       });
   };
 

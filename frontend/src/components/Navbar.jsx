@@ -1,7 +1,6 @@
 import Dropdown from 'react-bootstrap/Dropdown';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
@@ -12,6 +11,7 @@ import ConfirmationModal from './ConfirmationModal';
 import 'react-toastify/dist/ReactToastify.css';
 import RenameChannelModal from './RenameChannelModal';
 import { postNewChannel, patchChangedChannelName, removeChannelApi } from '../servises/api';
+import { errorHandler } from '../servises/interceptors';
 
 const Navbar = () => {
   const { t } = useTranslation();
@@ -49,9 +49,7 @@ const Navbar = () => {
         const newActualChannel = response.data;
         setCurrentChannel(newActualChannel);
       }).catch((error) => {
-        if (axios.isAxiosError(error)) {
-          notify('notify.networkError');
-        }
+        errorHandler(error);
       });
   };
 
@@ -82,9 +80,7 @@ const Navbar = () => {
         notify('notify.renameChannel');
         setCurrentChannel(response.data);
       }).catch((error) => {
-        if (axios.isAxiosError(error)) {
-          notify('notify.networkError');
-        }
+        errorHandler(error);
       });
   };
 
@@ -99,9 +95,7 @@ const Navbar = () => {
       .then(() => {
         notify('notify.removeChannel');
       }).catch((error) => {
-        if (axios.isAxiosError(error)) {
-          notify('notify.networkError');
-        }
+        errorHandler(error);
       });
   };
   const deleteChannel = (channelId) => {

@@ -1,14 +1,13 @@
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import React from 'react';
-import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
-import axios from 'axios';
 import Layout from '../components/Layout';
 import LoginForm from '../components/LoginForm';
 import { actions as autorizedActions } from '../store/slices/auth';
 import { postNewUser } from '../servises/api';
 import errors from '../servises/errorCodes';
+import { errorHandler } from '../servises/interceptors';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -26,9 +25,8 @@ const LoginPage = () => {
       .catch((error) => {
         if (error.status === errors.userNotExsist) {
           actions.setFieldError('password', t('serverError.userNotExsist'));
-        } else if (axios.isAxiosError(error)) {
-          toast(t('notify.networkError'));
         }
+        errorHandler(error);
       });
   };
 

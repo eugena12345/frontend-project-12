@@ -12,6 +12,7 @@ import { actions as channelsAct } from './store/slices/channelsSlice';
 import { actions as messagesActions } from './store/slices/messageSlice';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { getMessages } from './servises/api';
+import { errorHandler } from './servises/interceptors';
 
 const socket = io('/');
 
@@ -40,14 +41,7 @@ socket.on('removeChannel', (payload) => {
       store.dispatch(messagesActions.addMessages(response.data));
     })
     .catch((error) => {
-      console.log(error);
-      // if (axios.isAxiosError(error)) {
-      //   if (error.status === errors.userNotExsist) {
-      //     toast(t('notify.notAutorized'));
-      //   } else {
-      //     toast(t('notify.networkError'));
-      //   }
-      // }
+      errorHandler(error);
     });
 });
 

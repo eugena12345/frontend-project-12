@@ -3,8 +3,6 @@ import React, { useEffect } from 'react';
 import {
   useDispatch,
 } from 'react-redux';
-import { toast } from 'react-toastify';
-import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { actions as channelsActions } from '../store/slices/channelsSlice';
 import { actions as messagesActions } from '../store/slices/messageSlice';
@@ -13,8 +11,8 @@ import { getChannels, getMessages } from '../servises/api';
 import Navbar from '../components/Navbar';
 import Chat from '../components/Caht';
 import Layout from '../components/Layout';
-import errors from '../servises/errorCodes';
 import store from '../store/index';
+import { errorHandler } from '../servises/interceptors';
 
 const MainPage = () => {
   const userToken = store.getState().user.token;
@@ -28,13 +26,7 @@ const MainPage = () => {
         dispatch(channelsActions.addChannels(response.data));
       })
       .catch((error) => {
-        if (axios.isAxiosError(error)) {
-          if (error.status === errors.userNotExsist) {
-            toast(t('notify.notAutorized'));
-          } else {
-            toast(t('notify.networkError'));
-          }
-        }
+        errorHandler(error);
       });
 
     getMessages()
@@ -42,13 +34,7 @@ const MainPage = () => {
         dispatch(messagesActions.addMessages(response.data));
       })
       .catch((error) => {
-        if (axios.isAxiosError(error)) {
-          if (error.status === errors.userNotExsist) {
-            toast(t('notify.notAutorized'));
-          } else {
-            toast(t('notify.networkError'));
-          }
-        }
+        errorHandler(error);
       });
   }, [navigate, dispatch, t, userToken]);
 

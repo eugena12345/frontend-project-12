@@ -1,5 +1,3 @@
-import axios from 'axios';
-import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +7,7 @@ import RegistrationForm from '../components/RegistrationForm';
 import { actions as autorizedActions } from '../store/slices/auth';
 import { registrateNewUser } from '../servises/api';
 import errors from '../servises/errorCodes';
+import { errorHandler } from '../servises/interceptors';
 
 const RegistrationPage = () => {
   const dispatch = useDispatch();
@@ -27,9 +26,7 @@ const RegistrationPage = () => {
         if (error.status === errors.userExist) {
           actions.setFieldError('other', t('serverError.userExsist'));
         }
-        if (axios.isAxiosError(error)) {
-          toast(t('notify.networkError'));
-        }
+        errorHandler(error);
       });
   };
 
