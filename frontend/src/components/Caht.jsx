@@ -6,7 +6,7 @@ import { selectors as channelsSelectors } from '../store/slices/channelsSlice';
 
 import { selectors as messagesSelectors } from '../store/slices/messageSlice';
 
-const ActualChat = () => {
+const Chat = () => {
   const messageEl = useRef(null);
   const { t } = useTranslation();
   const currentChannelID = useSelector((state) => state.channels.currentChannel);
@@ -60,4 +60,4 @@ const ActualChat = () => {
   );
 };
 
-export default ActualChat;
+export default Chat;

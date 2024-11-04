@@ -11,7 +11,7 @@ import { actions as messagesActions } from '../store/slices/messageSlice';
 import { actions as autorizeActions } from '../store/slices/auth';
 import { getChannels, getMessages } from '../servises/api';
 import Navbar from '../components/Navbar';
-import ActualChat from '../components/ActualCaht';
+import Chat from '../components/Caht';
 import Layout from '../components/Layout';
 import errors from '../servises/errorCodes';
 import store from '../store/index';
@@ -61,7 +61,7 @@ const MainPage = () => {
           <Navbar />
         </div>
         <div className="col p-0 h-100">
-          <ActualChat />
+          <Chat />
         </div>
       </div>
 
