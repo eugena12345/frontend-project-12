@@ -57,9 +57,10 @@ const Navbar = () => {
       });
   };
 
-  const onSubmitAddNewChannel = (values) => {
+  const onSubmitAddNewChannel = (values, formik) => {
     const newChannel = { name: values.channelName };
     addNewChannel(newChannel);
+    formik.resetForm();
     handleClose();
   };
 

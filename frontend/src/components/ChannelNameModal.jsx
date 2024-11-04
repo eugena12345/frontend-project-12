@@ -22,8 +22,7 @@ const ChannelNameModal = ({
         .notOneOf(channelsNameColl, t('validationError.sameName')),
     }),
     onSubmit: (values) => {
-      onSubmit(values);
-      formik.resetForm();
+      onSubmit(values, formik);
     },
   });
 
