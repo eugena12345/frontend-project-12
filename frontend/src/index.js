@@ -11,6 +11,7 @@ import i18n from './i18n';
 import { actions as channelsAct } from './store/slices/channelsSlice';
 import { actions as messagesActions } from './store/slices/messageSlice';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { getMessages } from './servises/api';
 
 const socket = io('/');
 
@@ -34,8 +35,20 @@ socket.on('removeChannel', (payload) => {
   if (currentChannel === payload.id) {
     store.dispatch(channelsAct.setCurrentChannel());
   }
-  // eslint-disable-next-line max-len
-  // Лучше не фильтровать на фронте сообщения а повторно вызвать запрос с получением сообщений и актуализировать их.
+  getMessages()
+    .then((response) => {
+      store.dispatch(messagesActions.addMessages(response.data));
+    })
+    .catch((error) => {
+      console.log(error);
+      // if (axios.isAxiosError(error)) {
+      //   if (error.status === errors.userNotExsist) {
+      //     toast(t('notify.notAutorized'));
+      //   } else {
+      //     toast(t('notify.networkError'));
+      //   }
+      // }
+    });
 });
 
 socket.on('renameChannel', (payload) => {

@@ -26,7 +26,6 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const channels = useSelector(channelsSelectors.selectAll);
   const currentChannel = useSelector((state) => state.channels.currentChannel);
-  console.log(currentChannel);
   const channelsNameColl = channels.map((channel) => channel.name);
   const setCurrentChannel = (channelData) => {
     dispatch(channelsSliceActions.setCurrentChannel(channelData));
