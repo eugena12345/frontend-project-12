@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import React from 'react';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
@@ -14,9 +14,9 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const goToRegistration = () => {
-    navigate('/signup', { replace: false });
-  };
+  // const goToRegistration = () => {
+  //   navigate('/signup', { replace: false });
+  // };
 
   const login = (values, actions) => {
     const newUser = { username: values.username, password: values.password };
@@ -49,7 +49,9 @@ const LoginPage = () => {
                   {' '}
                   {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,
                   jsx-a11y/no-static-element-interactions */}
-                  <u onClick={goToRegistration}>{t('registrationHere')}</u>
+                  <Link to="/signup">
+                    {t('registrationHere')}
+                  </Link>
                 </p>
               </div>
             </div>
