@@ -26,8 +26,6 @@ const MainPage = () => {
     getChannels()
       .then((response) => {
         dispatch(channelsActions.addChannels(response.data));
-        const initialCurrentChannel = { id: '1', name: 'general', removable: false };
-        dispatch(channelsActions.setCurrentChannel(initialCurrentChannel));
       })
       .catch((error) => {
         if (axios.isAxiosError(error)) {
