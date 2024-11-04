@@ -32,7 +32,6 @@ socket.on('removeChannel', (payload) => {
     .filter((item) => item.channelId === payload.id);
   const messageIdsForRemove = messageForRemove.map((filtredItem) => filtredItem.id);
   store.dispatch(messagesActions.removeMessages(messageIdsForRemove));
-  // const defaultChannel = { id: '1', name: 'general', removable: false };
   setCurrentChannel();
 });
 

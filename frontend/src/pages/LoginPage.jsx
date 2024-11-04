@@ -14,9 +14,6 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  // const goToRegistration = () => {
-  //   navigate('/signup', { replace: false });
-  // };
 
   const login = (values, actions) => {
     const newUser = { username: values.username, password: values.password };
@@ -47,8 +44,6 @@ const LoginPage = () => {
                 {' '}
                 <p className="text-primary">
                   {' '}
-                  {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,
-                  jsx-a11y/no-static-element-interactions */}
                   <Link to="/signup">
                     {t('registrationHere')}
                   </Link>

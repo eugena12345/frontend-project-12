@@ -1,11 +1,8 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
-
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
-
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 

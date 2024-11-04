@@ -104,7 +104,6 @@ const Navbar = () => {
           .filter((message) => message.channelId === deletedChannelID)
           .map((item) => item.id);
         dispatch(messagesSliceActions.removeMessages(messagesForDelete));
-        // const defaultChannel = { id: '1', name: 'general', removable: false };
         setCurrentChannel();
         notify('notify.removeChannel');
       }).catch((error) => {
@@ -159,9 +158,14 @@ const Navbar = () => {
               ? 'w-100 rounded-0 text-start text-truncate btn btn-secondary' : 'w-100 rounded-0 text-start text-truncate btn';
             return (
               <Dropdown as={ButtonGroup} className="d-flex mb-1" key={channel.id}>
-                {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,
-                 jsx-a11y/interactive-supports-focus */}
-                <div role="button" className={classStyle} id={channel.id} onClick={selectChannel}>
+                <div
+                  role="button"
+                  className={classStyle}
+                  id={channel.id}
+                  onKeyDown={selectChannel}
+                  onClick={selectChannel}
+                  tabIndex={0}
+                >
                   {`# ${channel.name}`}
                 </div>
                 {channel.removable

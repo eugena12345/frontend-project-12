@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
