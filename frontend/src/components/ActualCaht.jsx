@@ -10,8 +10,8 @@ const ActualChat = () => {
   const messageEl = useRef(null);
   const { t } = useTranslation();
   const currentChannelID = useSelector((state) => state.channels.currentChannel);
-  // eslint-disable-next-line max-len
-  const currentChannel = useSelector((state) => channelsSelectors.selectById(state, currentChannelID));
+  const currentChannel = useSelector((state) => channelsSelectors
+    .selectById(state, currentChannelID));
   const messages = useSelector(messagesSelectors.selectAll);
   const currentMessages = currentChannel
     ? messages.filter((message) => message.channelId === currentChannel.id)

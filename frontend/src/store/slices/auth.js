@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'; // , createEntityAdapter
+import { createSlice } from '@reduxjs/toolkit';
 
 const token = localStorage.getItem('token');
 const username = localStorage.getItem('username');

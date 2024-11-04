@@ -14,7 +14,6 @@ code {
 
 .chat-messages{
   overflow: auto;
-   /* height: 100%; */
   display: flex;
   flex-direction: column-reverse;
 }
@@ -22,9 +21,3 @@ code {
 button#dropdown-custom-2 {
 flex: none;
 }
-
-/* .channels {
-  overflow: auto;
-  /* height: 100vh;
-} 
-*/

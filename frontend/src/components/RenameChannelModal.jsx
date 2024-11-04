@@ -53,7 +53,6 @@ const RenameChannelModal = ({
               value={formik.values.channelName}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              // autoFocus
               ref={inputRef}
             />
             {formik.submitCount > 0 && formik.errors.channelName && (

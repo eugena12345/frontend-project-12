@@ -14,7 +14,6 @@ const ChannelNameModal = ({
 }) => {
   const { t } = useTranslation();
   const formik = useFormik({
-    // enableReinitialize: true,
     initialValues: {
       channelName: '',
     },

@@ -6,15 +6,13 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
-// import { useSelector } from 'react-redux';
-// import { selectors as userSelectors } from '../store/slices/auorizeSlice';
 import { postNewMessage } from '../servises/api';
 import store from '../store';
 
 filter.loadDictionary('en');
 
 const AddMessage = ({ currentChannelId }) => {
-  const { username } = store.getState().user; // token, useSelector(userSelectors.selectAll)[0];
+  const { username } = store.getState().user;
   const { t } = useTranslation();
 
   const sendMessage = (e) => {
@@ -32,11 +30,7 @@ const AddMessage = ({ currentChannelId }) => {
     };
     form.reset();
 
-    postNewMessage(newMessage) // , token
-      .then(() => {
-      //  console.log(response.data);
-      // => { id: '1', body: 'new message', channelId: '1', username: 'admin }
-      })
+    postNewMessage(newMessage)
       .catch((error) => {
         if (axios.isAxiosError(error)) {
           toast(t('notify.networkError'));
