@@ -4,7 +4,7 @@ import MainPage from './pages/MainPage';
 import LoginPage from './pages/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
 import RegistrationPage from './pages/RegistrationPage';
-import PrivateRoute from './pages/PrivateRoute';
+import PrivateRoute from './components/PrivateRoute';
 
 const App = () => (
   <BrowserRouter>

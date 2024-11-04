@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
 import Layout from '../components/Layout';
-import RegistrationForm from './RegistrationForm';
+import RegistrationForm from '../components/RegistrationForm';
 import { actions as autorizedActions } from '../store/slices/auth';
 import { registrateNewUser } from '../servises/api';
 import errors from '../servises/errorCodes';
