@@ -165,7 +165,7 @@ const Navbar = () => {
                   {`# ${channel.name}`}
                 </div>
                 {channel.removable
-                  ? (
+                  && (
                     <>
                       <Dropdown.Toggle split variant="btn" id="dropdown-custom-2">
                         <span className="visually-hidden">{t('channelManagement')}</span>
@@ -176,8 +176,7 @@ const Navbar = () => {
                         <Dropdown.Item eventKey="2" onClick={() => deleteChannel(channel.id)}>{t('button.delete')}</Dropdown.Item>
                       </Dropdown.Menu>
                     </>
-                  )
-                  : null}
+                  )}
               </Dropdown>
             );
           },

@@ -39,8 +39,8 @@ const RegistrationForm = ({ onSubmit }) => {
           onChange={formik.handleChange}
           value={formik.values.name}
         />
-        {formik.errors.name && formik.touched.name ? (
-          <p className="text-danger small">{formik.errors.name}</p>) : null}
+        {formik.errors.name && formik.touched.name && (
+          <p className="text-danger small">{formik.errors.name}</p>)}
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="password">
@@ -51,8 +51,8 @@ const RegistrationForm = ({ onSubmit }) => {
           onChange={formik.handleChange}
           value={formik.values.password}
         />
-        {formik.errors.password && formik.touched.password ? (
-          <p className="text-danger small">{formik.errors.password}</p>) : null}
+        {formik.errors.password && formik.touched.password && (
+          <p className="text-danger small">{formik.errors.password}</p>)}
       </Form.Group>
       <Form.Group className="mb-3" controlId="repeatPassword">
         <Form.Label>{t('repeatPassword')}</Form.Label>
@@ -62,9 +62,9 @@ const RegistrationForm = ({ onSubmit }) => {
           onChange={formik.handleChange}
           value={formik.values.repeatPassword}
         />
-        {formik.errors.repeatPassword && formik.touched.repeatPassword ? (
+        {formik.errors.repeatPassword && formik.touched.repeatPassword && (
           <p className="text-danger small">{formik.errors.repeatPassword}</p>
-        ) : null}
+        )}
 
       </Form.Group>
       <Form.Group controlId="other">
