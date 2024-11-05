@@ -27,7 +27,6 @@ const LoginPage = () => {
           actions.setFieldError('password', t('serverError.userNotExsist'));
         }
         errorHandler(error);
-        // ?
       });
   };
 
