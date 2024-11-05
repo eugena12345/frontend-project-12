@@ -4,6 +4,16 @@ import i18next from 'i18next';
 import store from '../store';
 import errors from './errorCodes';
 
+export const errorHandler = (error) => {
+  if (axios.isAxiosError(error)) {
+    if (error.status === errors.userNotExsist) {
+      toast(i18next.t('notify.notAutorized'));
+    } else {
+      toast(i18next.t('notify.networkError'));
+    }
+  }
+};
+
 const base = axios.create({
   baseURL: '/',
 });
@@ -27,14 +37,9 @@ base.interceptors.request.use(
   },
 );
 
-export const errorHandler = (error) => {
-  if (axios.isAxiosError(error)) {
-    if (error.status === errors.userNotExsist) {
-      toast(i18next.t('notify.notAutorized'));
-    } else {
-      toast(i18next.t('notify.networkError'));
-    }
-  }
-};
+base.interceptors.response.use((response) => response, (error) => {
+  errorHandler(error);
+  return Promise.reject(error);
+});
 
 export default base;

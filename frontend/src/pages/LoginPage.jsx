@@ -7,7 +7,6 @@ import LoginForm from '../components/LoginForm';
 import { actions as autorizedActions } from '../store/slices/auth';
 import { postNewUser } from '../servises/api';
 import errors from '../servises/errorCodes';
-import { errorHandler } from '../servises/interceptors';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -26,7 +25,6 @@ const LoginPage = () => {
         if (error.status === errors.userNotExsist) {
           actions.setFieldError('password', t('serverError.userNotExsist'));
         }
-        errorHandler(error);
       });
   };
 

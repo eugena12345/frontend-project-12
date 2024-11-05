@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import { postNewMessage } from '../servises/api';
 import store from '../store';
-import { errorHandler } from '../servises/interceptors';
 
 filter.loadDictionary('en');
 
@@ -29,9 +28,7 @@ const AddMessage = ({ currentChannelId }) => {
     form.reset();
 
     postNewMessage(newMessage)
-      .catch((error) => {
-        errorHandler(error);
-      });
+      .catch(() => {});
   };
 
   return (

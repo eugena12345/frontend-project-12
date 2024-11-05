@@ -11,7 +11,6 @@ import ConfirmationModal from './ConfirmationModal';
 import 'react-toastify/dist/ReactToastify.css';
 import RenameChannelModal from './RenameChannelModal';
 import { postNewChannel, patchChangedChannelName, removeChannelApi } from '../servises/api';
-import { errorHandler } from '../servises/interceptors';
 
 const Navbar = () => {
   const { t } = useTranslation();
@@ -48,9 +47,7 @@ const Navbar = () => {
         notify('notify.createChannel');
         const newActualChannel = response.data;
         setCurrentChannel(newActualChannel);
-      }).catch((error) => {
-        errorHandler(error);
-      });
+      }).catch(() => {});
   };
 
   const onSubmitAddNewChannel = (values, formik) => {
@@ -79,9 +76,7 @@ const Navbar = () => {
           .updateChannel({ id: response.data.id, changes: { name: response.data.name } }));
         notify('notify.renameChannel');
         setCurrentChannel(response.data);
-      }).catch((error) => {
-        errorHandler(error);
-      });
+      }).catch(() => {});
   };
 
   const onSubmitRenameCHannel = (values, id) => {
@@ -94,9 +89,7 @@ const Navbar = () => {
     removeChannelApi(channelId)
       .then(() => {
         notify('notify.removeChannel');
-      }).catch((error) => {
-        errorHandler(error);
-      });
+      }).catch(() => {});
   };
   const deleteChannel = (channelId) => {
     setShowConf({

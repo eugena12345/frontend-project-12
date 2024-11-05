@@ -12,7 +12,6 @@ import Navbar from '../components/Navbar';
 import Chat from '../components/Caht';
 import Layout from '../components/Layout';
 import store from '../store/index';
-import { errorHandler } from '../servises/interceptors';
 
 const MainPage = () => {
   const userToken = store.getState().user.token;
@@ -25,17 +24,13 @@ const MainPage = () => {
       .then((response) => {
         dispatch(channelsActions.addChannels(response.data));
       })
-      .catch((error) => {
-        errorHandler(error);
-      });
+      .catch(() => {});
 
     getMessages()
       .then((response) => {
         dispatch(messagesActions.addMessages(response.data));
       })
-      .catch((error) => {
-        errorHandler(error);
-      });
+      .catch(() => {});
   }, [navigate, dispatch, t, userToken]);
 
   const logout = () => dispatch(autorizeActions.logout());
