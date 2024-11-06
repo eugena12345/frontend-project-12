@@ -23,8 +23,13 @@ base.interceptors.request.use(
     try {
       const { token } = store.getState().user;
       if (token) {
-        // eslint-disable-next-line no-param-reassign
-        config.headers.Authorization = `Bearer ${token}`;
+        return {
+          ...config,
+          headers: {
+            ...config.headers,
+            Authorization: `Bearer ${token}`,
+          },
+        };
       }
       return config;
     } catch (error) {

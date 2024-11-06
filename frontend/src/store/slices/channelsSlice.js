@@ -18,10 +18,10 @@ const channelsSlice = createSlice({
   },
 
   reducers: {
-    setCurrentChannel: (state, action) => {
-      // eslint-disable-next-line no-param-reassign
-      state.currentChannel = (action.payload?.id) || defaultChannelID;
-    },
+    setCurrentChannel: (state, action) => ({
+      ...state,
+      currentChannel: (action.payload?.id) || defaultChannelID,
+    }),
     addChannels: (state, action) => {
       channelsAdapter.addMany(state, action.payload);
     },
