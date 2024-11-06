@@ -9,7 +9,7 @@ import { actions as messagesActions } from '../store/slices/messageSlice';
 import { actions as autorizeActions } from '../store/slices/auth';
 import { getChannels, getMessages } from '../servises/api';
 import Navbar from '../components/Navbar';
-import Chat from '../components/Caht';
+import Chat from '../components/Chat';
 import Layout from '../components/Layout';
 import store from '../store/index';
 
