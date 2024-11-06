@@ -31,18 +31,6 @@ const MainPage = () => {
       }
     }
     fetchData();
-
-    // getChannels()
-    //   .then((response) => {
-    //     dispatch(channelsActions.addChannels(response.data));
-    //   })
-    //   .catch(() => {});
-
-    // getMessages()
-    //   .then((response) => {
-    //     dispatch(messagesActions.addMessages(response.data));
-    //   })
-    //   .catch(() => {});
   }, [navigate, dispatch, t, userToken]);
 
   const logout = () => dispatch(autorizeActions.logout());

@@ -50,15 +50,6 @@ const Navbar = () => {
     } catch (error) {
       //
     }
-
-    // postNewChannel(censoredChannelName)
-    //   .then((response) => {
-    //     handleClose();
-    //     dispatch(channelsSliceActions.addChannel(response.data));
-    //     notify('notify.createChannel');
-    //     const newActualChannel = response.data;
-    //     setCurrentChannel(newActualChannel);
-    //   }).catch(() => {});
   };
 
   const onSubmitAddNewChannel = (values, formik) => {
@@ -89,14 +80,6 @@ const Navbar = () => {
     } catch (error) {
       //
     }
-
-    // patchChangedChannelName(channelId, censoredChannelName)
-    //   .then((response) => {
-    //     dispatch(channelsSliceActions
-    //       .updateChannel({ id: response.data.id, changes: { name: response.data.name } }));
-    //     notify('notify.renameChannel');
-    //     setCurrentChannel(response.data);
-    //   }).catch(() => {});
   };
 
   const onSubmitRenameCHannel = (values, id) => {
@@ -112,11 +95,6 @@ const Navbar = () => {
     } catch (error) {
       //
     }
-
-    // removeChannelApi(channelId)
-    //   .then(() => {
-    //     notify('notify.removeChannel');
-    //   }).catch(() => {});
   };
   const deleteChannel = (channelId) => {
     setShowConf({

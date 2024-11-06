@@ -31,7 +31,6 @@ const AddMessage = ({ currentChannelId }) => {
     } catch (error) {
       //
     }
-    //  .catch(() => {});
   };
 
   return (
