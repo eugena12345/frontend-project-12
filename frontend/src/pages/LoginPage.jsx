@@ -13,19 +13,30 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const login = (values, actions) => {
+  const login = async (values, actions) => {
     const newUser = { username: values.username, password: values.password };
-    postNewUser(newUser)
-      .then((response) => {
-        const currentUser = response.data;
-        dispatch(autorizedActions.login({ ...currentUser, id: currentUser.token }));
-        navigate('/', { replace: false });
-      })
-      .catch((error) => {
-        if (error.status === errors.userNotExsist) {
-          actions.setFieldError('password', t('serverError.userNotExsist'));
-        }
-      });
+    try {
+      const { data } = await postNewUser(newUser);
+      const currentUser = data;
+      dispatch(autorizedActions.login({ ...currentUser, id: currentUser.token }));
+      navigate('/', { replace: false });
+    } catch (error) {
+      if (error.status === errors.userNotExsist) {
+        actions.setFieldError('password', t('serverError.userNotExsist'));
+      }
+    }
+
+    // postNewUser(newUser)
+    //   .then((response) => {
+    //     const currentUser = response.data;
+    //     dispatch(autorizedActions.login({ ...currentUser, id: currentUser.token }));
+    //     navigate('/', { replace: false });
+    //   })
+    //   .catch((error) => {
+    //     if (error.status === errors.userNotExsist) {
+    //       actions.setFieldError('password', t('serverError.userNotExsist'));
+    //     }
+    //   });
   };
 
   return (

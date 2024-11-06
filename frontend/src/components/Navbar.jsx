@@ -38,16 +38,27 @@ const Navbar = () => {
 
   const createChannel = () => handleShow();
 
-  const addNewChannel = (newChannel) => {
+  const addNewChannel = async (newChannel) => {
     const censoredChannelName = filter.clean(newChannel.name);
-    postNewChannel(censoredChannelName)
-      .then((response) => {
-        handleClose();
-        dispatch(channelsSliceActions.addChannel(response.data));
-        notify('notify.createChannel');
-        const newActualChannel = response.data;
-        setCurrentChannel(newActualChannel);
-      }).catch(() => {});
+    try {
+      const { data } = await postNewChannel(censoredChannelName);
+      handleClose();
+      dispatch(channelsSliceActions.addChannel(data));
+      notify('notify.createChannel');
+      const newActualChannel = data;
+      setCurrentChannel(newActualChannel);
+    } catch (error) {
+      //
+    }
+
+    // postNewChannel(censoredChannelName)
+    //   .then((response) => {
+    //     handleClose();
+    //     dispatch(channelsSliceActions.addChannel(response.data));
+    //     notify('notify.createChannel');
+    //     const newActualChannel = response.data;
+    //     setCurrentChannel(newActualChannel);
+    //   }).catch(() => {});
   };
 
   const onSubmitAddNewChannel = (values, formik) => {
@@ -68,15 +79,24 @@ const Navbar = () => {
     });
   };
 
-  const changeChannelName = (newName, channelId) => {
+  const changeChannelName = async (newName, channelId) => {
     const censoredChannelName = filter.clean(newName.name);
-    patchChangedChannelName(channelId, censoredChannelName)
-      .then((response) => {
-        dispatch(channelsSliceActions
-          .updateChannel({ id: response.data.id, changes: { name: response.data.name } }));
-        notify('notify.renameChannel');
-        setCurrentChannel(response.data);
-      }).catch(() => {});
+    try {
+      const { data } = await patchChangedChannelName(channelId, censoredChannelName);
+      dispatch(channelsSliceActions.updateChannel({ id: data.id, changes: { name: data.name } }));
+      notify('notify.renameChannel');
+      setCurrentChannel(data);
+    } catch (error) {
+      //
+    }
+
+    // patchChangedChannelName(channelId, censoredChannelName)
+    //   .then((response) => {
+    //     dispatch(channelsSliceActions
+    //       .updateChannel({ id: response.data.id, changes: { name: response.data.name } }));
+    //     notify('notify.renameChannel');
+    //     setCurrentChannel(response.data);
+    //   }).catch(() => {});
   };
 
   const onSubmitRenameCHannel = (values, id) => {
@@ -85,11 +105,18 @@ const Navbar = () => {
     handleCloseRename();
   };
 
-  const removeChannel = (channelId) => {
-    removeChannelApi(channelId)
-      .then(() => {
-        notify('notify.removeChannel');
-      }).catch(() => {});
+  const removeChannel = async (channelId) => {
+    try {
+      await removeChannelApi(channelId);
+      notify('notify.removeChannel');
+    } catch (error) {
+      //
+    }
+
+    // removeChannelApi(channelId)
+    //   .then(() => {
+    //     notify('notify.removeChannel');
+    //   }).catch(() => {});
   };
   const deleteChannel = (channelId) => {
     setShowConf({

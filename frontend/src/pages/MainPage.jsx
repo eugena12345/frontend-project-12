@@ -20,17 +20,29 @@ const MainPage = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    getChannels()
-      .then((response) => {
-        dispatch(channelsActions.addChannels(response.data));
-      })
-      .catch(() => {});
+    async function fetchData() {
+      try {
+        const { data } = await getChannels();
+        dispatch(channelsActions.addChannels(data));
+        const responseMessages = await getMessages();
+        dispatch(messagesActions.addMessages(responseMessages.data));
+      } catch (e) {
+        //
+      }
+    }
+    fetchData();
 
-    getMessages()
-      .then((response) => {
-        dispatch(messagesActions.addMessages(response.data));
-      })
-      .catch(() => {});
+    // getChannels()
+    //   .then((response) => {
+    //     dispatch(channelsActions.addChannels(response.data));
+    //   })
+    //   .catch(() => {});
+
+    // getMessages()
+    //   .then((response) => {
+    //     dispatch(messagesActions.addMessages(response.data));
+    //   })
+    //   .catch(() => {});
   }, [navigate, dispatch, t, userToken]);
 
   const logout = () => dispatch(autorizeActions.logout());

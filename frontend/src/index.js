@@ -24,7 +24,7 @@ socket.on('newChannel', (payload) => {
   store.dispatch(channelsAct.addChannel(payload));
 });
 
-socket.on('removeChannel', (payload) => {
+socket.on('removeChannel', async (payload) => {
   store.dispatch(channelsAct.removeChannel(payload.id));
   const { entities } = store.getState().messages;
   const messageForRemove = Object.values(entities)
@@ -36,10 +36,17 @@ socket.on('removeChannel', (payload) => {
   if (currentChannel === payload.id) {
     store.dispatch(channelsAct.setCurrentChannel());
   }
-  getMessages()
-    .then((response) => {
-      store.dispatch(messagesActions.addMessages(response.data));
-    });
+  try {
+    const data = await getMessages();
+    store.dispatch(messagesActions.addMessages(data));
+  } catch (error) {
+    //
+  }
+
+  // getMessages();
+  //   .then((response) => {
+  //     store.dispatch(messagesActions.addMessages(response.data));
+  //   });
   // .catch((error) => {
   //   errorHandler(error);
   // });

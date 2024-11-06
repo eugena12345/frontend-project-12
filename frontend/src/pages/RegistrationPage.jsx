@@ -13,19 +13,29 @@ const RegistrationPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const registrateUser = (values, actions) => {
+  const registrateUser = async (values, actions) => {
     const user = { username: values.name, password: values.password };
+    try {
+      const { data } = await registrateNewUser(user);
+      const currentUser = data;
+      dispatch(autorizedActions.login({ ...currentUser, id: currentUser.token }));
+      navigate('/', { replace: false });
+    } catch (error) {
+      if (error.status === errors.userExist) {
+        actions.setFieldError('other', t('serverError.userExsist'));
+      }
+    }
 
-    registrateNewUser(user)
-      .then((response) => {
-        const currentUser = response.data;
-        dispatch(autorizedActions.login({ ...currentUser, id: currentUser.token }));
-        navigate('/', { replace: false });
-      }).catch((error) => {
-        if (error.status === errors.userExist) {
-          actions.setFieldError('other', t('serverError.userExsist'));
-        }
-      });
+    // registrateNewUser(user)
+    //   .then((response) => {
+    //     const currentUser = response.data;
+    //     dispatch(autorizedActions.login({ ...currentUser, id: currentUser.token }));
+    //     navigate('/', { replace: false });
+    //   }).catch((error) => {
+    //     if (error.status === errors.userExist) {
+    //       actions.setFieldError('other', t('serverError.userExsist'));
+    //     }
+    //   });
   };
 
   return (

@@ -12,7 +12,7 @@ const AddMessage = ({ currentChannelId }) => {
   const { username } = store.getState().user;
   const { t } = useTranslation();
 
-  const sendMessage = (e) => {
+  const sendMessage = async (e) => {
     e.preventDefault();
     const form = e.target;
     const messageText = e.target[0].value;
@@ -26,9 +26,12 @@ const AddMessage = ({ currentChannelId }) => {
       username,
     };
     form.reset();
-
-    postNewMessage(newMessage)
-      .catch(() => {});
+    try {
+      await postNewMessage(newMessage);
+    } catch (error) {
+      //
+    }
+    //  .catch(() => {});
   };
 
   return (
