@@ -26,11 +26,7 @@ const AddMessage = ({ currentChannelId }) => {
       username,
     };
     form.reset();
-    // try {
     await postNewMessage(newMessage);
-    // } catch (error) {
-    //
-    // }
   };
 
   return (

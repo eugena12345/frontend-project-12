@@ -21,14 +21,10 @@ const MainPage = () => {
 
   useEffect(() => {
     async function fetchData() {
-      // try {
       const { data } = await getChannels();
       dispatch(channelsActions.addChannels(data));
       const responseMessages = await getMessages();
       dispatch(messagesActions.addMessages(responseMessages.data));
-      // } catch (e) {
-      //
-    // }
     }
     fetchData();
   }, [navigate, dispatch, t, userToken]);

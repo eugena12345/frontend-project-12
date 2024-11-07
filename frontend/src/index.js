@@ -35,12 +35,8 @@ socket.on('removeChannel', async (payload) => {
   if (currentChannel === payload.id) {
     store.dispatch(channelsAct.setCurrentChannel());
   }
-  // try {
   const data = await getMessages();
   store.dispatch(messagesActions.addMessages(data));
-  // } catch (error) {
-  //
-  // }
 });
 
 socket.on('renameChannel', (payload) => {
