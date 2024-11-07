@@ -8,6 +8,8 @@ export const errorHandler = (error) => {
   if (axios.isAxiosError(error)) {
     if (error.status === errors.userNotExsist) {
       toast(i18next.t('notify.notAutorized'));
+    } else if (error.status === errors.userExist) {
+      toast(i18next.t('serverError.userExsist'));
     } else {
       toast(i18next.t('notify.networkError'));
     }
@@ -44,7 +46,10 @@ base.interceptors.request.use(
 
 base.interceptors.response.use((response) => response, (error) => {
   errorHandler(error);
-  return Promise.reject(error);
+  if (error.status === errors.userNotExsist || error.status === errors.userExist) {
+    return Promise.reject(error);
+  }
+  return error;
 });
 
 export default base;

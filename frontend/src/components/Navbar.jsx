@@ -40,16 +40,16 @@ const Navbar = () => {
 
   const addNewChannel = async (newChannel) => {
     const censoredChannelName = filter.clean(newChannel.name);
-    try {
-      const { data } = await postNewChannel(censoredChannelName);
-      handleClose();
-      dispatch(channelsSliceActions.addChannel(data));
-      notify('notify.createChannel');
-      const newActualChannel = data;
-      setCurrentChannel(newActualChannel);
-    } catch (error) {
-      //
-    }
+    // try {
+    const { data } = await postNewChannel(censoredChannelName);
+    handleClose();
+    dispatch(channelsSliceActions.addChannel(data));
+    notify('notify.createChannel');
+    const newActualChannel = data;
+    setCurrentChannel(newActualChannel);
+    // } catch (error) {
+    //
+    // }
   };
 
   const onSubmitAddNewChannel = (values, formik) => {
@@ -72,14 +72,14 @@ const Navbar = () => {
 
   const changeChannelName = async (newName, channelId) => {
     const censoredChannelName = filter.clean(newName.name);
-    try {
-      const { data } = await patchChangedChannelName(channelId, censoredChannelName);
-      dispatch(channelsSliceActions.updateChannel({ id: data.id, changes: { name: data.name } }));
-      notify('notify.renameChannel');
-      setCurrentChannel(data);
-    } catch (error) {
-      //
-    }
+    // try {
+    const { data } = await patchChangedChannelName(channelId, censoredChannelName);
+    dispatch(channelsSliceActions.updateChannel({ id: data.id, changes: { name: data.name } }));
+    notify('notify.renameChannel');
+    setCurrentChannel(data);
+    // } catch (error) {
+    //
+    // }
   };
 
   const onSubmitRenameCHannel = (values, id) => {
@@ -89,12 +89,12 @@ const Navbar = () => {
   };
 
   const removeChannel = async (channelId) => {
-    try {
-      await removeChannelApi(channelId);
-      notify('notify.removeChannel');
-    } catch (error) {
-      //
-    }
+    // try {
+    await removeChannelApi(channelId);
+    notify('notify.removeChannel');
+    // } catch (error) {
+    //
+    // }
   };
   const deleteChannel = (channelId) => {
     setShowConf({

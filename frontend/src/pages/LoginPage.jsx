@@ -21,6 +21,7 @@ const LoginPage = () => {
       dispatch(autorizedActions.login({ ...currentUser, id: currentUser.token }));
       navigate('/', { replace: false });
     } catch (error) {
+      console.log(error);
       if (error.status === errors.userNotExsist) {
         actions.setFieldError('password', t('serverError.userNotExsist'));
       }
