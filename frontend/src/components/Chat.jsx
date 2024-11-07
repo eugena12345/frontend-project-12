@@ -17,13 +17,18 @@ const Chat = () => {
     ? messages.filter((message) => message.channelId === currentChannel.id)
     : [];
   useEffect(() => {
-    if (messageEl.current !== null) {
-      messageEl.current.addEventListener('DOMNodeInserted', (event) => {
-        const { currentTarget: target } = event;
-        target.scrollTo({ top: target.scrollHeight, behavior: 'smooth' });
-      });
-    }
-  });
+    const { current } = messageEl;
+    const handle = (event) => {
+      const { currentTarget: target } = event;
+      target.scrollTo({ top: target.scrollHeight, behavior: 'smooth' });
+    };
+
+    current.addEventListener('DOMNodeInserted', handle);
+
+    return () => {
+      current.removeEventListener('DOMNodeInserted', handle);
+    };
+  }, [messages?.length]);
 
   return (
     <div className="d-flex flex-column h-100">
